@@ -1,0 +1,1 @@
+{"version":3,"file":"IGeometricLoaderProps.d.ts","sourceRoot":"","sources":["../../../../src/@types/interfaces/IGeometricLoaderProps.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAC;AAEtD,MAAM,WAAW,qBAAsB,SAAQ,gBAAgB;IAC7D,+CAA+C;IAC/C,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,uCAAuC;IACvC,WAAW,CAAC,EAAE,MAAM,CAAC;CACtB"}

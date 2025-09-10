@@ -1,0 +1,289 @@
+/* Base loader styles */
+.react-loadly {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.react-loadly *,
+.react-loadly *::before,
+.react-loadly *::after {
+  box-sizing: border-box;
+}
+
+/* CSS Variables for customization */
+:root {
+  --react-loadly-color: #6366f1;
+  --react-loadly-secondary-color: #8b5cf6;
+  --react-loadly-size: 40px;
+  --react-loadly-speed: 1;
+  --react-loadly-background: transparent;
+  --react-loadly-text-color: #6b7280;
+  --react-loadly-border-width: 2px;
+  --react-loadly-glow-intensity: 0.5;
+  /* Error state colors */
+  --react-loadly-error-color: #f87171;
+  --react-loadly-error-color-hover: #ef4444;
+  --react-loadly-error-background: #fef2f2;
+  --react-loadly-error-border: #fecaca;
+}
+
+/* Loading text styles */
+.react-loadly-text {
+  margin-top: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--react-loadly-text-color);
+  text-align: center;
+}
+
+/* Error and fallback styles */
+.react-loadly-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--react-loadly-error-border);
+  border-radius: 8px;
+  background-color: var(--react-loadly-error-background);
+  color: var(--react-loadly-error-color-hover);
+}
+
+.react-loadly-error-icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 8px;
+  color: var(--react-loadly-error-color);
+}
+
+.react-loadly-retry-button {
+  margin-top: 8px;
+  padding: 8px 16px;
+  background-color: var(--react-loadly-error-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.react-loadly-retry-button:hover {
+  background-color: var(--react-loadly-error-color-hover);
+}
+
+.react-loadly-retry-button:focus {
+  outline: 2px solid var(--react-loadly-error-color);
+  outline-offset: 2px;
+}
+
+/* Accessibility */
+.react-loadly[aria-hidden="true"] {
+  pointer-events: none;
+}
+
+.react-loadly-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+/* Performance optimizations */
+.react-loadly,
+.react-loadly * {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .react-loadly,
+  .react-loadly * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Common animations */
+@keyframes react-loadly-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes react-loadly-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes react-loadly-bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40%,
+  43% {
+    transform: translateY(-30px);
+  }
+  70% {
+    transform: translateY(-15px);
+  }
+  90% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes react-loadly-wave {
+  0%,
+  60%,
+  100% {
+    transform: initial;
+  }
+  30% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes react-loadly-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--react-loadly-color);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--react-loadly-color), 0 0 30px var(--react-loadly-color);
+  }
+}
+
+@keyframes react-loadly-fade {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes react-loadly-scale {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes react-loadly-dots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+@keyframes react-loadly-flip {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+@keyframes react-loadly-liquid {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+  }
+}
+
+@keyframes react-loadly-flow {
+  0% {
+    transform: translateX(-100px) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) scale(0);
+    opacity: 0;
+  }
+}
+@keyframes react-loadly-bars {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.3);
+  }
+}
+
+@keyframes react-loadly-blob {
+  0%,
+  100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  25% {
+    border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+  }
+  50% {
+    border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+  }
+  75% {
+    border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+  }
+}
+
+@keyframes react-loadly-liquid-wave {
+  0%,
+  100% {
+    transform: translate(-25%, 50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(-25%, 40%) rotate(180deg);
+  }
+}
+
+@keyframes react-loadly-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

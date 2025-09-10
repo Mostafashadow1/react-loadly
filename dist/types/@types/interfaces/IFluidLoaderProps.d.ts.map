@@ -1,0 +1,1 @@
+{"version":3,"file":"IFluidLoaderProps.d.ts","sourceRoot":"","sources":["../../../../src/@types/interfaces/IFluidLoaderProps.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,oBAAoB,CAAC;AAEtD,MAAM,WAAW,iBAAkB,SAAQ,gBAAgB;IACzD,0CAA0C;IAC1C,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,4CAA4C;IAC5C,SAAS,CAAC,EAAE,MAAM,CAAC;CACpB"}
