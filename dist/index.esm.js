@@ -1,5 +1,4 @@
-import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 
 /**
  * Merges default props with user props, handling undefined values gracefully
@@ -171,7 +170,7 @@ const Dot = ({ size = 8, color = "var(--react-loadly-color)", opacity = 1, class
         boxShadow: glowIntensity > 0 ? `0 0 ${glowIntensity * 10}px ${color}` : undefined,
         ...style,
     };
-    return jsx("div", { className: `react-loadly-dot ${className}`.trim(), style: dotStyle, "data-testid": dataTestId, ...props });
+    return React.createElement("div", { className: `react-loadly-dot ${className}`.trim(), style: dotStyle, "data-testid": dataTestId, ...props });
 };
 
 const Line = ({ width = 30, height = 4, color = "var(--react-loadly-color)", opacity = 1, borderRadius = 2, className = "", style = {}, animation, animationDuration, animationDelay, orientation = "horizontal", "data-testid": dataTestId, ...props }) => {
@@ -189,7 +188,7 @@ const Line = ({ width = 30, height = 4, color = "var(--react-loadly-color)", opa
         display: "inline-block",
         ...style,
     };
-    return (jsx("div", { className: `react-loadly-line react-loadly-line-${orientation} ${className}`.trim(), style: lineStyle, "data-testid": dataTestId, ...props }));
+    return (React.createElement("div", { className: `react-loadly-line react-loadly-line-${orientation} ${className}`.trim(), style: lineStyle, "data-testid": dataTestId, ...props }));
 };
 
 const Rectangle = ({ width = 20, height = 20, color = "var(--react-loadly-color)", borderColor, borderWidth = 0, borderRadius = 0, opacity = 1, className = "", style = {}, animation, animationDuration, animationDelay, "data-testid": dataTestId, ...props }) => {
@@ -209,7 +208,7 @@ const Rectangle = ({ width = 20, height = 20, color = "var(--react-loadly-color)
         display: "inline-block",
         ...style,
     };
-    return jsx("div", { className: `react-loadly-rectangle ${className}`.trim(), style: rectangleStyle, "data-testid": dataTestId, ...props });
+    return React.createElement("div", { className: `react-loadly-rectangle ${className}`.trim(), style: rectangleStyle, "data-testid": dataTestId, ...props });
 };
 
 const Circle = ({ size = 20, color = "var(--react-loadly-color)", borderColor, borderWidth = 0, opacity = 1, className = "", style = {}, animation, animationDuration, animationDelay, "data-testid": dataTestId, ...props }) => {
@@ -227,7 +226,7 @@ const Circle = ({ size = 20, color = "var(--react-loadly-color)", borderColor, b
         display: "inline-block",
         ...style,
     };
-    return jsx("div", { className: `react-loadly-circle ${className}`.trim(), style: circleStyle, "data-testid": dataTestId, ...props });
+    return React.createElement("div", { className: `react-loadly-circle ${className}`.trim(), style: circleStyle, "data-testid": dataTestId, ...props });
 };
 
 const DotCluster = ({ count = 3, dotSize = 8, color = "var(--react-loadly-color)", secondaryColor, spacing = 8, speed = 1, arrangement = "linear", className = "", style = {}, animationType = "wave", "data-testid": dataTestId, ...props }) => {
@@ -280,7 +279,7 @@ const DotCluster = ({ count = 3, dotSize = 8, color = "var(--react-loadly-color)
         ...getArrangementStyle(),
         ...style,
     };
-    return (jsx("div", { className: `react-loadly-dot-cluster react-loadly-dot-cluster-${arrangement} ${className}`.trim(), style: containerStyle, "data-testid": dataTestId, ...props, children: Array.from({ length: count }, (_, index) => (jsx(Dot, { size: dotSize, color: secondaryColor && index % 2 === 1 ? secondaryColor : color, animation: `react-loadly-${animationType}`, animationDuration: animationDuration, animationDelay: getDotAnimationDelay(index), style: getDotPosition(index), "data-testid": dataTestId ? `${dataTestId}-dot-${index}` : undefined }, index))) }));
+    return (React.createElement("div", { className: `react-loadly-dot-cluster react-loadly-dot-cluster-${arrangement} ${className}`.trim(), style: containerStyle, "data-testid": dataTestId, ...props }, Array.from({ length: count }, (_, index) => (React.createElement(Dot, { key: index, size: dotSize, color: secondaryColor && index % 2 === 1 ? secondaryColor : color, animation: `react-loadly-${animationType}`, animationDuration: animationDuration, animationDelay: getDotAnimationDelay(index), style: getDotPosition(index), "data-testid": dataTestId ? `${dataTestId}-dot-${index}` : undefined })))));
 };
 
 const LineGroup = ({ count = 5, lineWidth = 4, lineHeight = 35, color = "var(--react-loadly-color)", secondaryColor, spacing = 6, speed = 1, arrangement = "parallel", orientation = "vertical", className = "", style = {}, animationType = "wave", "data-testid": dataTestId, ...props }) => {
@@ -339,7 +338,7 @@ const LineGroup = ({ count = 5, lineWidth = 4, lineHeight = 35, color = "var(--r
         ...getArrangementStyle(),
         ...style,
     };
-    return (jsx("div", { className: `react-loadly-line-group react-loadly-line-group-${arrangement} ${className}`.trim(), style: containerStyle, "data-testid": dataTestId, ...props, children: Array.from({ length: count }, (_, index) => (jsx(Line, { width: orientation === "horizontal" ? lineWidth : lineHeight, height: orientation === "horizontal" ? lineHeight : lineWidth, color: secondaryColor && index % 2 === 1 ? secondaryColor : color, orientation: orientation, animation: `react-loadly-${animationType}`, animationDuration: animationDuration, animationDelay: getLineAnimationDelay(index), style: getLinePosition(index), "data-testid": dataTestId ? `${dataTestId}-line-${index}` : undefined }, index))) }));
+    return (React.createElement("div", { className: `react-loadly-line-group react-loadly-line-group-${arrangement} ${className}`.trim(), style: containerStyle, "data-testid": dataTestId, ...props }, Array.from({ length: count }, (_, index) => (React.createElement(Line, { key: index, width: orientation === "horizontal" ? lineWidth : lineHeight, height: orientation === "horizontal" ? lineHeight : lineWidth, color: secondaryColor && index % 2 === 1 ? secondaryColor : color, orientation: orientation, animation: `react-loadly-${animationType}`, animationDuration: animationDuration, animationDelay: getLineAnimationDelay(index), style: getLinePosition(index), "data-testid": dataTestId ? `${dataTestId}-line-${index}` : undefined })))));
 };
 
 const ShapeGroup = ({ count = 4, shapeSize = 16, color = "var(--react-loadly-color)", secondaryColor, spacing = 8, speed = 1, arrangement = "linear", shapeTypes = ["circle", "rectangle"], className = "", style = {}, animationType = "pulse", borderWidth = 0, "data-testid": dataTestId, ...props }) => {
@@ -421,13 +420,75 @@ const ShapeGroup = ({ count = 4, shapeSize = 16, color = "var(--react-loadly-col
             "data-testid": dataTestId ? `${dataTestId}-shape-${index}` : undefined,
         };
         if (shapeType === "circle") {
-            return jsx(Circle, { ...commonProps, size: shapeSize });
+            return React.createElement(Circle, { ...commonProps, size: shapeSize });
         }
         else {
-            return jsx(Rectangle, { ...commonProps, width: shapeSize, height: shapeSize });
+            return React.createElement(Rectangle, { ...commonProps, width: shapeSize, height: shapeSize });
         }
     };
-    return (jsx("div", { className: `react-loadly-shape-group react-loadly-shape-group-${arrangement} ${className}`.trim(), style: containerStyle, "data-testid": dataTestId, ...props, children: Array.from({ length: count }, (_, index) => renderShape(index)) }));
+    return (React.createElement("div", { className: `react-loadly-shape-group react-loadly-shape-group-${arrangement} ${className}`.trim(), style: containerStyle, "data-testid": dataTestId, ...props }, Array.from({ length: count }, (_, index) => renderShape(index))));
+};
+
+const defaultProps$e = {
+    size: 20,
+    color: "var(--react-loadly-color)",
+    speed: 1,
+    loading: true,
+    count: 5,
+    "aria-label": "Loading...",
+};
+const BarsLoader = (userProps) => {
+    const props = mergeProps(defaultProps$e, userProps);
+    const { size, color, speed, loading, className = "", style = {}, count = 5, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
+    const id = useMemo(() => generateId("bars-loader"), []);
+    const sizeValue = getSizeValue(size);
+    const animationSettings = getOptimizedAnimationSettings(speed);
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    const barsContainerStyle = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "4px",
+    };
+    const barStyle = {
+        width: "4px",
+        height: sizeValue,
+        backgroundColor: color,
+        borderRadius: "2px",
+        animation: `react-loadly-bars ${animationSettings.duration} ease-in-out infinite`,
+        animationPlayState: animationSettings.playState,
+    };
+    // Create bars with different animation delays
+    const bars = Array.from({ length: count }).map((_, index) => {
+        const delay = `${index * 0.1}s`;
+        const heightFactor = 0.5 + (index % 3) * 0.25; // Vary heights for visual interest
+        return (React.createElement("div", { key: index, style: {
+                ...barStyle,
+                animationDelay: delay,
+                height: `${parseFloat(sizeValue) * heightFactor}px`,
+            }, "data-testid": dataTestId ? `${dataTestId}-bar-${index}` : undefined }));
+    });
+    return (React.createElement("div", { className: `react-loadly react-loadly-bars  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: barsContainerStyle }, bars),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
 };
 
 const defaultProps$d = {
@@ -473,7 +534,8 @@ const BlobLoader = (userProps) => {
         animation: `blob-inner ${animationDuration} ease-in-out infinite reverse`,
         opacity: 0.7,
     };
-    return (jsxs(Fragment, { children: [jsx("style", { children: `
+    return (React.createElement(React.Fragment, null,
+        React.createElement("style", null, `
         @keyframes blob-morph {
           0%, 100% {
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -507,21 +569,244 @@ const BlobLoader = (userProps) => {
             transform: scale(${0.9 + (fluidity ?? 1) * 0.05}) rotate(-240deg);
           }
         }
-      ` }), jsxs("div", { className: `react-loadly react-loadly-blob  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: blobStyle, "data-testid": dataTestId ? `${dataTestId}-blob` : undefined, children: jsx("div", { style: innerBlobStyle }) }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] })] }));
+      `),
+        React.createElement("div", { className: `react-loadly react-loadly-blob  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+            React.createElement("div", { style: blobStyle, "data-testid": dataTestId ? `${dataTestId}-blob` : undefined },
+                React.createElement("div", { style: innerBlobStyle })),
+            showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+            React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel))));
 };
 
-const ErrorIcon = ({ className = "" }) => (jsx("svg", { className: className, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true", children: jsx("path", { clipRule: "evenodd", fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" }) }));
-const NetworkIcon = ({ className = "" }) => (jsx("svg", { className: className, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true", children: jsx("path", { fillRule: "evenodd", d: "M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H16a1 1 0 110 2h-1.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H4a1 1 0 110-2h1.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z", clipRule: "evenodd" }) }));
-const TimeoutIcon = ({ className = "" }) => (jsx("svg", { className: className, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true", children: jsx("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z", clipRule: "evenodd" }) }));
-const FallbackLoader = ({ error = "Something went wrong", onRetry, showRetry = true, children, type = "error" }) => {
+const defaultProps$c = {
+    size: 15,
+    color: "var(--react-loadly-color)",
+    speed: 1,
+    loading: true,
+    count: 3,
+    "aria-label": "Loading...",
+};
+const BounceLoader = (userProps) => {
+    const props = mergeProps(defaultProps$c, userProps);
+    const { size, color, speed, loading, className = "", style = {}, count = 3, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
+    const id = useMemo(() => generateId("bounce-loader"), []);
+    const sizeValue = getSizeValue(size);
+    const animationSettings = getOptimizedAnimationSettings(speed);
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    const bounceContainerStyle = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "8px",
+    };
+    const bounceBallStyle = {
+        width: sizeValue,
+        height: sizeValue,
+        borderRadius: "50%",
+        backgroundColor: color,
+        animation: `react-loadly-bounce ${animationSettings.duration} ease-in-out infinite`,
+        animationPlayState: animationSettings.playState,
+    };
+    // Create bounce animation delays for each ball
+    const balls = Array.from({ length: count }).map((_, index) => {
+        const delay = `${index * 0.1}s`;
+        return (React.createElement("div", { key: index, style: {
+                ...bounceBallStyle,
+                animationDelay: delay,
+            }, "data-testid": dataTestId ? `${dataTestId}-ball-${index}` : undefined }));
+    });
+    return (React.createElement("div", { className: `react-loadly react-loadly-bounce ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: bounceContainerStyle }, balls),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
+};
+
+const defaultProps$b = {
+    size: 12,
+    color: "var(--react-loadly-color)",
+    speed: 1,
+    loading: true,
+    count: 3,
+    "aria-label": "Loading...",
+};
+const DotsLoader = (userProps) => {
+    const props = mergeProps(defaultProps$b, userProps);
+    const { size, color, speed, loading, className = "", style = {}, count = 3, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
+    const id = useMemo(() => generateId("dots-loader"), []);
+    const sizeValue = getSizeValue(size);
+    const animationSettings = getOptimizedAnimationSettings(speed);
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    const dotsContainerStyle = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "6px",
+    };
+    const dotStyle = {
+        width: sizeValue,
+        height: sizeValue,
+        borderRadius: "50%",
+        backgroundColor: color,
+        animation: `react-loadly-dots ${animationSettings.duration} ease-in-out infinite`,
+        animationPlayState: animationSettings.playState,
+    };
+    // Create dots with different animation delays
+    const dots = Array.from({ length: count }).map((_, index) => {
+        const delay = `${index * 0.2}s`;
+        return (React.createElement("div", { key: index, style: {
+                ...dotStyle,
+                animationDelay: delay,
+            }, "data-testid": dataTestId ? `${dataTestId}-dot-${index}` : undefined }));
+    });
+    return (React.createElement("div", { className: `react-loadly react-loadly-dots  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: dotsContainerStyle }, dots),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
+};
+
+const defaultProps$a = {
+    size: 60,
+    speed: 1,
+    loading: true,
+    animationType: "spin",
+    glowIntensity: 0.3,
+    "aria-label": "Loading...",
+};
+const ElementLoader = (userProps) => {
+    const props = mergeProps(defaultProps$a, userProps);
+    const { size, width, height, speed = 1, loading, animationType, glowIntensity, className = "", style = {}, color = "var(--react-loadly-color)", "aria-label": ariaLabel, loadingText, showText, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, children, ...restProps } = props;
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    // Enhanced animation variants for ElementLoader
+    const getAnimation = () => {
+        switch (animationType) {
+            case "pulse":
+                return `react-loadly-pulse ${getAnimationDuration(2000, speed)} infinite`;
+            case "glow":
+                return `react-loadly-glow ${getAnimationDuration(2000, speed)} infinite`;
+            case "bounce":
+                return `react-loadly-bounce ${getAnimationDuration(2000, speed)} infinite`;
+            case "flip":
+                return `react-loadly-flip ${getAnimationDuration(2000, speed)} infinite`;
+            case "spin":
+            default:
+                return `react-loadly-spin ${getAnimationDuration(2000, speed)} infinite`;
+        }
+    };
+    // Calculate dimensions, prioritizing width/height props over size
+    const elementWidth = width || size;
+    const elementHeight = height || size;
+    const elementStyle = {
+        width: typeof elementWidth === "number" ? `${elementWidth}px` : elementWidth,
+        height: typeof elementHeight === "number" ? `${elementHeight}px` : elementHeight,
+        animation: getAnimation(),
+        filter: (glowIntensity ?? 0) > 0 ? `drop-shadow(0 0 ${(glowIntensity ?? 0) * 20}px ${color})` : undefined,
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    };
+    // Add additional animated elements for enhanced visual effect
+    const innerElementStyle = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        width: "60%",
+        height: "60%",
+        borderRadius: "50%",
+        backgroundColor: color,
+        opacity: 0.3,
+        transform: "translate(-50%, -50%)",
+        animation: `react-loadly-pulse ${getAnimationDuration(1500, speed * 1.5)} infinite`,
+        zIndex: -1,
+    };
+    const outerElementStyle = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        width: "120%",
+        height: "120%",
+        borderRadius: "50%",
+        border: `2px solid ${color}`,
+        opacity: 0.2,
+        transform: "translate(-50%, -50%)",
+        animation: `react-loadly-spin ${getAnimationDuration(3000, speed * 0.8)} infinite reverse`,
+        zIndex: -2,
+    };
+    return (React.createElement("div", { className: `react-loadly react-loadly-element-loader ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: { position: "relative", display: "flex", alignItems: "center", justifyContent: "center" } },
+            React.createElement("div", { style: outerElementStyle }),
+            React.createElement("div", { style: innerElementStyle }),
+            React.createElement("div", { style: elementStyle, className: "react-loadly-element", "data-testid": dataTestId ? `${dataTestId}-element` : undefined }, children)),
+        showText && (React.createElement("div", { className: "react-loadly-text", "aria-live": "polite" }, loadingText || ariaLabel)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
+};
+
+const ErrorIcon = ({ className = "" }) => (React.createElement("svg", { className: className, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true" },
+    React.createElement("path", { clipRule: "evenodd", fillRule: "evenodd", d: "M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" })));
+const NetworkIcon = ({ className = "" }) => (React.createElement("svg", { className: className, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true" },
+    React.createElement("path", { fillRule: "evenodd", d: "M9.243 3.03a1 1 0 01.727 1.213L9.53 6h2.94l.56-2.243a1 1 0 111.94.486L14.53 6H16a1 1 0 110 2h-1.97l-1 4H15a1 1 0 110 2h-2.47l-.56 2.242a1 1 0 11-1.94-.485L10.47 14H7.53l-.56 2.242a1 1 0 11-1.94-.485L5.47 14H4a1 1 0 110-2h1.97l1-4H5a1 1 0 110-2h2.47l.56-2.243a1 1 0 011.213-.727zM9.03 8l-1 4h2.94l1-4H9.03z", clipRule: "evenodd" })));
+const TimeoutIcon = ({ className = "" }) => (React.createElement("svg", { className: className, fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg", "aria-hidden": "true" },
+    React.createElement("path", { fillRule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z", clipRule: "evenodd" })));
+const FallbackLoader = ({ error = "Something went wrong", onRetry, showRetry = true, children, type = "error", className = "", style = {}, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps }) => {
     const getIcon = () => {
         switch (type) {
             case "network":
-                return jsx(NetworkIcon, { className: "react-loadly-error-icon" });
+                return React.createElement(NetworkIcon, { className: "react-loadly-error-icon" });
             case "timeout":
-                return jsx(TimeoutIcon, { className: "react-loadly-error-icon" });
+                return React.createElement(TimeoutIcon, { className: "react-loadly-error-icon" });
             default:
-                return jsx(ErrorIcon, { className: "react-loadly-error-icon" });
+                return React.createElement(ErrorIcon, { className: "react-loadly-error-icon" });
         }
     };
     const getMessage = () => {
@@ -534,13 +819,32 @@ const FallbackLoader = ({ error = "Something went wrong", onRetry, showRetry = t
                 return error || "Something went wrong. Please try again.";
         }
     };
+    const containerStyle = {
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-error-background)",
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
     if (children) {
-        return jsx("div", { className: "react-loadly-fallback", children: children });
+        return React.createElement("div", { className: `react-loadly-fallback ${className}`.trim(), style: containerStyle, ...restProps }, children);
     }
-    return (jsxs("div", { className: "react-loadly-error", role: "alert", "aria-live": "polite", children: [getIcon(), jsx("p", { className: "react-loadly-error-message", children: getMessage() }), showRetry && onRetry && (jsx("button", { className: "react-loadly-retry-button", onClick: onRetry, type: "button", "aria-label": "Retry loading", children: "Try Again" }))] }));
+    return (React.createElement("div", { className: `react-loadly-error ${className}`.trim(), style: containerStyle, role: "alert", "aria-live": "polite", ...restProps },
+        getIcon(),
+        React.createElement("p", { className: "react-loadly-error-message" }, getMessage()),
+        showRetry && onRetry && (React.createElement("button", { className: "react-loadly-retry-button", onClick: onRetry, type: "button", "aria-label": "Retry loading" }, "Try Again"))));
 };
 
-const defaultProps$c = {
+const defaultProps$9 = {
     size: 60,
     color: "var(--react-loadly-color)",
     speed: 1,
@@ -550,8 +854,8 @@ const defaultProps$c = {
     "aria-label": "Loading...",
 };
 const FlowLoader = (userProps) => {
-    const props = mergeProps(defaultProps$c, userProps);
-    const { size, color, secondaryColor, speed, loading, amplitude, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$9, userProps);
+    const { size, color, secondaryColor, speed, loading, amplitude, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     const id = useMemo(() => generateId("flow-loader"), []);
     const sizeValue = getSizeValue(size);
     const numericSize = parseInt(sizeValue);
@@ -564,6 +868,16 @@ const FlowLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
     const flowContainerStyle = {
         width: sizeValue,
@@ -581,7 +895,7 @@ const FlowLoader = (userProps) => {
         // Scale particle size based on container size
         const minParticleSize = Math.max(numericSize / 10, 4); // Minimum 4px
         const particleSize = minParticleSize + (index % 3) * (minParticleSize / 2);
-        return (jsx("div", { style: {
+        return (React.createElement("div", { key: index, style: {
                 position: "absolute",
                 width: `${particleSize}px`,
                 height: `${particleSize}px`,
@@ -592,9 +906,10 @@ const FlowLoader = (userProps) => {
                 opacity: 0.8 - index * 0.1,
                 left: "0px", // Start at the beginning of the container
                 top: `${(containerHeight - particleSize) / 2 + (index % 3) * (containerHeight / (particleCount + 1))}px`, // Distribute vertically
-            }, "data-testid": dataTestId ? `${dataTestId}-particle-${index}` : undefined }, index));
+            }, "data-testid": dataTestId ? `${dataTestId}-particle-${index}` : undefined }));
     };
-    return (jsxs(Fragment, { children: [jsx("style", { children: `
+    return (React.createElement(React.Fragment, null,
+        React.createElement("style", null, `
         @keyframes flow-particle-${id} {
           0% {
             transform: translateX(0) translateY(0) scale(0);
@@ -617,10 +932,14 @@ const FlowLoader = (userProps) => {
             opacity: 0;
           }
         }
-      ` }), jsxs("div", { className: `react-loadly react-loadly-flow  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: flowContainerStyle, "data-testid": dataTestId ? `${dataTestId}-container` : undefined, children: Array.from({ length: particleCount }, (_, index) => createParticle(index)) }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] })] }));
+      `),
+        React.createElement("div", { className: `react-loadly react-loadly-flow  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+            React.createElement("div", { style: flowContainerStyle, "data-testid": dataTestId ? `${dataTestId}-container` : undefined }, Array.from({ length: particleCount }, (_, index) => createParticle(index))),
+            showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+            React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel))));
 };
 
-const defaultProps$b = {
+const defaultProps$8 = {
     size: 40,
     color: "var(--react-loadly-color)",
     speed: 1,
@@ -629,8 +948,8 @@ const defaultProps$b = {
     "aria-label": "Loading...",
 };
 const GridLoader = (userProps) => {
-    const props = mergeProps(defaultProps$b, userProps);
-    const { size, color, secondaryColor, speed, loading, count, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$8, userProps);
+    const { size, color, secondaryColor, speed = 1, loading, count, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     const id = useMemo(() => generateId("grid-loader"), []);
     const shapeSize = useMemo(() => {
         const sizeNum = typeof size === "number" ? size : parseInt(getSizeValue(size));
@@ -644,22 +963,35 @@ const GridLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
-    return (jsxs("div", { className: `react-loadly react-loadly-grid  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: {
-                    display: "grid",
-                    gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(count || 4))}, 1fr)`,
-                    gap: `${shapeSize / 4}px`,
-                }, children: Array.from({ length: count || 4 }, (_, index) => (jsx("div", { style: {
-                        width: shapeSize,
-                        height: shapeSize,
-                        backgroundColor: index % 2 === 0 ? color : secondaryColor || color,
-                        borderRadius: "2px",
-                        animation: `react-loadly-scale ${1.2 / (speed || 1)}s ease-in-out infinite`,
-                        animationDelay: `${(index * 0.1) / (speed || 1)}s`,
-                    }, "data-testid": dataTestId ? `${dataTestId}-shape-${index}` : undefined }, index))) }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
+    return (React.createElement("div", { className: `react-loadly react-loadly-grid  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { className: "react-loadly-grid-container", style: {
+                display: "grid",
+                gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(count || 4))}, 1fr)`,
+                gap: `${shapeSize / 3}px`,
+            }, "data-testid": dataTestId ? `${dataTestId}-grid` : undefined }, Array.from({ length: count || 4 }).map((_, index) => (React.createElement("div", { key: index, className: "react-loadly-grid-item", style: {
+                width: `${shapeSize}px`,
+                height: `${shapeSize}px`,
+                backgroundColor: index % 2 === 0 ? color : secondaryColor || color,
+                borderRadius: "20%",
+                animation: `react-loadly-scale ${1.2 / (speed || 1)}s ease-in-out infinite`,
+                animationDelay: `${(index * 0.1) / (speed || 1)}s`,
+            } })))),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
 };
 
-const defaultProps$a = {
+const defaultProps$7 = {
     size: 60,
     color: "var(--react-loadly-color)",
     speed: 1,
@@ -669,8 +1001,8 @@ const defaultProps$a = {
     "aria-label": "Loading...",
 };
 const LiquidLoader = (userProps) => {
-    const props = mergeProps(defaultProps$a, userProps);
-    const { size, color, secondaryColor, speed, loading, amplitude, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$7, userProps);
+    const { size, color, secondaryColor, speed, loading, amplitude, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     const id = useMemo(() => generateId("liquid-loader"), []);
     const sizeValue = getSizeValue(size);
     const animationDuration = getAnimationDuration(2000, speed);
@@ -681,6 +1013,16 @@ const LiquidLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
     const liquidStyle = {
         width: sizeValue,
@@ -711,7 +1053,8 @@ const LiquidLoader = (userProps) => {
         animationDelay: `${ -0.5 / (speed ?? 1)}s`,
         opacity: 0.8,
     };
-    return (jsxs(Fragment, { children: [jsx("style", { children: `
+    return (React.createElement(React.Fragment, null,
+        React.createElement("style", null, `
         @keyframes react-loadly-liquid-wave {
           0%, 100% {
             transform: translate(-25%, 50%) rotate(0deg);
@@ -720,20 +1063,27 @@ const LiquidLoader = (userProps) => {
             transform: translate(-25%, ${translateY}%) rotate(180deg);
           }
         }
-      ` }), jsxs("div", { className: `react-loadly react-loadly-liquid  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsxs("div", { style: liquidStyle, "data-testid": dataTestId ? `${dataTestId}-container` : undefined, children: [jsx("div", { style: waveStyle }), jsx("div", { style: wave2Style })] }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] })] }));
+      `),
+        React.createElement("div", { className: `react-loadly react-loadly-liquid  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+            React.createElement("div", { style: liquidStyle, "data-testid": dataTestId ? `${dataTestId}-container` : undefined },
+                React.createElement("div", { style: waveStyle }),
+                React.createElement("div", { style: wave2Style })),
+            showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+            React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel))));
 };
 
-const defaultProps$9 = {
+const defaultProps$6 = {
     size: 60,
     speed: 1,
     loading: true,
     animationType: "spin",
     glowIntensity: 0.3,
     "aria-label": "Loading...",
+    alt: "Loading",
 };
 const LogoSpinLoader = (userProps) => {
-    const props = mergeProps(defaultProps$9, userProps);
-    const { src, alt = "Loading", size, speed, loading, animationType, glowIntensity, className = "", style = {}, color = "var(--react-loadly-color)", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$6, userProps);
+    const { src, alt, size, speed, loading, animationType, glowIntensity, className = "", style = {}, color = "var(--react-loadly-color)", "aria-label": ariaLabel, loadingText, showText, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     if (!loading)
         return null;
     const containerStyle = {
@@ -741,6 +1091,16 @@ const LogoSpinLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
     const logoStyle = {
         width: typeof size === "number" ? `${size}px` : size,
@@ -748,19 +1108,13 @@ const LogoSpinLoader = (userProps) => {
         animation: `react-loadly-${animationType} ${getAnimationDuration(2000, speed)} infinite`,
         filter: (glowIntensity ?? 0) > 0 ? `drop-shadow(0 0 ${(glowIntensity ?? 0) * 20}px ${color})` : undefined,
     };
-    // If no src provided, show a default loading circle
-    if (!src) {
-        return (jsxs("div", { className: `react-loadly react-loadly-logo  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: {
-                        ...logoStyle,
-                        borderRadius: "50%",
-                        backgroundColor: color,
-                        opacity: 0.8,
-                    }, "data-testid": dataTestId ? `${dataTestId}-default` : undefined }), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-    }
-    return (jsxs("div", { className: `react-loadly react-loadly-logo  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("img", { src: src, alt: alt, style: logoStyle, "data-testid": dataTestId ? `${dataTestId}-image` : undefined }), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
+    return (React.createElement("div", { className: `react-loadly react-loadly-logo-spin  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("img", { src: src, alt: alt, style: logoStyle, className: "react-loadly-logo", "data-testid": dataTestId ? `${dataTestId}-logo` : undefined }),
+        showText && (React.createElement("div", { className: "react-loadly-text", "aria-live": "polite" }, loadingText || ariaLabel)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
 };
 
-const defaultProps$8 = {
+const defaultProps$5 = {
     size: 40,
     color: "var(--react-loadly-color)",
     speed: 1,
@@ -769,8 +1123,8 @@ const defaultProps$8 = {
     "aria-label": "Loading...",
 };
 const PulseLoader = (userProps) => {
-    const props = mergeProps(defaultProps$8, userProps);
-    const { size, color, secondaryColor, speed, loading, count, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$5, userProps);
+    const { size, color, secondaryColor, speed, loading, count, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     const id = useMemo(() => generateId("pulse-loader"), []);
     const dotSize = useMemo(() => {
         const sizeNum = typeof size === "number" ? size : parseInt(getSizeValue(size));
@@ -783,291 +1137,24 @@ const PulseLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
-    return (jsxs("div", { className: `react-loadly react-loadly-pulse  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx(DotCluster, { count: count, dotSize: dotSize, color: color, secondaryColor: secondaryColor, speed: speed, arrangement: "linear", animationType: "pulse", spacing: dotSize / 2, "data-testid": dataTestId ? `${dataTestId}-dots` : undefined }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-};
-
-const defaultProps$7 = {
-    size: 40,
-    color: "var(--react-loadly-color)",
-    speed: 1,
-    loading: true,
-    borderWidth: 4,
-    "aria-label": "Loading...",
-};
-const SpinLoader = (userProps) => {
-    const props = mergeProps(defaultProps$7, userProps);
-    const { size, color, speed, loading, className = "", style = {}, borderWidth, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
-    // Use useRef instead of useMemo for better compatibility
-    const idRef = useRef(generateId("spin-loader"));
-    const sizeValue = getSizeValue(size);
-    const animationSettings = getOptimizedAnimationSettings(speed);
-    if (!loading)
-        return null;
-    const containerStyle = {
-        display: "inline-flex",
-        flexDirection: "column",
-        alignItems: "center",
-        ...style,
-    };
-    const spinnerStyle = {
-        width: sizeValue,
-        height: sizeValue,
-        border: `${borderWidth}px solid transparent`,
-        borderTop: `${borderWidth}px solid ${color}`,
-        borderRadius: "50%",
-        animation: `react-loadly-spin ${animationSettings.duration} linear infinite`,
-        animationPlayState: animationSettings.playState,
-    };
-    return (jsxs("div", { className: `react-loadly react-loadly-spin  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: spinnerStyle, "data-testid": dataTestId ? `${dataTestId}-spinner` : undefined }), showText && (jsx("div", { className: "react-loadly-text", id: `${idRef.current}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-};
-
-const defaultProps$6 = {
-    text: "Loading...",
-    speed: 1,
-    loading: true,
-    charDelay: 100,
-    "aria-label": "Loading...",
-};
-const TypingLoader = (userProps) => {
-    const props = mergeProps(defaultProps$6, userProps);
-    const { text, speed, loading, charDelay, className = "", style = {}, color = "var(--react-loadly-text-color)", fontFamily, fontWeight = 500, "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
-    const [displayText, setDisplayText] = useState("");
-    const [isTyping, setIsTyping] = useState(false);
-    const timeoutRef = useRef(null);
-    useEffect(() => {
-        // Clear any existing timeout
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = null;
-        }
-        if (!loading || !text) {
-            setDisplayText("");
-            return;
-        }
-        setIsTyping(true);
-        setDisplayText("");
-        let currentIndex = 0;
-        const typeChar = () => {
-            if (currentIndex < text.length) {
-                setDisplayText(text.slice(0, currentIndex + 1));
-                currentIndex++;
-                timeoutRef.current = setTimeout(typeChar, (charDelay ?? 100) / (speed ?? 1));
-            }
-            else {
-                setIsTyping(false);
-                // Reset and start over
-                timeoutRef.current = setTimeout(() => {
-                    currentIndex = 0;
-                    setDisplayText("");
-                    if (loading)
-                        typeChar();
-                }, 1000 / (speed ?? 1));
-            }
-        };
-        typeChar();
-        return () => {
-            setIsTyping(false);
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-                timeoutRef.current = null;
-            }
-        };
-    }, [text, loading, charDelay, speed]);
-    if (!loading)
-        return null;
-    const containerStyle = {
-        display: "inline-flex",
-        alignItems: "center",
-        fontFamily: fontFamily || "var(--react-loadly-font-family)",
-        fontSize: "var(--react-loadly-font-size)",
-        fontWeight,
-        color,
-        ...style,
-    };
-    const cursorStyle = {
-        marginLeft: "2px",
-        animation: isTyping ? "none" : "react-loadly-fade 1s infinite",
-        opacity: isTyping ? 1 : 0.5,
-    };
-    return (jsxs("div", { className: `react-loadly react-loadly-typing  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("span", { children: displayText }), jsx("span", { style: cursorStyle, children: "|" }), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-};
-
-const defaultProps$5 = {
-    size: 40,
-    color: "var(--react-loadly-color)",
-    speed: 1,
-    loading: true,
-    count: 5,
-    "aria-label": "Loading...",
-};
-const WaveLoader = (userProps) => {
-    const props = mergeProps(defaultProps$5, userProps);
-    const { size, color, secondaryColor, speed, loading, count, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
-    const id = useMemo(() => generateId("wave-loader"), []);
-    const lineSpecs = useMemo(() => {
-        const sizeNum = typeof size === "number" ? size : parseInt(getSizeValue(size));
-        return {
-            width: Math.max(sizeNum / 10, 3), // Line thickness
-            height: sizeNum, // Line height
-            spacing: Math.max(sizeNum / 8, 4), // Spacing between lines
-        };
-    }, [size]);
-    if (!loading)
-        return null;
-    const containerStyle = {
-        display: "inline-flex",
-        flexDirection: "column",
-        alignItems: "center",
-        ...style,
-    };
-    return (jsxs("div", { className: `react-loadly react-loadly-wave  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx(LineGroup, { count: count, lineWidth: lineSpecs.width, lineHeight: lineSpecs.height, color: color, secondaryColor: secondaryColor, speed: speed, arrangement: "staggered", orientation: "vertical", animationType: "wave", spacing: lineSpecs.spacing, "data-testid": dataTestId ? `${dataTestId}-lines` : undefined }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
+    return (React.createElement("div", { className: `react-loadly react-loadly-pulse  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement(DotCluster, { count: count, dotSize: dotSize, color: color, secondaryColor: secondaryColor, speed: speed, arrangement: "linear", animationType: "pulse", spacing: dotSize / 2, "data-testid": dataTestId ? `${dataTestId}-dots` : undefined }),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
 };
 
 const defaultProps$4 = {
-    size: 20,
-    color: "var(--react-loadly-color)",
-    speed: 1,
-    loading: true,
-    count: 5,
-    "aria-label": "Loading...",
-};
-const BarsLoader = (userProps) => {
-    const props = mergeProps(defaultProps$4, userProps);
-    const { size, color, speed, loading, className = "", style = {}, count = 5, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
-    const id = useMemo(() => generateId("bars-loader"), []);
-    const sizeValue = getSizeValue(size);
-    const animationSettings = getOptimizedAnimationSettings(speed);
-    if (!loading)
-        return null;
-    const containerStyle = {
-        display: "inline-flex",
-        flexDirection: "column",
-        alignItems: "center",
-        ...style,
-    };
-    const barsContainerStyle = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "4px",
-    };
-    const barStyle = {
-        width: "4px",
-        height: sizeValue,
-        backgroundColor: color,
-        borderRadius: "2px",
-        animation: `react-loadly-bars ${animationSettings.duration} ease-in-out infinite`,
-        animationPlayState: animationSettings.playState,
-    };
-    // Create bars with different animation delays
-    const bars = Array.from({ length: count }).map((_, index) => {
-        const delay = `${index * 0.1}s`;
-        const heightFactor = 0.5 + (index % 3) * 0.25; // Vary heights for visual interest
-        return (jsx("div", { style: {
-                ...barStyle,
-                animationDelay: delay,
-                height: `${parseFloat(sizeValue) * heightFactor}px`,
-            }, "data-testid": dataTestId ? `${dataTestId}-bar-${index}` : undefined }, index));
-    });
-    return (jsxs("div", { className: `react-loadly react-loadly-bars  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: barsContainerStyle, children: bars }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-};
-
-const defaultProps$3 = {
-    size: 15,
-    color: "var(--react-loadly-color)",
-    speed: 1,
-    loading: true,
-    count: 3,
-    "aria-label": "Loading...",
-};
-const BounceLoader = (userProps) => {
-    const props = mergeProps(defaultProps$3, userProps);
-    const { size, color, speed, loading, className = "", style = {}, count = 3, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
-    const id = useMemo(() => generateId("bounce-loader"), []);
-    const sizeValue = getSizeValue(size);
-    const animationSettings = getOptimizedAnimationSettings(speed);
-    if (!loading)
-        return null;
-    const containerStyle = {
-        display: "inline-flex",
-        flexDirection: "column",
-        alignItems: "center",
-        ...style,
-    };
-    const bounceContainerStyle = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "8px",
-    };
-    const bounceBallStyle = {
-        width: sizeValue,
-        height: sizeValue,
-        borderRadius: "50%",
-        backgroundColor: color,
-        animation: `react-loadly-bounce ${animationSettings.duration} ease-in-out infinite`,
-        animationPlayState: animationSettings.playState,
-    };
-    // Create bounce animation delays for each ball
-    const balls = Array.from({ length: count }).map((_, index) => {
-        const delay = `${index * 0.1}s`;
-        return (jsx("div", { style: {
-                ...bounceBallStyle,
-                animationDelay: delay,
-            }, "data-testid": dataTestId ? `${dataTestId}-ball-${index}` : undefined }, index));
-    });
-    return (jsxs("div", { className: `react-loadly react-loadly-bounce ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: bounceContainerStyle, children: balls }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-};
-
-const defaultProps$2 = {
-    size: 12,
-    color: "var(--react-loadly-color)",
-    speed: 1,
-    loading: true,
-    count: 3,
-    "aria-label": "Loading...",
-};
-const DotsLoader = (userProps) => {
-    const props = mergeProps(defaultProps$2, userProps);
-    const { size, color, speed, loading, className = "", style = {}, count = 3, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
-    const id = useMemo(() => generateId("dots-loader"), []);
-    const sizeValue = getSizeValue(size);
-    const animationSettings = getOptimizedAnimationSettings(speed);
-    if (!loading)
-        return null;
-    const containerStyle = {
-        display: "inline-flex",
-        flexDirection: "column",
-        alignItems: "center",
-        ...style,
-    };
-    const dotsContainerStyle = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "6px",
-    };
-    const dotStyle = {
-        width: sizeValue,
-        height: sizeValue,
-        borderRadius: "50%",
-        backgroundColor: color,
-        animation: `react-loadly-dots ${animationSettings.duration} ease-in-out infinite`,
-        animationPlayState: animationSettings.playState,
-    };
-    // Create dots with different animation delays
-    const dots = Array.from({ length: count }).map((_, index) => {
-        const delay = `${index * 0.2}s`;
-        return (jsx("div", { style: {
-                ...dotStyle,
-                animationDelay: delay,
-            }, "data-testid": dataTestId ? `${dataTestId}-dot-${index}` : undefined }, index));
-    });
-    return (jsxs("div", { className: `react-loadly react-loadly-dots  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: dotsContainerStyle, children: dots }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
-};
-
-const defaultProps$1 = {
     size: 60,
     color: "var(--react-loadly-color)",
     speed: 1,
@@ -1076,8 +1163,8 @@ const defaultProps$1 = {
     "aria-label": "Loading...",
 };
 const RingLoader = (userProps) => {
-    const props = mergeProps(defaultProps$1, userProps);
-    const { size, color, speed, loading, className = "", style = {}, borderWidth, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$4, userProps);
+    const { size, color, speed, loading, className = "", style = {}, borderWidth, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     // Use useRef instead of useMemo for better compatibility
     const idRef = useRef(generateId("ring-loader"));
     const sizeValue = getSizeValue(size);
@@ -1090,6 +1177,16 @@ const RingLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
     const ringStyle = {
         position: "relative",
@@ -1113,16 +1210,19 @@ const RingLoader = (userProps) => {
     const segments = Array.from({ length: 4 }).map((_, index) => {
         const rotation = `${index * 90}deg`;
         const delay = `${index * -0.15}s`;
-        return (jsx("div", { style: {
+        return (React.createElement("div", { key: index, style: {
                 ...ringSegmentStyle,
                 transform: `rotate(${rotation})`,
                 animationDelay: delay,
-            }, "data-testid": dataTestId ? `${dataTestId}-segment-${index}` : undefined }, index));
+            }, "data-testid": dataTestId ? `${dataTestId}-segment-${index}` : undefined }));
     });
-    return (jsxs("div", { className: `react-loadly react-loadly-ring  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: ringStyle, children: segments }), showText && (jsx("div", { className: "react-loadly-text", id: `${idRef.current}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
+    return (React.createElement("div", { className: `react-loadly react-loadly-ring  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: ringStyle }, segments),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${idRef.current}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
 };
 
-const defaultProps = {
+const defaultProps$3 = {
     size: 15,
     color: "var(--react-loadly-color)",
     speed: 1,
@@ -1131,8 +1231,8 @@ const defaultProps = {
     "aria-label": "Loading...",
 };
 const RotateLoader = (userProps) => {
-    const props = mergeProps(defaultProps, userProps);
-    const { size, color, speed, loading, className = "", style = {}, count = 2, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, ...restProps } = props;
+    const props = mergeProps(defaultProps$3, userProps);
+    const { size, color, speed, loading, className = "", style = {}, count = 2, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
     const id = useMemo(() => generateId("rotate-loader"), []);
     const sizeValue = getSizeValue(size);
     const animationSettings = getOptimizedAnimationSettings(speed);
@@ -1143,6 +1243,16 @@ const RotateLoader = (userProps) => {
         flexDirection: "column",
         alignItems: "center",
         ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
     };
     const rotateContainerStyle = {
         position: "relative",
@@ -1166,16 +1276,198 @@ const RotateLoader = (userProps) => {
         const sizeFactor = 1 - index * 0.2;
         const borderWidth = 2 + index;
         const delay = `${index * -0.15}s`;
-        return (jsx("div", { style: {
+        return (React.createElement("div", { key: index, style: {
                 ...rotateElementStyle,
                 width: `${parseFloat(sizeValue) * sizeFactor}px`,
                 height: `${parseFloat(sizeValue) * sizeFactor}px`,
                 borderWidth: `${borderWidth}px`,
                 animationDuration: `${parseFloat(animationSettings.duration) * (1 + index * 0.5)}ms`,
                 animationDelay: delay,
-            }, "data-testid": dataTestId ? `${dataTestId}-element-${index}` : undefined }, index));
+            }, "data-testid": dataTestId ? `${dataTestId}-element-${index}` : undefined }));
     });
-    return (jsxs("div", { className: `react-loadly react-loadly-ring  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps, children: [jsx("div", { style: rotateContainerStyle, children: elements }), showText && (jsx("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite", children: loadingText })), jsx("span", { className: "react-loadly-sr-only", children: ariaLabel })] }));
+    return (React.createElement("div", { className: `react-loadly react-loadly-ring  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: rotateContainerStyle }, elements),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
+};
+
+const defaultProps$2 = {
+    size: 40,
+    color: "var(--react-loadly-color)",
+    speed: 1,
+    loading: true,
+    borderWidth: 4,
+    "aria-label": "Loading...",
+};
+const SpinLoader = (userProps) => {
+    const props = mergeProps(defaultProps$2, userProps);
+    const { size, color, speed, loading, className = "", style = {}, borderWidth, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
+    // Use useRef instead of useMemo for better compatibility
+    const idRef = useRef(generateId("spin-loader"));
+    const sizeValue = getSizeValue(size);
+    const animationSettings = getOptimizedAnimationSettings(speed);
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    const spinnerStyle = {
+        width: sizeValue,
+        height: sizeValue,
+        border: `${borderWidth}px solid transparent`,
+        borderTop: `${borderWidth}px solid ${color}`,
+        borderRadius: "50%",
+        animation: `react-loadly-spin ${animationSettings.duration} linear infinite`,
+        animationPlayState: animationSettings.playState,
+    };
+    return (React.createElement("div", { className: `react-loadly react-loadly-spin  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: spinnerStyle, "data-testid": dataTestId ? `${dataTestId}-spinner` : undefined }),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${idRef.current}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
+};
+
+const defaultProps$1 = {
+    speed: 1,
+    loading: true,
+    charDelay: 100,
+    "aria-label": "Loading...",
+    loop: true,
+};
+const TypingLoader = (userProps) => {
+    const props = mergeProps(defaultProps$1, userProps);
+    const { loadingText, speed = 1, loading, charDelay = 100, loop, className = "", style = {}, color = "var(--react-loadly-text-color)", fontFamily, fontWeight = 500, "aria-label": ariaLabel, "data-testid": dataTestId, showText, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
+    const [displayText, setDisplayText] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
+    const timeoutRef = useRef(null);
+    useEffect(() => {
+        // Clear any existing timeout
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+        if (!loading || !loadingText) {
+            setDisplayText("");
+            return;
+        }
+        setIsTyping(true);
+        setDisplayText("");
+        const typeText = (index = 0) => {
+            if (index < loadingText.length) {
+                setDisplayText(loadingText.substring(0, index + 1));
+                timeoutRef.current = setTimeout(() => typeText(index + 1), charDelay / speed);
+            }
+            else if (loop) {
+                // Reset and start over if looping
+                timeoutRef.current = setTimeout(() => {
+                    setDisplayText("");
+                    typeText(0);
+                }, charDelay * 2);
+            }
+            else {
+                setIsTyping(false);
+            }
+        };
+        typeText(0);
+        // Cleanup timeouts on unmount or when dependencies change
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, [loading, loadingText, charDelay, speed, loop]);
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    const textStyle = {
+        color,
+        fontFamily,
+        fontWeight,
+        fontSize: "1.2em",
+        whiteSpace: "pre",
+    };
+    return (React.createElement("div", { className: `react-loadly react-loadly-typing  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement("div", { style: textStyle, "data-testid": dataTestId ? `${dataTestId}-text` : undefined },
+            displayText,
+            React.createElement("span", { className: "react-loadly-typing-cursor", style: {
+                    display: isTyping ? "inline-block" : "none",
+                    animation: `react-loadly-blink ${1 / speed}s step-end infinite`,
+                    marginLeft: "2px",
+                    verticalAlign: "baseline",
+                } }, "|")),
+        showText && (React.createElement("div", { className: "react-loadly-text", "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
+};
+
+const defaultProps = {
+    size: 40,
+    color: "var(--react-loadly-color)",
+    speed: 1,
+    loading: true,
+    count: 5,
+    "aria-label": "Loading...",
+};
+const WaveLoader = (userProps) => {
+    const props = mergeProps(defaultProps, userProps);
+    const { size, color, secondaryColor, speed, loading, count, className = "", style = {}, showText, loadingText = "Loading...", "aria-label": ariaLabel, "data-testid": dataTestId, fullscreen, screenWidth, screenHeight, loaderCenter, screenBackground, ...restProps } = props;
+    const id = useMemo(() => generateId("wave-loader"), []);
+    const lineSpecs = useMemo(() => {
+        const sizeNum = typeof size === "number" ? size : parseInt(getSizeValue(size));
+        return {
+            width: Math.max(sizeNum / 10, 3), // Line thickness
+            height: sizeNum, // Line height
+            spacing: Math.max(sizeNum / 8, 4), // Spacing between lines
+        };
+    }, [size]);
+    if (!loading)
+        return null;
+    const containerStyle = {
+        display: "inline-flex",
+        flexDirection: "column",
+        alignItems: "center",
+        ...style,
+        ...(fullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: screenWidth || "100vw",
+            height: screenHeight || "100vh",
+            backgroundColor: screenBackground || "var(--react-loadly-background)",
+            zIndex: 9999,
+            justifyContent: loaderCenter ? "center" : style.justifyContent,
+        }),
+    };
+    return (React.createElement("div", { className: `react-loadly react-loadly-wave  ${className}`.trim(), style: containerStyle, role: "status", "aria-label": ariaLabel, "aria-live": "polite", "aria-busy": loading, "data-testid": dataTestId, ...restProps },
+        React.createElement(LineGroup, { count: count, lineWidth: lineSpecs.width, lineHeight: lineSpecs.height, color: color, secondaryColor: secondaryColor, speed: speed, arrangement: "staggered", orientation: "vertical", animationType: "wave", spacing: lineSpecs.spacing, "data-testid": dataTestId ? `${dataTestId}-lines` : undefined }),
+        showText && (React.createElement("div", { className: "react-loadly-text", id: `${id}-text`, "aria-live": "polite" }, loadingText)),
+        React.createElement("span", { className: "react-loadly-sr-only" }, ariaLabel)));
 };
 
 /**
@@ -1186,15 +1478,15 @@ const RotateLoader = (userProps) => {
  * @returns Object containing state and methods to control the loader
  */
 const useLoaderState = (options = {}) => {
-    const { initialLoading = false, timeout, maxRetries = 3, onLoadingChange, onError, onProgress, } = options;
+    const { initialLoading = false, timeout, maxRetries = 3, onLoadingChange, onError, onProgress } = options;
     const [state, setState] = useState({
         isLoading: initialLoading,
         progress: 0,
         error: null,
         retryCount: 0,
     });
-    const timeoutRef = useRef();
-    const retryTimeoutRef = useRef();
+    const timeoutRef = useRef(null);
+    const retryTimeoutRef = useRef(null);
     // Clear timeouts on unmount
     useEffect(() => {
         return () => {
@@ -1367,5 +1659,5 @@ const useAsyncLoader = (asyncFn, dependencies = [], options = {}) => {
     };
 };
 
-export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, generateCSSVariables, generateId, getAnimationDuration, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
+export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, generateCSSVariables, generateId, getAnimationDuration, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
 //# sourceMappingURL=index.esm.js.map

@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import React, { type CSSProperties } from "react";
 export interface LineProps {
     /** Width of the line */
     width?: number | string;

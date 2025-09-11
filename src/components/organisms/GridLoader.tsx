@@ -1,6 +1,6 @@
 import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getSizeValue, mergeProps } from "@/utils";
-import { CSSProperties, FC, useMemo } from "react";
+import React, { CSSProperties, FC, useMemo } from "react";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
   size: 40,
@@ -17,7 +17,7 @@ export const GridLoader: FC<IGeometricLoaderProps> = (userProps) => {
     size,
     color,
     secondaryColor,
-    speed,
+    speed = 1,
     loading,
     count,
     className = "",
@@ -26,6 +26,11 @@ export const GridLoader: FC<IGeometricLoaderProps> = (userProps) => {
     loadingText = "Loading...",
     "aria-label": ariaLabel,
     "data-testid": dataTestId,
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
     ...restProps
   } = props;
 
@@ -43,6 +48,16 @@ export const GridLoader: FC<IGeometricLoaderProps> = (userProps) => {
     flexDirection: "column",
     alignItems: "center",
     ...style,
+    ...(fullscreen && {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: screenWidth || "100vw",
+      height: screenHeight || "100vh",
+      backgroundColor: screenBackground || "var(--react-loadly-background)",
+      zIndex: 9999,
+      justifyContent: loaderCenter ? "center" : style.justifyContent,
+    }),
   };
 
   return (
@@ -57,24 +72,26 @@ export const GridLoader: FC<IGeometricLoaderProps> = (userProps) => {
       {...restProps}
     >
       <div
+        className="react-loadly-grid-container"
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(count || 4))}, 1fr)`,
-          gap: `${shapeSize / 4}px`,
+          gap: `${shapeSize / 3}px`,
         }}
+        data-testid={dataTestId ? `${dataTestId}-grid` : undefined}
       >
-        {Array.from({ length: count || 4 }, (_, index) => (
+        {Array.from({ length: count || 4 }).map((_, index) => (
           <div
             key={index}
+            className="react-loadly-grid-item"
             style={{
-              width: shapeSize,
-              height: shapeSize,
+              width: `${shapeSize}px`,
+              height: `${shapeSize}px`,
               backgroundColor: index % 2 === 0 ? color : secondaryColor || color,
-              borderRadius: "2px",
+              borderRadius: "20%",
               animation: `react-loadly-scale ${1.2 / (speed || 1)}s ease-in-out infinite`,
               animationDelay: `${(index * 0.1) / (speed || 1)}s`,
             }}
-            data-testid={dataTestId ? `${dataTestId}-shape-${index}` : undefined}
           />
         ))}
       </div>

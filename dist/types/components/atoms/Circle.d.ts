@@ -1,3 +1,4 @@
+import React from "react";
 export interface CircleProps {
     size?: number | string;
     color?: string;
@@ -11,5 +12,5 @@ export interface CircleProps {
     animationDelay?: string;
     "data-testid"?: string;
 }
-export declare const Circle: ({ size, color, borderColor, borderWidth, opacity, className, style, animation, animationDuration, animationDelay, "data-testid": dataTestId, ...props }: CircleProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Circle: ({ size, color, borderColor, borderWidth, opacity, className, style, animation, animationDuration, animationDelay, "data-testid": dataTestId, ...props }: CircleProps) => React.JSX.Element;
 //# sourceMappingURL=Circle.d.ts.map

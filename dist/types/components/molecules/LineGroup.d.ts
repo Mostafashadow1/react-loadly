@@ -1,3 +1,4 @@
+import React from "react";
 export interface LineGroupProps {
     /** Number of lines in the group */
     count?: number;

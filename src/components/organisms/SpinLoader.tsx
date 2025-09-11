@@ -1,6 +1,6 @@
 import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
-import { type CSSProperties, FC, useRef } from "react";
+import React, { type CSSProperties, FC, useRef } from "react";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
   size: 40,
@@ -25,6 +25,11 @@ export const SpinLoader: FC<IGeometricLoaderProps> = (userProps) => {
     loadingText = "Loading...",
     "aria-label": ariaLabel,
     "data-testid": dataTestId,
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
     ...restProps
   } = props;
 
@@ -40,6 +45,16 @@ export const SpinLoader: FC<IGeometricLoaderProps> = (userProps) => {
     flexDirection: "column",
     alignItems: "center",
     ...style,
+    ...(fullscreen && {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: screenWidth || "100vw",
+      height: screenHeight || "100vh",
+      backgroundColor: screenBackground || "var(--react-loadly-background)",
+      zIndex: 9999,
+      justifyContent: loaderCenter ? "center" : style.justifyContent,
+    }),
   };
 
   const spinnerStyle: CSSProperties = {

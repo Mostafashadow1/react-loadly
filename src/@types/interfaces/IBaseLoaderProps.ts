@@ -27,4 +27,15 @@ export interface IBaseLoaderProps {
 
   /** Data test id for testing */
   "data-testid"?: string;
+  
+  /** Enable fullscreen mode */
+  fullscreen?: boolean;
+  /** Screen width for fullscreen mode */
+  screenWidth?: number | string;
+  /** Screen height for fullscreen mode */
+  screenHeight?: number | string;
+  /** Center the loader in fullscreen mode */
+  loaderCenter?: boolean;
+  /** Background color for fullscreen mode */
+  screenBackground?: string;
 }

@@ -1,9 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import {
-  ILoaderState,
-  IUseLoaderStateOptions,
-  IUseLoaderStateReturn,
-} from "../@types";
+import { ILoaderState, IUseLoaderStateOptions, IUseLoaderStateReturn } from "../@types";
 
 /**
  * Custom React hook for managing loader state with advanced features
@@ -12,17 +8,8 @@ import {
  * @param options - Configuration options for the loader state
  * @returns Object containing state and methods to control the loader
  */
-export const useLoaderState = (
-  options: IUseLoaderStateOptions = {}
-): IUseLoaderStateReturn => {
-  const {
-    initialLoading = false,
-    timeout,
-    maxRetries = 3,
-    onLoadingChange,
-    onError,
-    onProgress,
-  } = options;
+export const useLoaderState = (options: IUseLoaderStateOptions = {}): IUseLoaderStateReturn => {
+  const { initialLoading = false, timeout, maxRetries = 3, onLoadingChange, onError, onProgress } = options;
 
   const [state, setState] = useState<ILoaderState>({
     isLoading: initialLoading,
@@ -31,8 +18,8 @@ export const useLoaderState = (
     retryCount: 0,
   });
 
-  const timeoutRef = useRef<NodeJS.Timeout>();
-  const retryTimeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Clear timeouts on unmount
   useEffect(() => {
@@ -110,7 +97,7 @@ export const useLoaderState = (
         onError?.(error);
       }
     },
-    [onError]
+    [onError],
   );
 
   const retry = useCallback(() => {
@@ -136,10 +123,7 @@ export const useLoaderState = (
     });
 
     // Add exponential backoff for retries
-    const backoffDelay = Math.min(
-      1000 * Math.pow(2, state.retryCount || 0),
-      30000
-    );
+    const backoffDelay = Math.min(1000 * Math.pow(2, state.retryCount || 0), 30000);
     retryTimeoutRef.current = setTimeout(() => {
       setState((prev) => ({ ...prev, isLoading: true }));
     }, backoffDelay);

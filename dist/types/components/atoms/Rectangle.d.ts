@@ -1,3 +1,4 @@
+import React from "react";
 export interface RectangleProps {
     /** Width of the rectangle */
     width?: number | string;

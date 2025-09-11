@@ -1,5 +1,5 @@
 import { getAnimationDuration, getSizeValue } from "@/utils";
-import type { CSSProperties } from "react";
+import React, { type CSSProperties } from "react";
 import { Line } from "../atoms/Line";
 
 export interface LineGroupProps {

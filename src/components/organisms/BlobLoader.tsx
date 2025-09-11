@@ -1,6 +1,6 @@
 import { IFluidLoaderProps } from "@/@types";
 import { generateId, getAnimationDuration, getSizeValue, mergeProps } from "@/utils";
-import { FC, useMemo, type CSSProperties } from "react";
+import React, { FC, useMemo, type CSSProperties } from "react";
 
 const defaultProps: Partial<IFluidLoaderProps> = {
   size: 60,

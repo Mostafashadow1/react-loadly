@@ -1,5 +1,6 @@
 import { IFallbackLoaderProps } from "@types";
-import { FC } from "react";
+import React, { FC } from "react";
+import { CSSProperties } from "react";
 
 const ErrorIcon: FC<{ className?: string }> = ({ className = "" }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -31,7 +32,21 @@ const TimeoutIcon: FC<{ className?: string }> = ({ className = "" }) => (
   </svg>
 );
 
-export const FallbackLoader: FC<IFallbackLoaderProps> = ({ error = "Something went wrong", onRetry, showRetry = true, children, type = "error" }) => {
+export const FallbackLoader: FC<IFallbackLoaderProps> = ({ 
+  error = "Something went wrong", 
+  onRetry, 
+  showRetry = true, 
+  children, 
+  type = "error",
+  className = "",
+  style = {},
+  fullscreen,
+  screenWidth,
+  screenHeight,
+  loaderCenter,
+  screenBackground,
+  ...restProps
+}) => {
   const getIcon = () => {
     switch (type) {
       case "network":
@@ -54,12 +69,29 @@ export const FallbackLoader: FC<IFallbackLoaderProps> = ({ error = "Something we
     }
   };
 
+  const containerStyle: CSSProperties = {
+    ...style,
+    ...(fullscreen && {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: screenWidth || "100vw",
+      height: screenHeight || "100vh",
+      backgroundColor: screenBackground || "var(--react-loadly-error-background)",
+      zIndex: 9999,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: loaderCenter ? "center" : (style.justifyContent as React.CSSProperties["justifyContent"]),
+    }),
+  };
+
   if (children) {
-    return <div className="react-loadly-fallback">{children}</div>;
+    return <div className={`react-loadly-fallback ${className}`.trim()} style={containerStyle} {...restProps}>{children}</div>;
   }
 
   return (
-    <div className="react-loadly-error" role="alert" aria-live="polite">
+    <div className={`react-loadly-error ${className}`.trim()} style={containerStyle} role="alert" aria-live="polite" {...restProps}>
       {getIcon()}
       <p className="react-loadly-error-message">{getMessage()}</p>
       {showRetry && onRetry && (

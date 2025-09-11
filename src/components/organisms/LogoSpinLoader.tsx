@@ -1,6 +1,6 @@
 import { ILogoLoaderProps } from "@/@types";
 import { getAnimationDuration, mergeProps } from "@/utils";
-import { type CSSProperties, FC } from "react";
+import React, { type CSSProperties, FC } from "react";
 
 const defaultProps: Partial<ILogoLoaderProps> = {
   size: 60,
@@ -9,13 +9,14 @@ const defaultProps: Partial<ILogoLoaderProps> = {
   animationType: "spin",
   glowIntensity: 0.3,
   "aria-label": "Loading...",
+  alt: "Loading",
 };
 
 export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
     src,
-    alt = "Loading",
+    alt,
     size,
     speed,
     loading,
@@ -25,7 +26,14 @@ export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
     style = {},
     color = "var(--react-loadly-color)",
     "aria-label": ariaLabel,
+    loadingText,
+    showText,
     "data-testid": dataTestId,
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
     ...restProps
   } = props;
 
@@ -36,6 +44,16 @@ export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
     flexDirection: "column",
     alignItems: "center",
     ...style,
+    ...(fullscreen && {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: screenWidth || "100vw",
+      height: screenHeight || "100vh",
+      backgroundColor: screenBackground || "var(--react-loadly-background)",
+      zIndex: 9999,
+      justifyContent: loaderCenter ? "center" : style.justifyContent,
+    }),
   };
 
   const logoStyle: CSSProperties = {
@@ -45,36 +63,9 @@ export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
     filter: (glowIntensity ?? 0) > 0 ? `drop-shadow(0 0 ${(glowIntensity ?? 0) * 20}px ${color})` : undefined,
   };
 
-  // If no src provided, show a default loading circle
-  if (!src) {
-    return (
-      <div
-        className={`react-loadly react-loadly-logo  ${className}`.trim()}
-        style={containerStyle}
-        role="status"
-        aria-label={ariaLabel}
-        aria-live="polite"
-        aria-busy={loading}
-        data-testid={dataTestId}
-        {...restProps}
-      >
-        <div
-          style={{
-            ...logoStyle,
-            borderRadius: "50%",
-            backgroundColor: color,
-            opacity: 0.8,
-          }}
-          data-testid={dataTestId ? `${dataTestId}-default` : undefined}
-        />
-        <span className="react-loadly-sr-only">{ariaLabel}</span>
-      </div>
-    );
-  }
-
   return (
     <div
-      className={`react-loadly react-loadly-logo  ${className}`.trim()}
+      className={`react-loadly react-loadly-logo-spin  ${className}`.trim()}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}
@@ -83,7 +74,18 @@ export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <img src={src} alt={alt} style={logoStyle} data-testid={dataTestId ? `${dataTestId}-image` : undefined} />
+      <img
+        src={src}
+        alt={alt}
+        style={logoStyle}
+        className="react-loadly-logo"
+        data-testid={dataTestId ? `${dataTestId}-logo` : undefined}
+      />
+      {showText && (
+        <div className="react-loadly-text" aria-live="polite">
+          {loadingText || ariaLabel}
+        </div>
+      )}
       <span className="react-loadly-sr-only">{ariaLabel}</span>
     </div>
   );

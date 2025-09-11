@@ -1,5 +1,5 @@
 import { getAnimationDuration, getSizeValue } from "@/utils";
-import type { CSSProperties } from "react";
+import React, { type CSSProperties } from "react";
 import { Dot } from "../atoms/Dot";
 
 export interface DotClusterProps {

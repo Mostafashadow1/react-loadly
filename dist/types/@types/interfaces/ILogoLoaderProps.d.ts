@@ -1,7 +1,7 @@
 import { IBaseLoaderProps } from "./IBaseLoaderProps";
 export interface ILogoLoaderProps extends IBaseLoaderProps {
     /** Logo source (image URL or SVG) */
-    src?: string;
+    src: string;
     /** Logo alt text */
     alt?: string;
     /** Animation type for logo */

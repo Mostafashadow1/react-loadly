@@ -30,7 +30,6 @@ export default [
       typescriptPaths({
         preserveExtensions: true,
       }),
-
       resolve({
         browser: true,
         preferBuiltins: false,
@@ -41,7 +40,7 @@ export default [
         tsconfig: "./tsconfig.json",
         declaration: true,
         declarationDir: "dist/types",
-        emitDeclarationOnly: false, // build JS + DTS in one pass
+        emitDeclarationOnly: false,
       }),
       postcss({
         extract: "styles.css",
@@ -56,6 +55,6 @@ export default [
     input: "dist/types/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "es" }],
     plugins: [typescriptPaths({ preserveExtensions: true }), dts()],
-    external: [/\.css$/], // ignore CSS imports in DTS bundle
+    external: [/\.css$/],
   },
 ];

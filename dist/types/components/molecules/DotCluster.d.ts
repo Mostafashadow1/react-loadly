@@ -1,3 +1,4 @@
+import React from "react";
 export interface DotClusterProps {
     /** Number of dots in the cluster */
     count?: number;

@@ -1,5 +1,4 @@
-import { CSSProperties, FC } from 'react';
-import * as react_jsx_runtime from 'react/jsx-runtime';
+import React$1, { CSSProperties, FC, ReactNode } from 'react';
 import { IFallbackLoaderProps } from '@types';
 
 interface DotProps {
@@ -14,7 +13,7 @@ interface DotProps {
     glowIntensity?: number;
     "data-testid"?: string;
 }
-declare const Dot: React.FC<DotProps>;
+declare const Dot: React$1.FC<DotProps>;
 
 interface LineProps {
     /** Width of the line */
@@ -42,7 +41,7 @@ interface LineProps {
     /** Data test id */
     "data-testid"?: string;
 }
-declare const Line: React.FC<LineProps>;
+declare const Line: React$1.FC<LineProps>;
 
 interface RectangleProps {
     /** Width of the rectangle */
@@ -62,7 +61,7 @@ interface RectangleProps {
     /** Custom CSS class */
     className?: string;
     /** Custom styles */
-    style?: React.CSSProperties;
+    style?: React$1.CSSProperties;
     /** Animation name if any */
     animation?: string;
     /** Animation duration */
@@ -72,7 +71,7 @@ interface RectangleProps {
     /** Data test id */
     "data-testid"?: string;
 }
-declare const Rectangle: React.FC<RectangleProps>;
+declare const Rectangle: React$1.FC<RectangleProps>;
 
 interface CircleProps {
     size?: number | string;
@@ -81,13 +80,13 @@ interface CircleProps {
     borderWidth?: number | string;
     opacity?: number;
     className?: string;
-    style?: React.CSSProperties;
+    style?: React$1.CSSProperties;
     animation?: string;
     animationDuration?: string;
     animationDelay?: string;
     "data-testid"?: string;
 }
-declare const Circle: ({ size, color, borderColor, borderWidth, opacity, className, style, animation, animationDuration, animationDelay, "data-testid": dataTestId, ...props }: CircleProps) => react_jsx_runtime.JSX.Element;
+declare const Circle: ({ size, color, borderColor, borderWidth, opacity, className, style, animation, animationDuration, animationDelay, "data-testid": dataTestId, ...props }: CircleProps) => React$1.JSX.Element;
 
 interface DotClusterProps {
     /** Number of dots in the cluster */
@@ -107,13 +106,13 @@ interface DotClusterProps {
     /** Custom CSS class */
     className?: string;
     /** Custom styles */
-    style?: React.CSSProperties;
+    style?: React$1.CSSProperties;
     /** Animation type */
     animationType?: "wave" | "pulse" | "fade" | "bounce";
     /** Data test id */
     "data-testid"?: string;
 }
-declare const DotCluster: React.FC<DotClusterProps>;
+declare const DotCluster: React$1.FC<DotClusterProps>;
 
 interface LineGroupProps {
     /** Number of lines in the group */
@@ -137,13 +136,13 @@ interface LineGroupProps {
     /** Custom CSS class */
     className?: string;
     /** Custom styles */
-    style?: React.CSSProperties;
+    style?: React$1.CSSProperties;
     /** Animation type */
     animationType?: "wave" | "pulse" | "scale" | "rotate";
     /** Data test id */
     "data-testid"?: string;
 }
-declare const LineGroup: React.FC<LineGroupProps>;
+declare const LineGroup: React$1.FC<LineGroupProps>;
 
 interface ShapeGroupProps {
     /** Number of shapes in the group */
@@ -165,7 +164,7 @@ interface ShapeGroupProps {
     /** Custom CSS class */
     className?: string;
     /** Custom styles */
-    style?: React.CSSProperties;
+    style?: React$1.CSSProperties;
     /** Animation type */
     animationType?: "pulse" | "rotate" | "scale" | "bounce";
     /** Border width for outlined shapes */
@@ -173,7 +172,7 @@ interface ShapeGroupProps {
     /** Data test id */
     "data-testid"?: string;
 }
-declare const ShapeGroup: React.FC<ShapeGroupProps>;
+declare const ShapeGroup: React$1.FC<ShapeGroupProps>;
 
 interface IBaseLoaderProps$1 {
   /** Custom CSS class name */
@@ -203,6 +202,17 @@ interface IBaseLoaderProps$1 {
 
   /** Data test id for testing */
   "data-testid"?: string;
+  
+  /** Enable fullscreen mode */
+  fullscreen?: boolean;
+  /** Screen width for fullscreen mode */
+  screenWidth?: number | string;
+  /** Screen height for fullscreen mode */
+  screenHeight?: number | string;
+  /** Center the loader in fullscreen mode */
+  loaderCenter?: boolean;
+  /** Background color for fullscreen mode */
+  screenBackground?: string;
 }
 
 interface IFluidLoaderProps extends IBaseLoaderProps$1 {
@@ -232,7 +242,7 @@ interface ILoaderCSSVariables$1 {
 
 interface ILogoLoaderProps extends IBaseLoaderProps$1 {
   /** Logo source (image URL or SVG) */
-  src?: string;
+  src: string;
   /** Logo alt text */
   alt?: string;
   /** Animation type for logo */
@@ -242,17 +252,57 @@ interface ILogoLoaderProps extends IBaseLoaderProps$1 {
 }
 
 interface ITextLoaderProps extends IBaseLoaderProps$1 {
-  /** Text to animate */
-  text?: string;
   /** Font family for text loaders */
   fontFamily?: string;
   /** Font weight */
   fontWeight?: number | string;
   /** Character animation delay */
   charDelay?: number;
+  loop?: boolean;
 }
 
+declare const BarsLoader: FC<IGeometricLoaderProps$1>;
+
 declare const BlobLoader: FC<IFluidLoaderProps>;
+
+declare const BounceLoader: FC<IGeometricLoaderProps$1>;
+
+declare const DotsLoader: FC<IGeometricLoaderProps$1>;
+
+interface IElementLoaderProps extends IBaseLoaderProps$1 {
+  /** Animation type for logo */
+  animationType?: "spin" | "pulse" | "glow" | "bounce" | "flip";
+  /** Glow intensity (0-1) */
+  glowIntensity?: number;
+  /** React element to display (icon, div, paragraph, etc.) */
+  children?: ReactNode;
+}
+
+/**
+ * ElementLoader Component
+ *
+ * A flexible loader component that can display any React element with various animation effects.
+ *
+ * @example
+ * ```tsx
+ * // Basic usage with a div element
+ * <ElementLoader>
+ *   <div style={{ width: '100%', height: '100%', backgroundColor: 'blue' }} />
+ * </ElementLoader>
+ *
+ * // With different animation types
+ * <ElementLoader animationType="pulse">
+ *   <div>Your custom element here</div>
+ * </ElementLoader>
+ *
+ * // With loading text
+ * <ElementLoader showText loadingText="Loading...">
+ *   <YourIconComponent />
+ * </ElementLoader>
+ * ```
+ */
+
+declare const ElementLoader: FC<IElementLoaderProps>;
 
 declare const FallbackLoader: FC<IFallbackLoaderProps>;
 
@@ -265,18 +315,6 @@ declare const LiquidLoader: FC<IFluidLoaderProps>;
 declare const LogoSpinLoader: FC<ILogoLoaderProps>;
 
 declare const PulseLoader: FC<IGeometricLoaderProps$1>;
-
-declare const SpinLoader: FC<IGeometricLoaderProps$1>;
-
-declare const TypingLoader: FC<ITextLoaderProps>;
-
-declare const WaveLoader: FC<IGeometricLoaderProps$1>;
-
-declare const BarsLoader: FC<IGeometricLoaderProps$1>;
-
-declare const BounceLoader: FC<IGeometricLoaderProps$1>;
-
-declare const DotsLoader: FC<IGeometricLoaderProps$1>;
 
 interface IBaseLoaderProps {
     /** Custom CSS class name */
@@ -305,6 +343,16 @@ interface IBaseLoaderProps {
     loadingText?: string;
     /** Data test id for testing */
     "data-testid"?: string;
+    /** Enable fullscreen mode */
+    fullscreen?: boolean;
+    /** Screen width for fullscreen mode */
+    screenWidth?: number | string;
+    /** Screen height for fullscreen mode */
+    screenHeight?: number | string;
+    /** Center the loader in fullscreen mode */
+    loaderCenter?: boolean;
+    /** Background color for fullscreen mode */
+    screenBackground?: string;
 }
 
 interface IGeometricLoaderProps extends IBaseLoaderProps {
@@ -379,6 +427,12 @@ type AnimationFillModeType = "none" | "forwards" | "backwards" | "both";
 declare const RingLoader: FC<IGeometricLoaderProps>;
 
 declare const RotateLoader: FC<IGeometricLoaderProps$1>;
+
+declare const SpinLoader: FC<IGeometricLoaderProps$1>;
+
+declare const TypingLoader: FC<ITextLoaderProps>;
+
+declare const WaveLoader: FC<IGeometricLoaderProps$1>;
 
 /**
  * Custom React hook for managing loader state with advanced features
@@ -503,5 +557,5 @@ declare function generateId(prefix?: string): string;
  */
 declare function sanitizeCSSValue(value: string | number | undefined): string | undefined;
 
-export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, generateCSSVariables, generateId, getAnimationDuration, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
+export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, generateCSSVariables, generateId, getAnimationDuration, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
 export type { AnimationDirectionType, AnimationEasingType, AnimationFillModeType, CircleProps, DotClusterProps, DotProps, IBaseLoaderProps, ILoaderCSSVariables, ILoaderTheme, LineGroupProps, LineProps, RectangleProps, ShapeGroupProps };

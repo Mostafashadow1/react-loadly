@@ -1,5 +1,5 @@
 import { getSizeValue, sanitizeCSSValue } from "@/utils";
-import type { CSSProperties } from "react";
+import React, { type CSSProperties } from "react";
 
 export interface CircleProps {
   size?: number | string;

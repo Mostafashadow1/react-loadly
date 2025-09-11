@@ -1,3 +1,4 @@
+import React from "react";
 export interface ShapeGroupProps {
     /** Number of shapes in the group */
     count?: number;

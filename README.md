@@ -2,12 +2,9 @@
 
 A professional, high-performance, and accessible collection of **React loader components**. Built with **TypeScript** and optimized for a great user and developer experience.
 
-[](https://www.npmjs.com/package/react-loadly)
-[](https://www.npmjs.com/package/react-loadly)
-[](https://bundlephobia.com/result?p=react-loadly)
-[](https://github.com/react-loaders/react-loaders/blob/main/LICENSE)
-
----
+[![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)  
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/main/LICENSE)
 
 ## ✨ Key Features
 
@@ -18,6 +15,7 @@ A professional, high-performance, and accessible collection of **React loader co
 - **Tree-Shakable**: Supports modern bundlers to only include what you use.
 - **Reduced Motion**: Respects the user's `prefers-reduced-motion` settings.
 - **SSR Compatible**: Works out-of-the-box with frameworks like **Next.js**.
+- **Fullscreen Support**: Display loaders in fullscreen mode with customizable backgrounds.
 
 ---
 
@@ -80,6 +78,116 @@ function App() {
 | `TypingLoader` |         | A loader that simulates typing or processing text.  |
 | `DotsLoader`   |         | The familiar three-dot animation, perfect for text. |
 
+### Flexible Loaders
+
+| Component       | Description                                               |
+| --------------- | --------------------------------------------------------- |
+| `ElementLoader` | A flexible loader that can display any React element with various animation effects. |
+
+---
+
+## 🧩 ElementLoader Component
+
+The `ElementLoader` is a versatile component that can wrap any React element and apply various loading animations to it. Unlike other loaders that are pre-designed with specific visuals, the ElementLoader allows you to use your own elements (icons, divs, images, etc.) as the loading indicator.
+
+### Basic Usage
+
+```jsx
+import { ElementLoader } from "react-loadly";
+
+function App() {
+  return (
+    <ElementLoader>
+      <div style={{ width: '40px', height: '40px', backgroundColor: 'blue' }} />
+    </ElementLoader>
+  );
+}
+```
+
+### Animation Types
+
+The ElementLoader supports multiple animation types:
+
+```jsx
+// Spin animation (default)
+<ElementLoader animationType="spin">
+  <YourIconComponent />
+</ElementLoader>
+
+// Pulse animation
+<ElementLoader animationType="pulse">
+  <YourIconComponent />
+</ElementLoader>
+
+// Glow animation
+<ElementLoader animationType="glow">
+  <YourIconComponent />
+</ElementLoader>
+
+// Bounce animation
+<ElementLoader animationType="bounce">
+  <YourIconComponent />
+</ElementLoader>
+
+// Flip animation
+<ElementLoader animationType="flip">
+  <YourIconComponent />
+</ElementLoader>
+```
+
+### Customization Options
+
+```jsx
+<ElementLoader
+  size={80}
+  color="#ff6b6b"
+  speed={1.5}
+  glowIntensity={0.5}
+  showText
+  loadingText="Loading..."
+>
+  <YourCustomElement />
+</ElementLoader>
+```
+
+### Fullscreen Mode
+
+Like other loaders, ElementLoader supports fullscreen mode:
+
+```jsx
+<ElementLoader
+  fullscreen
+  loaderCenter
+  screenBackground="rgba(0, 0, 0, 0.5)"
+>
+  <YourIconComponent />
+</ElementLoader>
+```
+
+### Props
+
+| Prop            | Type                            | Default     | Description                                         |
+| --------------- | ------------------------------- | ----------- | --------------------------------------------------- |
+| `children`      | ReactNode                       | undefined   | The React element to apply loading animation to     |
+| `animationType` | "spin" \| "pulse" \| "glow" \| "bounce" \| "flip" | "spin"      | Type of animation to apply                          |
+| `glowIntensity` | number (0-1)                    | 0.3         | Intensity of the glow effect                        |
+| `size`          | number \| string                | 60          | Size of the loader                                  |
+| `width`         | number \| string                | undefined   | Width of the loader (overrides size)                |
+| `height`        | number \| string                | undefined   | Height of the loader (overrides size)               |
+| `color`         | string                          | "var(--react-loadly-color)" | Primary color of the loader         |
+| `speed`         | number                          | 1           | Animation speed multiplier                          |
+| `loading`       | boolean                         | true        | Whether the loader is active                        |
+| `className`     | string                          | undefined   | Custom CSS class name                               |
+| `style`         | CSSProperties                   | undefined   | Custom inline styles                                |
+| `aria-label`    | string                          | "Loading..."| Accessibility label for screen readers              |
+| `showText`      | boolean                         | false       | Whether to show loading text                        |
+| `loadingText`   | string                          | undefined   | Custom loading text                                 |
+| `fullscreen`    | boolean                         | false       | Enable fullscreen mode                              |
+| `screenWidth`   | number \| string                | undefined   | Screen width for fullscreen mode                    |
+| `screenHeight`  | number \| string                | undefined   | Screen height for fullscreen mode                   |
+| `loaderCenter`  | boolean                         | false       | Center the loader in fullscreen mode                |
+| `screenBackground` | string                       | undefined   | Background color for fullscreen mode                |
+
 ---
 
 ## ♿ Accessibility
@@ -131,7 +239,35 @@ interface BaseLoaderProps {
   style?: React.CSSProperties;
   showText?: boolean;
   loadingText?: string;
+  // Fullscreen props
+  fullscreen?: boolean;
+  screenWidth?: number | string;
+  screenHeight?: number | string;
+  loaderCenter?: boolean;
+  screenBackground?: string;
 }
+```
+
+### Fullscreen Mode
+
+Display any loader in fullscreen mode with customizable dimensions and background:
+
+```jsx
+// Fullscreen loader covering entire viewport
+<SpinLoader
+  fullscreen={true}
+  loaderCenter={true}
+  screenBackground="#f0f0f0"
+/>
+
+// Fullscreen loader with custom dimensions
+<PulseLoader
+  fullscreen={true}
+  screenWidth={800}
+  screenHeight={600}
+  loaderCenter={true}
+  screenBackground="rgba(0, 0, 0, 0.5)"
+/>
 ```
 
 ---
@@ -189,32 +325,4 @@ A component to gracefully handle and display errors, timeouts, or network issues
 import { FallbackLoader } from "react-loadly";
 
 function ErrorBoundary({ error, retry }) {
-  return (
-    <FallbackLoader
-      error={error.message}
-      onRetry={retry}
-      type="error" // 'error' | 'network' | 'timeout'
-    />
-  );
-}
 ```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome\! Please see our [CONTRIBUTING.md](https://www.google.com/search?q=CONTRIBUTING.md) guide for details.
-
-1.  Fork the repository.
-2.  Create your feature branch (`git checkout -b feature/my-new-feature`).
-3.  Commit your changes (`git commit -m 'feat: add a new loader component'`).
-4.  Push to the branch (`git push origin feature/my-new-feature`).
-5.  Open a pull request.
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
-\<p align="center"\>Made with ❤️ by the React community.\</p\>

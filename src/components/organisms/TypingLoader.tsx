@@ -1,22 +1,23 @@
 import { ITextLoaderProps } from "@/@types";
 import { mergeProps } from "@/utils";
-import { type CSSProperties, FC, useEffect, useRef, useState } from "react";
+import React, { type CSSProperties, FC, useEffect, useRef, useState } from "react";
 
 const defaultProps: Partial<ITextLoaderProps> = {
-  text: "Loading...",
   speed: 1,
   loading: true,
   charDelay: 100,
   "aria-label": "Loading...",
+  loop: true,
 };
 
 export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
-    text,
-    speed,
+    loadingText,
+    speed = 1,
     loading,
-    charDelay,
+    charDelay = 100,
+    loop,
     className = "",
     style = {},
     color = "var(--react-loadly-text-color)",
@@ -24,12 +25,18 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
     fontWeight = 500,
     "aria-label": ariaLabel,
     "data-testid": dataTestId,
+    showText,
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
     ...restProps
   } = props;
 
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     // Clear any existing timeout
@@ -38,58 +45,64 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
       timeoutRef.current = null;
     }
 
-    if (!loading || !text) {
+    if (!loading || !loadingText) {
       setDisplayText("");
       return;
     }
 
     setIsTyping(true);
     setDisplayText("");
-    let currentIndex = 0;
 
-    const typeChar = () => {
-      if (currentIndex < text.length) {
-        setDisplayText(text.slice(0, currentIndex + 1));
-        currentIndex++;
-        timeoutRef.current = setTimeout(typeChar, (charDelay ?? 100) / (speed ?? 1));
+    const typeText = (index: number = 0) => {
+      if (index < loadingText.length) {
+        setDisplayText(loadingText.substring(0, index + 1));
+        timeoutRef.current = setTimeout(() => typeText(index + 1), charDelay / speed);
+      } else if (loop) {
+        // Reset and start over if looping
+        timeoutRef.current = setTimeout(() => {
+          setDisplayText("");
+          typeText(0);
+        }, charDelay * 2);
       } else {
         setIsTyping(false);
-        // Reset and start over
-        timeoutRef.current = setTimeout(() => {
-          currentIndex = 0;
-          setDisplayText("");
-          if (loading) typeChar();
-        }, 1000 / (speed ?? 1));
       }
     };
 
-    typeChar();
+    typeText(0);
 
+    // Cleanup timeouts on unmount or when dependencies change
     return () => {
-      setIsTyping(false);
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
       }
     };
-  }, [text, loading, charDelay, speed]);
+  }, [loading, loadingText, charDelay, speed, loop]);
 
   if (!loading) return null;
 
   const containerStyle: CSSProperties = {
     display: "inline-flex",
+    flexDirection: "column",
     alignItems: "center",
-    fontFamily: fontFamily || "var(--react-loadly-font-family)",
-    fontSize: "var(--react-loadly-font-size)",
-    fontWeight,
-    color,
     ...style,
+    ...(fullscreen && {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: screenWidth || "100vw",
+      height: screenHeight || "100vh",
+      backgroundColor: screenBackground || "var(--react-loadly-background)",
+      zIndex: 9999,
+      justifyContent: loaderCenter ? "center" : style.justifyContent,
+    }),
   };
 
-  const cursorStyle: CSSProperties = {
-    marginLeft: "2px",
-    animation: isTyping ? "none" : "react-loadly-fade 1s infinite",
-    opacity: isTyping ? 1 : 0.5,
+  const textStyle: CSSProperties = {
+    color,
+    fontFamily,
+    fontWeight,
+    fontSize: "1.2em",
+    whiteSpace: "pre",
   };
 
   return (
@@ -103,8 +116,25 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <span>{displayText}</span>
-      <span style={cursorStyle}>|</span>
+      <div style={textStyle} data-testid={dataTestId ? `${dataTestId}-text` : undefined}>
+        {displayText}
+        <span
+          className="react-loadly-typing-cursor"
+          style={{
+            display: isTyping ? "inline-block" : "none",
+            animation: `react-loadly-blink ${1 / speed}s step-end infinite`,
+            marginLeft: "2px",
+            verticalAlign: "baseline",
+          }}
+        >
+          |
+        </span>
+      </div>
+      {showText && (
+        <div className="react-loadly-text" aria-live="polite">
+          {loadingText}
+        </div>
+      )}
       <span className="react-loadly-sr-only">{ariaLabel}</span>
     </div>
   );
