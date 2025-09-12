@@ -31,7 +31,8 @@
       "@/molecules/*": ["./components/molecules/*"],
       "@/organisms/*": ["./components/organisms/*"],
       "@/hooks/*": ["./hooks/*"],
-      "@/types/*": ["./types/*"],
+      "@/types/*": ["./@types/types/*"],
+      "@/interfaces/*": ["./@types/interfaces/*"],
       "@/utils/*": ["./utils/*"]
     }
   },

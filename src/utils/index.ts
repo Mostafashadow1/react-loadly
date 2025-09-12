@@ -2,7 +2,15 @@
 export { generateCSSVariables, getSizeValue, mergeProps } from "./propUtils";
 
 // Animation utilities
-export { createAnimationName, getAnimationDuration, getOptimizedAnimationSettings, prefersReducedMotion } from "./animationUtils";
+export {
+  createAnimationName,
+  getAnimationDuration,
+  getOptimizedAnimationSettings,
+  prefersReducedMotion,
+  getAnimationDirection,
+  getAnimationEasing,
+  createAnimationString,
+} from "./animationUtils";
 
 // Color utilities
 export { hexToRgb, rgba } from "./colorUtils";

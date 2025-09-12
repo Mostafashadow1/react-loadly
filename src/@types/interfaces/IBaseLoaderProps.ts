@@ -1,4 +1,9 @@
 import type { CSSProperties } from "react";
+
+/**
+ * Base props interface for all loader components
+ * Provides common functionality across all loader types
+ */
 export interface IBaseLoaderProps {
   /** Custom CSS class name */
   className?: string;
@@ -24,10 +29,8 @@ export interface IBaseLoaderProps {
   showText?: boolean;
   /** Custom loading text */
   loadingText?: string;
-
   /** Data test id for testing */
   "data-testid"?: string;
-  
   /** Enable fullscreen mode */
   fullscreen?: boolean;
   /** Screen width for fullscreen mode */

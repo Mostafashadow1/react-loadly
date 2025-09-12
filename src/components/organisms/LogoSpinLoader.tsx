@@ -1,4 +1,4 @@
-import { ILogoLoaderProps } from "@/@types";
+import { ILogoLoaderProps } from "@/@types/interfaces/ILogoLoaderProps";
 import { getAnimationDuration, mergeProps } from "@/utils";
 import React, { type CSSProperties, FC } from "react";
 
@@ -74,13 +74,7 @@ export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <img
-        src={src}
-        alt={alt}
-        style={logoStyle}
-        className="react-loadly-logo"
-        data-testid={dataTestId ? `${dataTestId}-logo` : undefined}
-      />
+      <img src={src} alt={alt} style={logoStyle} className="react-loadly-logo" data-testid={dataTestId ? `${dataTestId}-logo` : undefined} />
       {showText && (
         <div className="react-loadly-text" aria-live="polite">
           {loadingText || ariaLabel}

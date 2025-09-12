@@ -35,9 +35,10 @@ export function prefersReducedMotion(): boolean {
 /**
  * Get optimized animation settings based on user preferences
  * @param speed - The animation speed multiplier (default: 1)
+ * @param respectReducedMotion - Whether to respect reduced motion preference (default: true)
  * @returns Object with optimized animation settings
  */
-export function getOptimizedAnimationSettings(speed = 1) {
+export function getOptimizedAnimationSettings(speed = 1, respectReducedMotion = true) {
   // In test environments, disable animations to prevent test failures
   if (typeof process !== "undefined" && process.env.NODE_ENV === "test") {
     return {
@@ -47,11 +48,48 @@ export function getOptimizedAnimationSettings(speed = 1) {
     };
   }
 
-  const reducedMotion = prefersReducedMotion();
+  const reducedMotion = respectReducedMotion && prefersReducedMotion();
 
   return {
     duration: reducedMotion ? "0ms" : getAnimationDuration(1000, speed),
     playState: reducedMotion ? "paused" : "running",
     iterationCount: reducedMotion ? 1 : "infinite",
   };
+}
+
+/**
+ * Get animation direction CSS value
+ * @param direction - The animation direction
+ * @returns CSS direction value
+ */
+export function getAnimationDirection(direction: "normal" | "reverse" | "alternate" | "alternate-reverse" = "normal"): string {
+  return direction;
+}
+
+/**
+ * Get animation easing CSS value
+ * @param easing - The animation easing function
+ * @returns CSS easing value
+ */
+export function getAnimationEasing(easing: "linear" | "ease" | "ease-in" | "ease-out" | "ease-in-out" | "cubic-bezier" = "ease"): string {
+  return easing;
+}
+
+/**
+ * Create a complete animation string
+ * @param name - The animation name
+ * @param duration - The animation duration
+ * @param easing - The animation easing
+ * @param direction - The animation direction
+ * @param iterationCount - The iteration count
+ * @returns Complete animation string
+ */
+export function createAnimationString(
+  name: string,
+  duration: string,
+  easing: string = "ease",
+  direction: string = "normal",
+  iterationCount: string | number = "infinite",
+): string {
+  return `${name} ${duration} ${easing} ${direction} ${iterationCount}`;
 }

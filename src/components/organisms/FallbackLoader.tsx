@@ -1,4 +1,4 @@
-import { IFallbackLoaderProps } from "@types";
+import { IFallbackLoaderProps } from "@/interfaces/IFallbackLoaderProps";
 import React, { FC } from "react";
 import { CSSProperties } from "react";
 
@@ -32,11 +32,11 @@ const TimeoutIcon: FC<{ className?: string }> = ({ className = "" }) => (
   </svg>
 );
 
-export const FallbackLoader: FC<IFallbackLoaderProps> = ({ 
-  error = "Something went wrong", 
-  onRetry, 
-  showRetry = true, 
-  children, 
+export const FallbackLoader: FC<IFallbackLoaderProps> = ({
+  error = "Something went wrong",
+  onRetry,
+  showRetry = true,
+  children,
   type = "error",
   className = "",
   style = {},
@@ -87,7 +87,11 @@ export const FallbackLoader: FC<IFallbackLoaderProps> = ({
   };
 
   if (children) {
-    return <div className={`react-loadly-fallback ${className}`.trim()} style={containerStyle} {...restProps}>{children}</div>;
+    return (
+      <div className={`react-loadly-fallback ${className}`.trim()} style={containerStyle} {...restProps}>
+        {children}
+      </div>
+    );
   }
 
   return (
