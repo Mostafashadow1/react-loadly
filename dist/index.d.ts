@@ -1,5 +1,4 @@
-import React$1, { CSSProperties, FC, ReactNode } from 'react';
-import { IFallbackLoaderProps } from '@types';
+import React$1, { CSSProperties, ReactNode, FC } from 'react';
 
 interface DotProps {
     size?: number | string;
@@ -174,6 +173,10 @@ interface ShapeGroupProps {
 }
 declare const ShapeGroup: React$1.FC<ShapeGroupProps>;
 
+/**
+ * Base props interface for all loader components
+ * Provides common functionality across all loader types
+ */
 interface IBaseLoaderProps$1 {
   /** Custom CSS class name */
   className?: string;
@@ -199,10 +202,8 @@ interface IBaseLoaderProps$1 {
   showText?: boolean;
   /** Custom loading text */
   loadingText?: string;
-
   /** Data test id for testing */
   "data-testid"?: string;
-  
   /** Enable fullscreen mode */
   fullscreen?: boolean;
   /** Screen width for fullscreen mode */
@@ -213,6 +214,15 @@ interface IBaseLoaderProps$1 {
   loaderCenter?: boolean;
   /** Background color for fullscreen mode */
   screenBackground?: string;
+}
+
+interface IElementLoaderProps extends IBaseLoaderProps$1 {
+  /** Animation type for logo */
+  animationType?: "spin" | "pulse" | "glow" | "bounce" | "flip";
+  /** Glow intensity (0-1) */
+  glowIntensity?: number;
+  /** React element to display (icon, div, paragraph, etc.) */
+  children?: ReactNode;
 }
 
 interface IFluidLoaderProps extends IBaseLoaderProps$1 {
@@ -229,7 +239,7 @@ interface IGeometricLoaderProps$1 extends IBaseLoaderProps$1 {
   borderWidth?: number;
 }
 
-interface ILoaderCSSVariables$1 {
+interface ILoaderCSSVariables {
   "--loader-color"?: string;
   "--loader-secondary-color"?: string;
   "--loader-size"?: string;
@@ -261,6 +271,102 @@ interface ITextLoaderProps extends IBaseLoaderProps$1 {
   loop?: boolean;
 }
 
+interface ISkeletonLoaderProps extends Exclude<IBaseLoaderProps$1, "color"> {
+  /** Number of skeleton lines to display */
+  lines?: number;
+  /** Variant of skeleton (line, card, avatar, text) */
+  variant?: "line" | "card" | "avatar" | "text" | "custom";
+  /** Width of skeleton elements */
+  width?: number | string;
+  /** Height of skeleton elements */
+  height?: number | string;
+  /** Border radius of skeleton elements */
+  borderRadius?: number | string;
+  /** Spacing between skeleton lines */
+  spacing?: number | string;
+  /** Whether to show shimmer animation */
+  shimmer?: boolean;
+  /** Shimmer color */
+  shimmerColor?: string;
+  /** Base color of skeleton */
+  baseColor?: string;
+  /** Highlight color for shimmer effect */
+  highlightColor?: string;
+}
+
+interface IShimmerLoaderProps extends IBaseLoaderProps$1 {
+  /** Number of shimmer lines to display */
+  lines?: number;
+  /** Variant of shimmer (line, card, avatar, text, wave) */
+  variant?: "line" | "card" | "avatar" | "text" | "wave" | "custom";
+  /** Border radius of shimmer elements */
+  borderRadius?: number | string;
+  /** Spacing between shimmer lines */
+  spacing?: number | string;
+  /** Shimmer wave width */
+  waveWidth?: number | string;
+  /** Shimmer color */
+  shimmerColor?: string;
+  /** Highlight color for shimmer effect */
+  highlightColor?: string;
+  /** Wave direction */
+  waveDirection?: "left-to-right" | "right-to-left" | "top-to-bottom" | "bottom-to-top";
+}
+
+interface ILoaderState$1 {
+  isLoading: boolean;
+  progress?: number;
+  error?: string | null;
+  retryCount?: number;
+}
+
+interface IUseLoaderStateOptions$1 {
+  initialLoading?: boolean;
+  timeout?: number;
+  maxRetries?: number;
+  onLoadingChange?: (isLoading: boolean) => void;
+  onError?: (error: string) => void;
+  onProgress?: (progress: number) => void;
+}
+
+interface IUseLoaderStateReturn$1 {
+  state: ILoaderState$1;
+  setLoading: (loading: boolean) => void;
+  setProgress: (progress: number) => void;
+  setError: (error: string | null) => void;
+  retry: () => void;
+  reset: () => void;
+}
+
+interface IFallbackLoaderProps extends IBaseLoaderProps$1 {
+  /** Error message to display */
+  error?: string;
+  /** Retry function */
+  onRetry?: () => void;
+  /** Show retry button */
+  showRetry?: boolean;
+  /** Custom fallback content */
+  children?: ReactNode;
+  /** Fallback type */
+  type?: "error" | "timeout" | "network";
+}
+
+type AnimationDirectionType =
+  | "normal"
+  | "reverse"
+  | "alternate"
+  | "alternate-reverse";
+
+type AnimationEasingType =
+  | "linear"
+  | "ease"
+  | "ease-in"
+  | "ease-out"
+  | "ease-in-out"
+  | "cubic-bezier(number, number, number, number)";
+
+type AnimationFillModeType = "none" | "forwards" | "backwards" | "both";
+
 declare const BarsLoader: FC<IGeometricLoaderProps$1>;
 
 declare const BlobLoader: FC<IFluidLoaderProps>;
@@ -268,15 +374,6 @@ declare const BlobLoader: FC<IFluidLoaderProps>;
 declare const BounceLoader: FC<IGeometricLoaderProps$1>;
 
 declare const DotsLoader: FC<IGeometricLoaderProps$1>;
-
-interface IElementLoaderProps extends IBaseLoaderProps$1 {
-  /** Animation type for logo */
-  animationType?: "spin" | "pulse" | "glow" | "bounce" | "flip";
-  /** Glow intensity (0-1) */
-  glowIntensity?: number;
-  /** React element to display (icon, div, paragraph, etc.) */
-  children?: ReactNode;
-}
 
 /**
  * ElementLoader Component
@@ -316,6 +413,10 @@ declare const LogoSpinLoader: FC<ILogoLoaderProps>;
 
 declare const PulseLoader: FC<IGeometricLoaderProps$1>;
 
+/**
+ * Base props interface for all loader components
+ * Provides common functionality across all loader types
+ */
 interface IBaseLoaderProps {
     /** Custom CSS class name */
     className?: string;
@@ -362,17 +463,6 @@ interface IGeometricLoaderProps extends IBaseLoaderProps {
     borderWidth?: number;
 }
 
-interface ILoaderCSSVariables {
-    "--loader-color"?: string;
-    "--loader-secondary-color"?: string;
-    "--loader-size"?: string;
-    "--loader-speed"?: string;
-    "--loader-background"?: string;
-    "--loader-text-color"?: string;
-    "--loader-border-width"?: string;
-    "--loader-glow-intensity"?: string;
-}
-
 interface ILoaderState {
     isLoading: boolean;
     progress?: number;
@@ -398,35 +488,13 @@ interface IUseLoaderStateReturn {
     reset: () => void;
 }
 
-interface ILoaderTheme {
-    name: string;
-    colors: {
-        primary: string;
-        secondary: string;
-        background: string;
-        text: string;
-        accent: string;
-    };
-    animation: {
-        duration: string;
-        easing: string;
-    };
-    typography: {
-        fontFamily: string;
-        fontSize: string;
-        fontWeight: number;
-    };
-}
-
-type AnimationDirectionType = "normal" | "reverse" | "alternate" | "alternate-reverse";
-
-type AnimationEasingType = "linear" | "ease" | "ease-in" | "ease-out" | "ease-in-out" | "cubic-bezier(number, number, number, number)";
-
-type AnimationFillModeType = "none" | "forwards" | "backwards" | "both";
-
 declare const RingLoader: FC<IGeometricLoaderProps>;
 
 declare const RotateLoader: FC<IGeometricLoaderProps$1>;
+
+declare const ShimmerLoader: FC<IShimmerLoaderProps>;
+
+declare const SkeletonLoader: FC<ISkeletonLoaderProps>;
 
 declare const SpinLoader: FC<IGeometricLoaderProps$1>;
 
@@ -486,7 +554,7 @@ declare function getSizeValue(size: number | string | undefined, fallback?: stri
  * @param variables - The loader CSS variables object
  * @returns React CSS properties object
  */
-declare function generateCSSVariables(variables: ILoaderCSSVariables$1): React.CSSProperties;
+declare function generateCSSVariables(variables: ILoaderCSSVariables): React.CSSProperties;
 
 /**
  * Calculates animation duration based on speed multiplier
@@ -509,13 +577,36 @@ declare function prefersReducedMotion(): boolean;
 /**
  * Get optimized animation settings based on user preferences
  * @param speed - The animation speed multiplier (default: 1)
+ * @param respectReducedMotion - Whether to respect reduced motion preference (default: true)
  * @returns Object with optimized animation settings
  */
-declare function getOptimizedAnimationSettings(speed?: number): {
+declare function getOptimizedAnimationSettings(speed?: number, respectReducedMotion?: boolean): {
     duration: string;
     playState: string;
     iterationCount: string | number;
 };
+/**
+ * Get animation direction CSS value
+ * @param direction - The animation direction
+ * @returns CSS direction value
+ */
+declare function getAnimationDirection(direction?: "normal" | "reverse" | "alternate" | "alternate-reverse"): string;
+/**
+ * Get animation easing CSS value
+ * @param easing - The animation easing function
+ * @returns CSS easing value
+ */
+declare function getAnimationEasing(easing?: "linear" | "ease" | "ease-in" | "ease-out" | "ease-in-out" | "cubic-bezier"): string;
+/**
+ * Create a complete animation string
+ * @param name - The animation name
+ * @param duration - The animation duration
+ * @param easing - The animation easing
+ * @param direction - The animation direction
+ * @param iterationCount - The iteration count
+ * @returns Complete animation string
+ */
+declare function createAnimationString(name: string, duration: string, easing?: string, direction?: string, iterationCount?: string | number): string;
 
 /**
  * Converts hex color to RGB values
@@ -557,5 +648,5 @@ declare function generateId(prefix?: string): string;
  */
 declare function sanitizeCSSValue(value: string | number | undefined): string | undefined;
 
-export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, generateCSSVariables, generateId, getAnimationDuration, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
-export type { AnimationDirectionType, AnimationEasingType, AnimationFillModeType, CircleProps, DotClusterProps, DotProps, IBaseLoaderProps, ILoaderCSSVariables, ILoaderTheme, LineGroupProps, LineProps, RectangleProps, ShapeGroupProps };
+export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, ShimmerLoader, SkeletonLoader, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, createAnimationString, generateCSSVariables, generateId, getAnimationDirection, getAnimationDuration, getAnimationEasing, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
+export type { AnimationDirectionType, AnimationEasingType, AnimationFillModeType, CircleProps, DotClusterProps, DotProps, IBaseLoaderProps$1 as IBaseLoaderProps, IElementLoaderProps, IFallbackLoaderProps, IFluidLoaderProps, IGeometricLoaderProps$1 as IGeometricLoaderProps, ILoaderCSSVariables, ILoaderState$1 as ILoaderState, ILogoLoaderProps, IShimmerLoaderProps, ISkeletonLoaderProps, ITextLoaderProps, IUseLoaderStateOptions$1 as IUseLoaderStateOptions, IUseLoaderStateReturn$1 as IUseLoaderStateReturn, LineGroupProps, LineProps, RectangleProps, ShapeGroupProps };

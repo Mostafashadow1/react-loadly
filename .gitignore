@@ -1,2 +1,8 @@
 node_modules
 node-compile-cache
+dist
+.idea
+.vscode
+.DS_Store
+
+

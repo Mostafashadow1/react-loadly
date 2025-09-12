@@ -1,4 +1,4 @@
-import { clamp } from "./index";
+import { clamp } from "./mathUtils";
 
 /**
  * Converts hex color to RGB values

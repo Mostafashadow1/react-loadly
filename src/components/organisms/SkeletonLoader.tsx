@@ -1,0 +1,233 @@
+import React, { type CSSProperties, FC } from "react";
+import { getSizeValue, mergeProps } from "@/utils";
+import { ISkeletonLoaderProps } from "@/@types/interfaces/ISkeletonLoaderProps";
+
+/**
+ * SkeletonLoader Component
+ *
+ * A modern skeleton loader that creates placeholder content with shimmer animation.
+ * Perfect for loading states in cards, lists, and content areas.
+ *
+ * @example
+ * ```tsx
+ * // Basic skeleton
+ * <SkeletonLoader />
+ *
+ * // Custom skeleton with specific dimensions
+ * <SkeletonLoader width={200} height={100} />
+ *
+ * // Multiple skeleton lines
+ * <SkeletonLoader lines={3} />
+ *
+ * // Card skeleton
+ * <SkeletonLoader variant="card" />
+ * ```
+ */
+
+const defaultProps: Partial<ISkeletonLoaderProps> = {
+  size: 40,
+  color: "var(--react-loadly-color)",
+  speed: 1,
+  loading: true,
+  lines: 1,
+  variant: "line",
+  shimmer: true,
+  baseColor: "#e2e8f0",
+  highlightColor: "#f1f5f9",
+  shimmerColor: "rgba(255, 255, 255, 0.6)",
+  borderRadius: "4px",
+  spacing: "8px",
+  "aria-label": "Loading content...",
+};
+
+export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
+  const props = mergeProps(defaultProps, userProps);
+  const {
+    size,
+    width,
+    height,
+    speed,
+    loading,
+    className = "",
+    style = {},
+    lines = 1,
+    variant,
+    borderRadius,
+    spacing,
+    shimmer,
+    baseColor,
+    highlightColor,
+    shimmerColor,
+    showText,
+    loadingText = "Loading content...",
+    "aria-label": ariaLabel,
+    "data-testid": dataTestId,
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
+    ...restProps
+  } = props;
+
+  if (!loading) return null;
+
+  const containerStyle: CSSProperties = {
+    display: "inline-flex",
+    flexDirection: "column",
+    alignItems: "center",
+    ...style,
+    ...(fullscreen && {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: screenWidth || "100vw",
+      height: screenHeight || "100vh",
+      backgroundColor: screenBackground || "var(--react-loadly-background)",
+      zIndex: 9999,
+      justifyContent: loaderCenter ? "center" : style.justifyContent,
+    }),
+  };
+
+  const getSkeletonDimensions = () => {
+    switch (variant) {
+      case "avatar":
+        return {
+          width: width || size || "40px",
+          height: height || size || "40px",
+          borderRadius: borderRadius || "50%",
+        };
+      case "card":
+        return {
+          width: width || "300px",
+          height: height || "200px",
+          borderRadius: borderRadius || "8px",
+        };
+      case "text":
+        return {
+          width: width || "100%",
+          height: height || "16px",
+          borderRadius: borderRadius || "4px",
+        };
+      default:
+        return {
+          width: width || size || "100%",
+          height: height || "16px",
+          borderRadius: borderRadius || "4px",
+        };
+    }
+  };
+
+  const skeletonDimensions = getSkeletonDimensions();
+  const spacingValue = getSizeValue(spacing, "8px");
+
+  const skeletonStyle: CSSProperties = {
+    width: getSizeValue(skeletonDimensions.width),
+    height: getSizeValue(skeletonDimensions.height),
+    backgroundColor: baseColor,
+    borderRadius: getSizeValue(skeletonDimensions.borderRadius),
+    position: "relative",
+    overflow: "hidden",
+    ...(shimmer && {
+      background: `linear-gradient(90deg, ${baseColor} 25%, ${highlightColor} 50%, ${baseColor} 75%)`,
+      backgroundSize: "200% 100%",
+      animation: `react-loadly-shimmer ${1.5 / (speed || 1)}s ease-in-out infinite`,
+    }),
+  };
+
+  const renderSkeletonLines = () => {
+    if (variant === "card") {
+      return (
+        <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
+          {shimmer && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
+                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
+              }}
+            />
+          )}
+        </div>
+      );
+    }
+
+    if (variant === "avatar") {
+      return (
+        <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
+          {shimmer && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: "50%",
+                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
+                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
+              }}
+            />
+          )}
+        </div>
+      );
+    }
+
+    return Array.from({ length: lines }, (_, index) => {
+      const isLastLine = index === lines - 1;
+      const lineWidth = isLastLine && lines > 1 ? "60%" : "100%";
+
+      return (
+        <div
+          key={index}
+          style={{
+            ...skeletonStyle,
+            width: lineWidth,
+            marginBottom: index < lines - 1 ? spacingValue : 0,
+          }}
+          data-testid={dataTestId ? `${dataTestId}-skeleton-${index}` : undefined}
+        >
+          {shimmer && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
+                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
+                animationDelay: `${index * 0.1}s`,
+              }}
+            />
+          )}
+        </div>
+      );
+    });
+  };
+
+  return (
+    <div
+      className={`react-loadly react-loadly-skeleton ${className}`.trim()}
+      style={containerStyle}
+      role="status"
+      aria-label={ariaLabel}
+      aria-live="polite"
+      aria-busy={loading}
+      data-testid={dataTestId}
+      {...restProps}
+    >
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>{renderSkeletonLines()}</div>
+      {showText && (
+        <div className="react-loadly-text" aria-live="polite">
+          {loadingText}
+        </div>
+      )}
+      <span className="react-loadly-sr-only">{ariaLabel}</span>
+    </div>
+  );
+};

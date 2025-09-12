@@ -1,4 +1,4 @@
-export type { AnimationEasingType } from "./AnimationEasingType";
-export type { AnimationDirectionType } from "./AnimationDirectionType";
-export type { AnimationFillModeType } from "./AnimationFillModeType";
+export type * from "./AnimationEasingType";
+export type * from "./AnimationDirectionType";
+export type * from "./AnimationFillModeType";
 //# sourceMappingURL=index.d.ts.map

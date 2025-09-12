@@ -5,10 +5,9 @@ export * from "./components";
 export * from "./hooks";
 
 // Types
-export * from "./@types";
+
+export * from "@/types/index";
+export * from "@/interfaces/index";
 
 // Utils
 export * from "./utils";
-
-// CSS
-import "./styles/base.css";

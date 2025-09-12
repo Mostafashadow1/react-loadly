@@ -1,4 +1,8 @@
 import type { CSSProperties } from "react";
+/**
+ * Base props interface for all loader components
+ * Provides common functionality across all loader types
+ */
 export interface IBaseLoaderProps {
     /** Custom CSS class name */
     className?: string;

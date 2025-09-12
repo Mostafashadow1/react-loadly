@@ -11,8 +11,10 @@ export { LogoSpinLoader } from "./LogoSpinLoader";
 export { PulseLoader } from "./PulseLoader";
 export { RingLoader } from "./RingLoader";
 export { RotateLoader } from "./RotateLoader";
+export { ShimmerLoader } from "./ShimmerLoader";
+export { SkeletonLoader } from "./SkeletonLoader";
 export { SpinLoader } from "./SpinLoader";
 export { TypingLoader } from "./TypingLoader";
 export { WaveLoader } from "./WaveLoader";
-export type { IFallbackLoaderProps, IFluidLoaderProps, IGeometricLoaderProps, ILogoLoaderProps, ITextLoaderProps } from "@/@types";
+export type { IFallbackLoaderProps, IFluidLoaderProps, IGeometricLoaderProps, ILogoLoaderProps, ITextLoaderProps, IBaseLoaderProps, ISkeletonLoaderProps, IShimmerLoaderProps, IElementLoaderProps, ILoaderCSSVariables, ILoaderState, IUseLoaderStateReturn, IUseLoaderStateOptions, } from "@/@types/interfaces";
 //# sourceMappingURL=index.d.ts.map

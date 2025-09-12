@@ -1,6 +1,7 @@
 {
   "name": "react-loadly",
-  "version": "1.0.1",
+  "version": "1.1.0",
+  "type": "module",
   "description": "A professional React loaders package with high-performance, customizable loader components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -14,17 +15,37 @@
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./components": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "scripts": {
     "build:js": "rollup -c",
     "build:types": "tsc --emitDeclarationOnly",
     "build:watch": "rollup -c -w",
     "clean": "rimraf dist",
     "build": "npm run clean && npm run build:js && npm run build:types",
+    "build:analyze": "npm run build && npm run analyze",
+    "analyze": "rollup -c --config-option analyze=true",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -39,15 +60,27 @@
     "production": "pnpm i && pnpm lint:fix && pnpm build && pnpm pack"
   },
   "keywords": [
+    "react-loadly",
     "react",
     "loaders",
     "loading",
     "spinner",
-    "animation",
     "typescript",
     "nextjs",
     "components",
     "ui",
+    "react loaders",
+    "react loader",
+    "react spinner",
+    "loading indicator",
+    "react loading component",
+    "spinner component",
+    "skeleton loader",
+    "typescript",
+    "nextjs",
+    "ui components",
+    "frontend",
+    "animation",
     "performance"
   ],
   "author": "Mostafa Mohamed",
@@ -87,6 +120,8 @@
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript-paths": "^1.5.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-visualizer": "^5.9.2",
     "ts-jest": "^29.1.1",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.2",
