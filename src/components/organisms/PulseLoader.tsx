@@ -2,6 +2,7 @@ import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getSizeValue, mergeProps } from "@/utils";
 import React, { type CSSProperties, FC, useMemo } from "react";
 import { DotCluster } from "../molecules";
+import { classNameGen } from "@/utils/classNameGen";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
   size: 40,
@@ -62,7 +63,7 @@ export const PulseLoader: FC<IGeometricLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-pulse  ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-pulse", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

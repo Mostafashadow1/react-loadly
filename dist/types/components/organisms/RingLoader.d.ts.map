@@ -1,1 +1,1 @@
-{"version":3,"file":"RingLoader.d.ts","sourceRoot":"","sources":["../../../../src/components/organisms/RingLoader.tsx"],"names":[],"mappings":"AAAA,OAAc,EAAsB,EAAE,EAAU,MAAM,OAAO,CAAC;AAC9D,OAAO,EAAE,qBAAqB,EAAE,MAAM,cAAc,CAAC;AAYrD,eAAO,MAAM,UAAU,EAAE,EAAE,CAAC,qBAAqB,CAwGhD,CAAC"}
+{"version":3,"file":"RingLoader.d.ts","sourceRoot":"","sources":["../../../../src/components/organisms/RingLoader.tsx"],"names":[],"mappings":"AAAA,OAAc,EAAsB,EAAE,EAAU,MAAM,OAAO,CAAC;AAC9D,OAAO,EAAE,qBAAqB,EAAE,MAAM,cAAc,CAAC;AAarD,eAAO,MAAM,UAAU,EAAE,EAAE,CAAC,qBAAqB,CAwGhD,CAAC"}

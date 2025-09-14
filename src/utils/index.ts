@@ -20,3 +20,6 @@ export { clamp } from "./mathUtils";
 
 // DOM utilities
 export { generateId, sanitizeCSSValue } from "./domUtils";
+
+import { classNameGen } from "./classNameGen";
+export { classNameGen };

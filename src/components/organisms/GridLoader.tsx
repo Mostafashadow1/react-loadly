@@ -1,5 +1,6 @@
 import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getSizeValue, mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
 import React, { CSSProperties, FC, useMemo } from "react";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
@@ -62,7 +63,7 @@ export const GridLoader: FC<IGeometricLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-grid  ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-grid", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

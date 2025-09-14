@@ -1,5 +1,6 @@
 import { IFluidLoaderProps } from "@/@types";
 import { generateId, getAnimationDuration, getSizeValue, mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
 import React, { FC, useMemo, type CSSProperties } from "react";
 
 const defaultProps: Partial<IFluidLoaderProps> = {
@@ -104,7 +105,7 @@ export const BlobLoader: FC<IFluidLoaderProps> = (userProps) => {
         }
       `}</style>
       <div
-        className={`react-loadly react-loadly-blob  ${className}`.trim()}
+        className={classNameGen("react-loadly react-loadly-blob", className)}
         style={containerStyle}
         role="status"
         aria-label={ariaLabel}

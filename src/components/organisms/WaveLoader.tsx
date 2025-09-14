@@ -2,6 +2,7 @@ import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getSizeValue, mergeProps } from "@/utils";
 import React, { type CSSProperties, FC, useMemo } from "react";
 import { LineGroup } from "../molecules";
+import { classNameGen } from "@/utils/classNameGen";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
   size: 40,
@@ -66,7 +67,7 @@ export const WaveLoader: FC<IGeometricLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-wave  ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-wave", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

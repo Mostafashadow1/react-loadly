@@ -1,1 +1,1 @@
-{"version":3,"file":"WaveLoader.d.ts","sourceRoot":"","sources":["../../../../src/components/organisms/WaveLoader.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,UAAU,CAAC;AAEjD,OAAc,EAAsB,EAAE,EAAW,MAAM,OAAO,CAAC;AAY/D,eAAO,MAAM,UAAU,EAAE,EAAE,CAAC,qBAAqB,CAoFhD,CAAC"}
+{"version":3,"file":"WaveLoader.d.ts","sourceRoot":"","sources":["../../../../src/components/organisms/WaveLoader.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,UAAU,CAAC;AAEjD,OAAc,EAAsB,EAAE,EAAW,MAAM,OAAO,CAAC;AAa/D,eAAO,MAAM,UAAU,EAAE,EAAE,CAAC,qBAAqB,CAoFhD,CAAC"}

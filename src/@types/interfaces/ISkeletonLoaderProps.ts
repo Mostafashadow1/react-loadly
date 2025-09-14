@@ -1,6 +1,6 @@
 import { IBaseLoaderProps } from "./IBaseLoaderProps";
 
-export interface ISkeletonLoaderProps extends Exclude<IBaseLoaderProps, "color"> {
+export interface ISkeletonLoaderProps extends IBaseLoaderProps {
   /** Number of skeleton lines to display */
   lines?: number;
   /** Variant of skeleton (line, card, avatar, text) */
@@ -17,8 +17,6 @@ export interface ISkeletonLoaderProps extends Exclude<IBaseLoaderProps, "color">
   shimmer?: boolean;
   /** Shimmer color */
   shimmerColor?: string;
-  /** Base color of skeleton */
-  baseColor?: string;
   /** Highlight color for shimmer effect */
   highlightColor?: string;
 }

@@ -1,4 +1,4 @@
-import React$1, { CSSProperties, ReactNode, FC } from 'react';
+import React$1, { CSSProperties, ReactNode, FC, HTMLAttributes } from 'react';
 
 interface DotProps {
     size?: number | string;
@@ -271,7 +271,7 @@ interface ITextLoaderProps extends IBaseLoaderProps$1 {
   loop?: boolean;
 }
 
-interface ISkeletonLoaderProps extends Exclude<IBaseLoaderProps$1, "color"> {
+interface ISkeletonLoaderProps extends IBaseLoaderProps$1 {
   /** Number of skeleton lines to display */
   lines?: number;
   /** Variant of skeleton (line, card, avatar, text) */
@@ -288,8 +288,6 @@ interface ISkeletonLoaderProps extends Exclude<IBaseLoaderProps$1, "color"> {
   shimmer?: boolean;
   /** Shimmer color */
   shimmerColor?: string;
-  /** Base color of skeleton */
-  baseColor?: string;
   /** Highlight color for shimmer effect */
   highlightColor?: string;
 }
@@ -374,30 +372,6 @@ declare const BlobLoader: FC<IFluidLoaderProps>;
 declare const BounceLoader: FC<IGeometricLoaderProps$1>;
 
 declare const DotsLoader: FC<IGeometricLoaderProps$1>;
-
-/**
- * ElementLoader Component
- *
- * A flexible loader component that can display any React element with various animation effects.
- *
- * @example
- * ```tsx
- * // Basic usage with a div element
- * <ElementLoader>
- *   <div style={{ width: '100%', height: '100%', backgroundColor: 'blue' }} />
- * </ElementLoader>
- *
- * // With different animation types
- * <ElementLoader animationType="pulse">
- *   <div>Your custom element here</div>
- * </ElementLoader>
- *
- * // With loading text
- * <ElementLoader showText loadingText="Loading...">
- *   <YourIconComponent />
- * </ElementLoader>
- * ```
- */
 
 declare const ElementLoader: FC<IElementLoaderProps>;
 
@@ -648,5 +622,7 @@ declare function generateId(prefix?: string): string;
  */
 declare function sanitizeCSSValue(value: string | number | undefined): string | undefined;
 
-export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, ShimmerLoader, SkeletonLoader, SpinLoader, TypingLoader, WaveLoader, clamp, createAnimationName, createAnimationString, generateCSSVariables, generateId, getAnimationDirection, getAnimationDuration, getAnimationEasing, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
+declare function classNameGen<T, C>(...props: T[]): HTMLAttributes<C>["className"];
+
+export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, ShimmerLoader, SkeletonLoader, SpinLoader, TypingLoader, WaveLoader, clamp, classNameGen, createAnimationName, createAnimationString, generateCSSVariables, generateId, getAnimationDirection, getAnimationDuration, getAnimationEasing, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
 export type { AnimationDirectionType, AnimationEasingType, AnimationFillModeType, CircleProps, DotClusterProps, DotProps, IBaseLoaderProps$1 as IBaseLoaderProps, IElementLoaderProps, IFallbackLoaderProps, IFluidLoaderProps, IGeometricLoaderProps$1 as IGeometricLoaderProps, ILoaderCSSVariables, ILoaderState$1 as ILoaderState, ILogoLoaderProps, IShimmerLoaderProps, ISkeletonLoaderProps, ITextLoaderProps, IUseLoaderStateOptions$1 as IUseLoaderStateOptions, IUseLoaderStateReturn$1 as IUseLoaderStateReturn, LineGroupProps, LineProps, RectangleProps, ShapeGroupProps };

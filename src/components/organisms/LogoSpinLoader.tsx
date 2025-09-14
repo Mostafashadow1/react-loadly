@@ -1,5 +1,6 @@
 import { ILogoLoaderProps } from "@/@types/interfaces/ILogoLoaderProps";
 import { getAnimationDuration, mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC } from "react";
 
 const defaultProps: Partial<ILogoLoaderProps> = {
@@ -65,7 +66,7 @@ export const LogoSpinLoader: FC<ILogoLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-logo-spin  ${className}`.trim()}
+      className={classNameGen("`react-loadly react-loadly-logo-spin", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

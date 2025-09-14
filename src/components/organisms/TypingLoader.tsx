@@ -1,5 +1,6 @@
 import { ITextLoaderProps } from "@/@types";
 import { mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useEffect, useRef, useState } from "react";
 
 const defaultProps: Partial<ITextLoaderProps> = {
@@ -31,6 +32,7 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
     screenHeight,
     loaderCenter,
     screenBackground,
+    size = 18,
     ...restProps
   } = props;
 
@@ -101,13 +103,13 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
     color,
     fontFamily,
     fontWeight,
-    fontSize: "1.2em",
+    fontSize: size,
     whiteSpace: "pre",
   };
 
   return (
     <div
-      className={`react-loadly react-loadly-typing  ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-typing", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

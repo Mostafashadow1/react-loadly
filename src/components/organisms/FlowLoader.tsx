@@ -1,5 +1,6 @@
 import { IFluidLoaderProps } from "@/@types";
 import { generateId, getAnimationDuration, getSizeValue, mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
 const defaultProps: Partial<IFluidLoaderProps> = {
@@ -133,7 +134,7 @@ export const FlowLoader: FC<IFluidLoaderProps> = (userProps) => {
         }
       `}</style>
       <div
-        className={`react-loadly react-loadly-flow  ${className}`.trim()}
+        className={classNameGen("react-loadly react-loadly-flow", className)}
         style={containerStyle}
         role="status"
         aria-label={ariaLabel}

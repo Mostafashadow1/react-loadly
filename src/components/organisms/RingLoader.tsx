@@ -1,6 +1,7 @@
 import React, { type CSSProperties, FC, useRef } from "react";
 import { IGeometricLoaderProps } from "../../@types";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "../../utils";
+import { classNameGen } from "@/utils/classNameGen";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
   size: 60,
@@ -97,7 +98,7 @@ export const RingLoader: FC<IGeometricLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-ring  ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-ring", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

@@ -178,7 +178,7 @@ function App() {
 ```jsx
 <SkeletonLoader
   lines={3}
-  baseColor="#f0f0f0"
+  color="#f0f0f0"
   highlightColor="#e0e0e0"
   shimmerColor="rgba(255, 255, 255, 0.6)"
   spacing="12px"
@@ -238,7 +238,7 @@ function App() {
 ```jsx
 <ShimmerLoader
   lines={3}
-  baseColor="#f1f5f9"
+  color="#f1f5f9"
   highlightColor="#e2e8f0"
   shimmerColor="rgba(255, 255, 255, 0.8)"
   waveWidth="200px"

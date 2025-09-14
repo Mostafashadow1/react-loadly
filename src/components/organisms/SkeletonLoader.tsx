@@ -1,6 +1,7 @@
 import React, { type CSSProperties, FC } from "react";
 import { getSizeValue, mergeProps } from "@/utils";
 import { ISkeletonLoaderProps } from "@/@types/interfaces/ISkeletonLoaderProps";
+import { classNameGen } from "@/utils/classNameGen";
 
 /**
  * SkeletonLoader Component
@@ -26,13 +27,12 @@ import { ISkeletonLoaderProps } from "@/@types/interfaces/ISkeletonLoaderProps";
 
 const defaultProps: Partial<ISkeletonLoaderProps> = {
   size: 40,
-  color: "var(--react-loadly-color)",
   speed: 1,
   loading: true,
   lines: 1,
   variant: "line",
   shimmer: true,
-  baseColor: "#e2e8f0",
+  color: "#e2e8f0",
   highlightColor: "#f1f5f9",
   shimmerColor: "rgba(255, 255, 255, 0.6)",
   borderRadius: "4px",
@@ -55,7 +55,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
     borderRadius,
     spacing,
     shimmer,
-    baseColor,
+    color,
     highlightColor,
     shimmerColor,
     showText,
@@ -124,12 +124,12 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
   const skeletonStyle: CSSProperties = {
     width: getSizeValue(skeletonDimensions.width),
     height: getSizeValue(skeletonDimensions.height),
-    backgroundColor: baseColor,
+    backgroundColor: color,
     borderRadius: getSizeValue(skeletonDimensions.borderRadius),
     position: "relative",
     overflow: "hidden",
     ...(shimmer && {
-      background: `linear-gradient(90deg, ${baseColor} 25%, ${highlightColor} 50%, ${baseColor} 75%)`,
+      background: `linear-gradient(90deg, ${color} 25%, ${highlightColor} 50%, ${color} 75%)`,
       backgroundSize: "200% 100%",
       animation: `react-loadly-shimmer ${1.5 / (speed || 1)}s ease-in-out infinite`,
     }),
@@ -212,7 +212,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-skeleton ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-skeleton", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

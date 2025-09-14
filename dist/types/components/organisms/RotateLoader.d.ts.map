@@ -1,1 +1,1 @@
-{"version":3,"file":"RotateLoader.d.ts","sourceRoot":"","sources":["../../../../src/components/organisms/RotateLoader.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,UAAU,CAAC;AAEjD,OAAc,EAAsB,EAAE,EAAW,MAAM,OAAO,CAAC;AAW/D,eAAO,MAAM,YAAY,EAAE,EAAE,CAAC,qBAAqB,CAyGlD,CAAC"}
+{"version":3,"file":"RotateLoader.d.ts","sourceRoot":"","sources":["../../../../src/components/organisms/RotateLoader.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,UAAU,CAAC;AAGjD,OAAc,EAAsB,EAAE,EAAW,MAAM,OAAO,CAAC;AAW/D,eAAO,MAAM,YAAY,EAAE,EAAE,CAAC,qBAAqB,CAyGlD,CAAC"}

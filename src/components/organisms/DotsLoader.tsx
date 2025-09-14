@@ -1,5 +1,6 @@
 import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {
@@ -89,7 +90,7 @@ export const DotsLoader: FC<IGeometricLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-dots  ${className}`.trim()}
+      className={classNameGen("`react-loadly react-loadly-dots", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

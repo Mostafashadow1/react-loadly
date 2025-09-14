@@ -1,28 +1,7 @@
 import React, { type CSSProperties, FC } from "react";
 import { getSizeValue, mergeProps } from "@/utils";
 import { IShimmerLoaderProps } from "@/@types/interfaces/IShimmerLoaderProps";
-
-/**
- * ShimmerLoader Component
- *
- * A sophisticated shimmer effect loader that creates a wave-like animation.
- * Perfect for loading states in modern UIs and content areas.
- *
- * @example
- * ```tsx
- * // Basic shimmer
- * <ShimmerLoader />
- *
- * // Custom shimmer with specific dimensions
- * <ShimmerLoader width={300} height={100} />
- *
- * // Multiple shimmer lines
- * <ShimmerLoader lines={3} />
- *
- * // Card shimmer
- * <ShimmerLoader variant="card" />
- * ```
- */
+import { classNameGen } from "@/utils/classNameGen";
 
 const defaultProps: Partial<IShimmerLoaderProps> = {
   size: 40,
@@ -242,7 +221,7 @@ export const ShimmerLoader: FC<IShimmerLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={`react-loadly react-loadly-shimmer ${className}`.trim()}
+      className={classNameGen("react-loadly react-loadly-shimmer", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

@@ -3,4 +3,6 @@ export { createAnimationName, getAnimationDuration, getOptimizedAnimationSetting
 export { hexToRgb, rgba } from "./colorUtils";
 export { clamp } from "./mathUtils";
 export { generateId, sanitizeCSSValue } from "./domUtils";
+import { classNameGen } from "./classNameGen";
+export { classNameGen };
 //# sourceMappingURL=index.d.ts.map
