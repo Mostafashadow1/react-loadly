@@ -19,4 +19,9 @@ export interface ISkeletonLoaderProps extends IBaseLoaderProps {
   shimmerColor?: string;
   /** Highlight color for shimmer effect */
   highlightColor?: string;
+  /** Shimmer wave width */
+  waveWidth?: number | string;
+
+  /** Wave direction */
+  waveDirection?: "left-to-right" | "right-to-left" | "top-to-bottom" | "bottom-to-top";
 }

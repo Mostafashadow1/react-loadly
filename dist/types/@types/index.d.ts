@@ -6,7 +6,6 @@ export type { ILoaderCSSVariables } from "./interfaces/ILoaderCSSVariables";
 export type { ILogoLoaderProps } from "./interfaces/ILogoLoaderProps";
 export type { ITextLoaderProps } from "./interfaces/ITextLoaderProps";
 export type { ISkeletonLoaderProps } from "./interfaces/ISkeletonLoaderProps";
-export type { IShimmerLoaderProps } from "./interfaces/IShimmerLoaderProps";
 export type { ILoaderState } from "./interfaces/ILoaderState";
 export type { IUseLoaderStateOptions } from "./interfaces/IUseLoaderStateOptions";
 export type { IUseLoaderStateReturn } from "./interfaces/IUseLoaderStateReturn";

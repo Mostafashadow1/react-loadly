@@ -290,23 +290,9 @@ interface ISkeletonLoaderProps extends IBaseLoaderProps$1 {
   shimmerColor?: string;
   /** Highlight color for shimmer effect */
   highlightColor?: string;
-}
-
-interface IShimmerLoaderProps extends IBaseLoaderProps$1 {
-  /** Number of shimmer lines to display */
-  lines?: number;
-  /** Variant of shimmer (line, card, avatar, text, wave) */
-  variant?: "line" | "card" | "avatar" | "text" | "wave" | "custom";
-  /** Border radius of shimmer elements */
-  borderRadius?: number | string;
-  /** Spacing between shimmer lines */
-  spacing?: number | string;
   /** Shimmer wave width */
   waveWidth?: number | string;
-  /** Shimmer color */
-  shimmerColor?: string;
-  /** Highlight color for shimmer effect */
-  highlightColor?: string;
+
   /** Wave direction */
   waveDirection?: "left-to-right" | "right-to-left" | "top-to-bottom" | "bottom-to-top";
 }
@@ -466,8 +452,6 @@ declare const RingLoader: FC<IGeometricLoaderProps>;
 
 declare const RotateLoader: FC<IGeometricLoaderProps$1>;
 
-declare const ShimmerLoader: FC<IShimmerLoaderProps>;
-
 declare const SkeletonLoader: FC<ISkeletonLoaderProps>;
 
 declare const SpinLoader: FC<IGeometricLoaderProps$1>;
@@ -624,5 +608,5 @@ declare function sanitizeCSSValue(value: string | number | undefined): string | 
 
 declare function classNameGen<T, C>(...props: T[]): HTMLAttributes<C>["className"];
 
-export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, ShimmerLoader, SkeletonLoader, SpinLoader, TypingLoader, WaveLoader, clamp, classNameGen, createAnimationName, createAnimationString, generateCSSVariables, generateId, getAnimationDirection, getAnimationDuration, getAnimationEasing, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
-export type { AnimationDirectionType, AnimationEasingType, AnimationFillModeType, CircleProps, DotClusterProps, DotProps, IBaseLoaderProps$1 as IBaseLoaderProps, IElementLoaderProps, IFallbackLoaderProps, IFluidLoaderProps, IGeometricLoaderProps$1 as IGeometricLoaderProps, ILoaderCSSVariables, ILoaderState$1 as ILoaderState, ILogoLoaderProps, IShimmerLoaderProps, ISkeletonLoaderProps, ITextLoaderProps, IUseLoaderStateOptions$1 as IUseLoaderStateOptions, IUseLoaderStateReturn$1 as IUseLoaderStateReturn, LineGroupProps, LineProps, RectangleProps, ShapeGroupProps };
+export { BarsLoader, BlobLoader, BounceLoader, Circle, Dot, DotCluster, DotsLoader, ElementLoader, FallbackLoader, FlowLoader, GridLoader, Line, LineGroup, LiquidLoader, LogoSpinLoader, PulseLoader, Rectangle, RingLoader, RotateLoader, ShapeGroup, SkeletonLoader, SpinLoader, TypingLoader, WaveLoader, clamp, classNameGen, createAnimationName, createAnimationString, generateCSSVariables, generateId, getAnimationDirection, getAnimationDuration, getAnimationEasing, getOptimizedAnimationSettings, getSizeValue, hexToRgb, mergeProps, prefersReducedMotion, rgba, sanitizeCSSValue, useAsyncLoader, useLoaderState, useMultipleLoaderStates };
+export type { AnimationDirectionType, AnimationEasingType, AnimationFillModeType, CircleProps, DotClusterProps, DotProps, IBaseLoaderProps$1 as IBaseLoaderProps, IElementLoaderProps, IFallbackLoaderProps, IFluidLoaderProps, IGeometricLoaderProps$1 as IGeometricLoaderProps, ILoaderCSSVariables, ILoaderState$1 as ILoaderState, ILogoLoaderProps, ISkeletonLoaderProps, ITextLoaderProps, IUseLoaderStateOptions$1 as IUseLoaderStateOptions, IUseLoaderStateReturn$1 as IUseLoaderStateReturn, LineGroupProps, LineProps, RectangleProps, ShapeGroupProps };

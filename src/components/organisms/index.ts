@@ -11,7 +11,6 @@ export { LogoSpinLoader } from "./LogoSpinLoader";
 export { PulseLoader } from "./PulseLoader";
 export { RingLoader } from "./RingLoader";
 export { RotateLoader } from "./RotateLoader";
-export { ShimmerLoader } from "./ShimmerLoader";
 export { SkeletonLoader } from "./SkeletonLoader";
 export { SpinLoader } from "./SpinLoader";
 export { TypingLoader } from "./TypingLoader";
@@ -24,7 +23,6 @@ export type {
   ITextLoaderProps,
   IBaseLoaderProps,
   ISkeletonLoaderProps,
-  IShimmerLoaderProps,
   IElementLoaderProps,
   ILoaderCSSVariables,
   ILoaderState,

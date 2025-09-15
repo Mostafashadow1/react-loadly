@@ -96,10 +96,9 @@ function App() {
 
 ### Modern Content Loaders
 
-| Component        | Description                                        |
-| ---------------- | -------------------------------------------------- |
-| `SkeletonLoader` | Modern skeleton placeholders with shimmer effects. |
-| `ShimmerLoader`  | Sophisticated shimmer wave animations.             |
+| Component        | Description                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `SkeletonLoader` | Modern skeleton placeholders with shimmer effects. with Sophisticated shimmer wave animations. |
 
 ### Organic & Text-Based Loaders
 
@@ -151,20 +150,22 @@ function App() {
 
 ### Skeleton Variants
 
+The SkeletonLoader supports multiple variants to match different content types:
+
 ```jsx
-// Line skeleton (default)
+// Line skeleton (default) - for text content
 <SkeletonLoader variant="line" lines={3} />
 
-// Card skeleton
+// Card skeleton - for image cards or content blocks
 <SkeletonLoader variant="card" width={300} height={200} />
 
-// Avatar skeleton
+// Avatar skeleton - for profile images
 <SkeletonLoader variant="avatar" size={60} />
 
-// Text skeleton
+// Text skeleton - for single line text
 <SkeletonLoader variant="text" width="100%" height={16} />
 
-// Custom skeleton
+// Custom skeleton - for any custom shape
 <SkeletonLoader
   variant="custom"
   width={200}
@@ -172,6 +173,16 @@ function App() {
   borderRadius="8px"
 />
 ```
+
+### Variant Details
+
+| Variant  | Use Case                           | Default Dimensions          | Default Border Radius |
+| -------- | ---------------------------------- | --------------------------- | --------------------- |
+| `line`   | Paragraphs, lists, general content | width: 100%, height: 16px   | 4px                   |
+| `card`   | Images, cards, content blocks      | width: 300px, height: 200px | 8px                   |
+| `avatar` | Profile pictures, user icons       | width: 40px, height: 40px   | 50% (circular)        |
+| `text`   | Single line text elements          | width: 100%, height: 16px   | 4px                   |
+| `custom` | Any custom shape or element        | width: 100%, height: 16px   | 4px (customizable)    |
 
 ### Customization Options
 
@@ -183,163 +194,27 @@ function App() {
   shimmerColor="rgba(255, 255, 255, 0.6)"
   spacing="12px"
   shimmer={true}
+  waveWidth="200px"
+  waveDirection="left-to-right"
   speed={1.5}
 />
 ```
 
----
+### SkeletonLoader Props
 
-## ✨ ShimmerLoader Component
-
-The `ShimmerLoader` creates sophisticated wave-like animations perfect for modern UIs.
-
-### Basic Usage
-
-```jsx
-import { ShimmerLoader } from "react-loadly";
-
-function App() {
-  return (
-    <div>
-      {/* Basic shimmer */}
-      <ShimmerLoader />
-
-      {/* Multiple shimmer lines */}
-      <ShimmerLoader lines={3} />
-
-      {/* Card shimmer */}
-      <ShimmerLoader variant="card" width={300} height={200} />
-    </div>
-  );
-}
-```
-
-### Shimmer Variants
-
-```jsx
-// Line shimmer (default)
-<ShimmerLoader variant="line" lines={3} />
-
-// Card shimmer
-<ShimmerLoader variant="card" width={300} height={200} />
-
-// Avatar shimmer
-<ShimmerLoader variant="avatar" size={60} />
-
-// Wave shimmer
-<ShimmerLoader variant="wave" width="100%" height={20} />
-
-// Text shimmer
-<ShimmerLoader variant="text" width="100%" height={16} />
-```
-
-### Customization Options
-
-```jsx
-<ShimmerLoader
-  lines={3}
-  color="#f1f5f9"
-  highlightColor="#e2e8f0"
-  shimmerColor="rgba(255, 255, 255, 0.8)"
-  waveWidth="200px"
-  waveDirection="left-to-right"
-  speed={1.2}
-/>
-```
-
----
-
-## 🧩 ElementLoader Component
-
-The `ElementLoader` is a versatile component that can wrap any React element and apply various loading animations to it. Unlike other loaders that are pre-designed with specific visuals, the ElementLoader allows you to use your own elements (icons, divs, images, etc.) as the loading indicator.
-
-### Basic Usage
-
-```jsx
-import { ElementLoader } from "react-loadly";
-
-function App() {
-  return (
-    <ElementLoader>
-      <div style={{ width: "40px", height: "40px", backgroundColor: "blue" }} />
-    </ElementLoader>
-  );
-}
-```
-
-### Animation Types
-
-The ElementLoader supports multiple animation types:
-
-```jsx
-// Spin animation (default)
-<ElementLoader animationType="spin">
-  <YourIconComponent />
-</ElementLoader>
-
-// Pulse animation
-<ElementLoader animationType="pulse">
-  <YourIconComponent />
-</ElementLoader>
-
-// Glow animation
-<ElementLoader animationType="glow">
-  <YourIconComponent />
-</ElementLoader>
-
-// Bounce animation
-<ElementLoader animationType="bounce">
-  <YourIconComponent />
-</ElementLoader>
-
-// Flip animation
-<ElementLoader animationType="flip">
-  <YourIconComponent />
-</ElementLoader>
-```
-
-### Customization Options
-
-``jsx
-<ElementLoader size={80} color="#ff6b6b" speed={1.5} glowIntensity={0.5} showText loadingText="Loading...">
-<YourCustomElement />
-</ElementLoader>
-
-```
-
-### Fullscreen Mode
-
-Like other loaders, ElementLoader supports fullscreen mode:
-
-``jsx
-<ElementLoader fullscreen loaderCenter screenBackground="rgba(0, 0, 0, 0.5)">
-  <YourIconComponent />
-</ElementLoader>
-```
-
-### Props
-
-| Prop               | Type                                              | Default                     | Description                                     |
-| ------------------ | ------------------------------------------------- | --------------------------- | ----------------------------------------------- |
-| `children`         | ReactNode                                         | undefined                   | The React element to apply loading animation to |
-| `animationType`    | "spin" \| "pulse" \| "glow" \| "bounce" \| "flip" | "spin"                      | Type of animation to apply                      |
-| `glowIntensity`    | number (0-1)                                      | 0.3                         | Intensity of the glow effect                    |
-| `size`             | number \| string                                  | 60                          | Size of the loader                              |
-| `width`            | number \| string                                  | undefined                   | Width of the loader (overrides size)            |
-| `height`           | number \| string                                  | undefined                   | Height of the loader (overrides size)           |
-| `color`            | string                                            | "var(--react-loadly-color)" | Primary color of the loader                     |
-| `speed`            | number                                            | 1                           | Animation speed multiplier                      |
-| `loading`          | boolean                                           | true                        | Whether the loader is active                    |
-| `className`        | string                                            | undefined                   | Custom CSS class name                           |
-| `style`            | CSSProperties                                     | undefined                   | Custom inline styles                            |
-| `aria-label`       | string                                            | "Loading..."                | Accessibility label for screen readers          |
-| `showText`         | boolean                                           | false                       | Whether to show loading text                    |
-| `loadingText`      | string                                            | undefined                   | Custom loading text                             |
-| `fullscreen`       | boolean                                           | false                       | Enable fullscreen mode                          |
-| `screenWidth`      | number \| string                                  | undefined                   | Screen width for fullscreen mode                |
-| `screenHeight`     | number \| string                                  | undefined                   | Screen height for fullscreen mode               |
-| `loaderCenter`     | boolean                                           | false                       | Center the loader in fullscreen mode            |
-| `screenBackground` | string                                            | undefined                   | Background color for fullscreen mode            |
+| Prop             | Type                                                                     | Default                 | Description                         |
+| ---------------- | ------------------------------------------------------------------------ | ----------------------- | ----------------------------------- |
+| `lines`          | number                                                                   | 1                       | Number of skeleton lines to display |
+| `variant`        | "line" \| "card" \| "avatar" \| "text" \| "custom"                       | "line"                  | Variant of skeleton to display      |
+| `width`          | number \| string                                                         | varies by variant       | Width of skeleton elements          |
+| `height`         | number \| string                                                         | varies by variant       | Height of skeleton elements         |
+| `borderRadius`   | number \| string                                                         | varies by variant       | Border radius of skeleton elements  |
+| `spacing`        | number \| string                                                         | "8px"                   | Spacing between skeleton lines      |
+| `shimmer`        | boolean                                                                  | true                    | Whether to show shimmer animation   |
+| `shimmerColor`   | string                                                                   | "rgba(255,255,255,0.6)" | Shimmer effect color                |
+| `highlightColor` | string                                                                   | "#f1f5f9"               | Highlight color for shimmer effect  |
+| `waveWidth`      | number \| string                                                         | "200px"                 | Shimmer wave width                  |
+| `waveDirection`  | "left-to-right" \| "right-to-left" \| "top-to-bottom" \| "bottom-to-top" | "left-to-right"         | Direction of shimmer animation      |
 
 ---
 
@@ -476,7 +351,7 @@ interface BaseLoaderProps {
 
 React Loadly provides comprehensive TypeScript definitions for all components and hooks. You can import types and interfaces directly from the library:
 
-```tsx
+``tsx
 // ✅ Correct way to import shared interfaces
 import type { IBaseLoaderProps, ISkeletonLoaderProps } from "react-loadly";
 
@@ -488,7 +363,8 @@ import type { IUseLoaderStateReturn } from "react-loadly/hooks";
 
 // For animation types
 import type { AnimationDirectionType } from "react-loadly";
-```
+
+````
 
 All types are properly exported and can be used in your TypeScript projects for better type safety and autocompletion.
 
@@ -514,7 +390,7 @@ Display any loader in fullscreen mode with customizable dimensions and backgroun
   loaderCenter={true}
   screenBackground="rgba(0, 0, 0, 0.5)"
 />
-```
+````
 
 ---
 
@@ -523,25 +399,18 @@ Display any loader in fullscreen mode with customizable dimensions and backgroun
 ### Loading States for Different Content Types
 
 ``jsx
-import { SkeletonLoader, ShimmerLoader, SpinLoader, PulseLoader } from "react-loadly";
+import { SkeletonLoader, SpinLoader, PulseLoader } from "react-loadly";
 
 function ContentLoader() {
 return (
 
 <div>
-{/_ Blog post loading _/}
+{/_ Blog post loading Dashboard loading _/}
 <div className="blog-post">
 <SkeletonLoader variant="avatar" size={40} />
 <SkeletonLoader lines={3} spacing="8px" />
 <SkeletonLoader variant="card" width="100%" height={200} />
 </div>
-
-      {/* Dashboard loading */}
-      <div className="dashboard">
-        <ShimmerLoader variant="card" width={300} height={150} />
-        <ShimmerLoader variant="card" width={300} height={150} />
-        <ShimmerLoader variant="card" width={300} height={150} />
-      </div>
 
       {/* Button loading */}
       <button disabled>
@@ -588,17 +457,17 @@ function FormWithLoading() {
 
 ### Data Table Loading
 
-```jsx
+``jsx
 function DataTable({ data, loading }) {
-  if (loading) {
-    return (
-      <div className="data-table">
-        {/* Header skeleton */}
-        <div className="table-header">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <SkeletonLoader key={i} width={120} height={20} />
-          ))}
-        </div>
+if (loading) {
+return (
+<div className="data-table">
+{/_ Header skeleton _/}
+<div className="table-header">
+{Array.from({ length: 5 }).map((\_, i) => (
+<SkeletonLoader key={i} width={120} height={20} />
+))}
+</div>
 
         {/* Row skeletons */}
         {Array.from({ length: 10 }).map((_, i) => (
@@ -610,21 +479,32 @@ function DataTable({ data, loading }) {
         ))}
       </div>
     );
-  }
 
-  return <div className="data-table">{/* Actual table content */}</div>;
 }
+
+return <div className="data-table">{/_ Actual table content _/}</div>;
+}
+
 ```
 
 ### Image Gallery Loading
 
-```jsx
+``jsx
 function ImageGallery({ images, loading }) {
   if (loading) {
     return (
       <div className="image-gallery">
         {Array.from({ length: 6 }).map((_, i) => (
-          <ShimmerLoader key={i} variant="card" width={200} height={200} borderRadius="8px" />
+          <SkeletonLoader
+            key={i}
+            variant="card"
+            width={200}
+            height={200}
+            borderRadius="8px"
+            shimmer
+            shimmerColor="#f0f0f0"
+            waveDirection="left-to-right"
+          />
         ))}
       </div>
     );

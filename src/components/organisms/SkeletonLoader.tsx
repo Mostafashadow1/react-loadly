@@ -3,28 +3,6 @@ import { getSizeValue, mergeProps } from "@/utils";
 import { ISkeletonLoaderProps } from "@/@types/interfaces/ISkeletonLoaderProps";
 import { classNameGen } from "@/utils/classNameGen";
 
-/**
- * SkeletonLoader Component
- *
- * A modern skeleton loader that creates placeholder content with shimmer animation.
- * Perfect for loading states in cards, lists, and content areas.
- *
- * @example
- * ```tsx
- * // Basic skeleton
- * <SkeletonLoader />
- *
- * // Custom skeleton with specific dimensions
- * <SkeletonLoader width={200} height={100} />
- *
- * // Multiple skeleton lines
- * <SkeletonLoader lines={3} />
- *
- * // Card skeleton
- * <SkeletonLoader variant="card" />
- * ```
- */
-
 const defaultProps: Partial<ISkeletonLoaderProps> = {
   size: 40,
   speed: 1,
@@ -37,6 +15,8 @@ const defaultProps: Partial<ISkeletonLoaderProps> = {
   shimmerColor: "rgba(255, 255, 255, 0.6)",
   borderRadius: "4px",
   spacing: "8px",
+  waveWidth: "200px",
+  waveDirection: "left-to-right",
   "aria-label": "Loading content...",
 };
 
@@ -58,6 +38,8 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
     color,
     highlightColor,
     shimmerColor,
+    waveWidth,
+    waveDirection,
     showText,
     loadingText = "Loading content...",
     "aria-label": ariaLabel,
@@ -120,6 +102,20 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
 
   const skeletonDimensions = getSkeletonDimensions();
   const spacingValue = getSizeValue(spacing, "8px");
+  const waveWidthValue = getSizeValue(waveWidth, "200px");
+
+  const getShimmerGradient = () => {
+    const gradientDirection =
+      waveDirection === "left-to-right"
+        ? "90deg"
+        : waveDirection === "right-to-left"
+        ? "270deg"
+        : waveDirection === "top-to-bottom"
+        ? "180deg"
+        : "0deg";
+
+    return `linear-gradient(${gradientDirection}, ${color} 0%, ${highlightColor} 50%, ${color} 100%)`;
+  };
 
   const skeletonStyle: CSSProperties = {
     width: getSizeValue(skeletonDimensions.width),
@@ -129,55 +125,14 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
     position: "relative",
     overflow: "hidden",
     ...(shimmer && {
-      background: `linear-gradient(90deg, ${color} 25%, ${highlightColor} 50%, ${color} 75%)`,
-      backgroundSize: "200% 100%",
+      background: getShimmerGradient(),
+      backgroundSize: `${waveWidthValue} 100%`,
       animation: `react-loadly-shimmer ${1.5 / (speed || 1)}s ease-in-out infinite`,
     }),
   };
 
-  const renderSkeletonLines = () => {
-    if (variant === "card") {
-      return (
-        <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
-          {shimmer && (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
-                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
-              }}
-            />
-          )}
-        </div>
-      );
-    }
-
-    if (variant === "avatar") {
-      return (
-        <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
-          {shimmer && (
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                borderRadius: "50%",
-                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
-                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
-              }}
-            />
-          )}
-        </div>
-      );
-    }
-
-    return Array.from({ length: lines }, (_, index) => {
+  const renderSkeletonLines = () =>
+    Array.from({ length: lines }, (_, index) => {
       const isLastLine = index === lines - 1;
       const lineWidth = isLastLine && lines > 1 ? "60%" : "100%";
 
@@ -208,7 +163,6 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
         </div>
       );
     });
-  };
 
   return (
     <div

@@ -6,7 +6,6 @@ export type { IGeometricLoaderProps } from "./IGeometricLoaderProps";
 export type { ILoaderCSSVariables } from "./ILoaderCSSVariables";
 export type { ILogoLoaderProps } from "./ILogoLoaderProps";
 export type { ITextLoaderProps } from "./ITextLoaderProps";
-export type { IShimmerLoaderProps } from "./IShimmerLoaderProps";
 export type { ISkeletonLoaderProps } from "./ISkeletonLoaderProps";
 // Export all hooks interfaces
 export type { ILoaderState } from "./ILoaderState";
