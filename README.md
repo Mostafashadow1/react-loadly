@@ -33,7 +33,7 @@ npm install react-loadly
 # or
 yarn add react-loadly
 # or
-pnpm add react-loadly
+pnpm i react-loadly
 ```
 
 ### Bundle Optimization
