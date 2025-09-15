@@ -261,7 +261,7 @@ interface ILogoLoaderProps extends IBaseLoaderProps$1 {
   glowIntensity?: number;
 }
 
-interface ITextLoaderProps extends IBaseLoaderProps$1 {
+interface ITextLoaderProps extends Exclude<IBaseLoaderProps$1, "showText"> {
   /** Font family for text loaders */
   fontFamily?: string;
   /** Font weight */

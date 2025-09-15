@@ -8,7 +8,7 @@ const defaultProps: Partial<ISkeletonLoaderProps> = {
   speed: 1,
   loading: true,
   lines: 1,
-  variant: "line",
+  variant: "card",
   shimmer: true,
   color: "#e2e8f0",
   highlightColor: "#f1f5f9",
@@ -81,20 +81,20 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
         };
       case "card":
         return {
-          width: width || "300px",
-          height: height || "200px",
+          width: width || size || "300px",
+          height: height || size || "200px",
           borderRadius: borderRadius || "8px",
         };
       case "text":
         return {
-          width: width || "100%",
-          height: height || "16px",
+          width: width || size || "100%",
+          height: height || size || "16px",
           borderRadius: borderRadius || "4px",
         };
       default:
         return {
           width: width || size || "100%",
-          height: height || "16px",
+          height: height || size || "16px",
           borderRadius: borderRadius || "4px",
         };
     }
@@ -117,13 +117,17 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
     return `linear-gradient(${gradientDirection}, ${color} 0%, ${highlightColor} 50%, ${color} 100%)`;
   };
 
-  const skeletonStyle: CSSProperties = {
+  const skeletonBaseStyle: CSSProperties = {
     width: getSizeValue(skeletonDimensions.width),
     height: getSizeValue(skeletonDimensions.height),
     backgroundColor: color,
     borderRadius: getSizeValue(skeletonDimensions.borderRadius),
     position: "relative",
     overflow: "hidden",
+  };
+
+  const skeletonStyle: CSSProperties = {
+    ...skeletonBaseStyle,
     ...(shimmer && {
       background: getShimmerGradient(),
       backgroundSize: `${waveWidthValue} 100%`,
@@ -131,8 +135,51 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
     }),
   };
 
-  const renderSkeletonLines = () =>
-    Array.from({ length: lines }, (_, index) => {
+  const renderSkeletonLines = () => {
+    // keep special behavior for card & avatar like the previous version
+    if (variant === "card") {
+      return (
+        <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
+          {shimmer && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
+                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
+              }}
+            />
+          )}
+        </div>
+      );
+    }
+
+    if (variant === "avatar") {
+      return (
+        <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
+          {shimmer && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: "50%",
+                background: `linear-gradient(90deg, transparent, ${shimmerColor}, transparent)`,
+                animation: `react-loadly-shimmer-overlay ${1.5 / (speed || 1)}s ease-in-out infinite`,
+              }}
+            />
+          )}
+        </div>
+      );
+    }
+
+    // default: render multiple lines (line/text variants)
+    return Array.from({ length: lines }, (_, index) => {
       const isLastLine = index === lines - 1;
       const lineWidth = isLastLine && lines > 1 ? "60%" : "100%";
 
@@ -141,7 +188,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
           key={index}
           style={{
             ...skeletonStyle,
-            width: lineWidth,
+            width: lineWidth, // for text/line variants we intentionally override width so lines look like text
             marginBottom: index < lines - 1 ? spacingValue : 0,
           }}
           data-testid={dataTestId ? `${dataTestId}-skeleton-${index}` : undefined}
@@ -163,6 +210,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
         </div>
       );
     });
+  };
 
   return (
     <div

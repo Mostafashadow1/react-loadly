@@ -5,6 +5,8 @@ It’s built with **TypeScript**, optimized for **Next.js / SSR**, and designed 
 
 Perfect for building **React apps, dashboards, forms, and data-driven UIs** where you need smooth, customizable loading states.
 
+🏠 **Home Page**: [https://Mostafashadow1.github.io/react-loadly-showCases/](https://Mostafashadow1.github.io/react-loadly-showCases/)
+
 [![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)  
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/main/LICENSE)
@@ -461,6 +463,7 @@ function FormWithLoading() {
 function DataTable({ data, loading }) {
 if (loading) {
 return (
+
 <div className="data-table">
 {/_ Header skeleton _/}
 <div className="table-header">

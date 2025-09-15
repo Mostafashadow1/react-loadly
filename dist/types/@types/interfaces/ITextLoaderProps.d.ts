@@ -1,5 +1,5 @@
 import { IBaseLoaderProps } from "./IBaseLoaderProps";
-export interface ITextLoaderProps extends IBaseLoaderProps {
+export interface ITextLoaderProps extends Exclude<IBaseLoaderProps, "showText"> {
     /** Font family for text loaders */
     fontFamily?: string;
     /** Font weight */

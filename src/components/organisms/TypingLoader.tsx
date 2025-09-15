@@ -14,7 +14,7 @@ const defaultProps: Partial<ITextLoaderProps> = {
 export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
-    loadingText,
+    loadingText = "loading...",
     speed = 1,
     loading,
     charDelay = 100,
@@ -26,7 +26,6 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
     fontWeight = 500,
     "aria-label": ariaLabel,
     "data-testid": dataTestId,
-    showText,
     fullscreen,
     screenWidth,
     screenHeight,
@@ -132,11 +131,9 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
           |
         </span>
       </div>
-      {showText && (
-        <div className="react-loadly-text" aria-live="polite">
-          {loadingText}
-        </div>
-      )}
+      <div className="react-loadly-text" aria-live="polite">
+        {loadingText}
+      </div>
       <span className="react-loadly-sr-only">{ariaLabel}</span>
     </div>
   );
