@@ -131,9 +131,6 @@ export const TypingLoader: FC<ITextLoaderProps> = (userProps) => {
           |
         </span>
       </div>
-      <div className="react-loadly-text" aria-live="polite">
-        {loadingText}
-      </div>
       <span className="react-loadly-sr-only">{ariaLabel}</span>
     </div>
   );

@@ -1,6 +1,6 @@
 {
   "name": "react-loadly",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "type": "module",
   "description": "A professional React loaders package with high-performance, customizable loader components",
   "main": "dist/index.cjs.js",
@@ -94,8 +94,8 @@
   },
   "homepage": "https://Mostafashadow1.github.io/react-loadly-showCases/",
   "peerDependencies": {
-    "react": ">=16.8.0 <21",
-    "react-dom": ">=16.8.0 <21"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
