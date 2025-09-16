@@ -1,1 +1,0 @@
-{"version":3,"file":"ILoaderState.d.ts","sourceRoot":"","sources":["../../../../src/@types/interfaces/ILoaderState.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,YAAY;IAC3B,SAAS,EAAE,OAAO,CAAC;IACnB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,KAAK,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IACtB,UAAU,CAAC,EAAE,MAAM,CAAC;CACrB"}
