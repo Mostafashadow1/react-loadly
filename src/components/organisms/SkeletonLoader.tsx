@@ -86,6 +86,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
           borderRadius: borderRadius || "8px",
         };
       case "text":
+      case "line":
         return {
           width: width || size || "100%",
           height: height || size || "16px",
@@ -136,7 +137,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
   };
 
   const renderSkeletonLines = () => {
-    // keep special behavior for card & avatar like the previous version
+    // Special behavior for card variant
     if (variant === "card") {
       return (
         <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
@@ -157,6 +158,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
       );
     }
 
+    // Special behavior for avatar variant
     if (variant === "avatar") {
       return (
         <div style={skeletonStyle} data-testid={dataTestId ? `${dataTestId}-skeleton` : undefined}>
@@ -178,7 +180,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
       );
     }
 
-    // default: render multiple lines (line/text variants)
+    // Default: render multiple lines for text/line variants
     return Array.from({ length: lines }, (_, index) => {
       const isLastLine = index === lines - 1;
       const lineWidth = isLastLine && lines > 1 ? "60%" : "100%";
@@ -188,7 +190,7 @@ export const SkeletonLoader: FC<ISkeletonLoaderProps> = (userProps) => {
           key={index}
           style={{
             ...skeletonStyle,
-            width: lineWidth, // for text/line variants we intentionally override width so lines look like text
+            width: lineWidth,
             marginBottom: index < lines - 1 ? spacingValue : 0,
           }}
           data-testid={dataTestId ? `${dataTestId}-skeleton-${index}` : undefined}

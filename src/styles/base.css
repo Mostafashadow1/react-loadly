@@ -338,6 +338,13 @@
   }
 }
 
+/* AutoSkeleton styles */
+.react-loadly-auto-skeleton {
+  display: block;
+  width: 100%;
+  transition: opacity 0.3s ease-in-out;
+}
+
 /* Enhanced geometric animations */
 @keyframes react-loadly-rotate-3d {
   0% {

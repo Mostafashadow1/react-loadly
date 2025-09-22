@@ -15,6 +15,7 @@ export { SkeletonLoader } from "./SkeletonLoader";
 export { SpinLoader } from "./SpinLoader";
 export { TypingLoader } from "./TypingLoader";
 export { WaveLoader } from "./WaveLoader";
+export { AutoSkeletonLoader } from "./AutoSkeletonLoader";
 export type {
   IFallbackLoaderProps,
   IFluidLoaderProps,
@@ -28,4 +29,5 @@ export type {
   ILoaderState,
   IUseLoaderStateReturn,
   IUseLoaderStateOptions,
+  IAutoSkeletonProps,
 } from "@/@types/interfaces";

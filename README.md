@@ -3,7 +3,7 @@
 **React Loadly** is a modern, high-performance library of **React loaders, spinners, and loading indicators**.  
 It’s built with **TypeScript**, optimized for **Next.js / SSR**, and designed with **accessibility** and **developer experience** in mind.
 
-Perfect for building **React apps, dashboards, forms, and data-driven UIs** where you need smooth, customizable loading states.
+Perfect for building **React apps, dashboards, forms, and data-driven UIs** where you need smooth, customizable loading states. Includes **AutoSkeletonLoader** for automatically generating skeleton loaders based on your component structure.
 
 🏠 **Home Page**: [https://Mostafashadow1.github.io/react-loadly-showCases/](https://Mostafashadow1.github.io/react-loadly-showCases/)
 
@@ -21,6 +21,7 @@ Perfect for building **React apps, dashboards, forms, and data-driven UIs** wher
 - **Reduced Motion**: Respects the user's `prefers-reduced-motion` settings.
 - **SSR Compatible**: Works out-of-the-box with frameworks like **Next.js**.
 - **Fullscreen Support**: Display loaders in fullscreen mode with customizable backgrounds.
+- **AutoSkeletonLoader Support**: Automatically generates skeleton loaders based on your component structure.
 
 ---
 
@@ -98,9 +99,10 @@ function App() {
 
 ### Modern Content Loaders
 
-| Component        | Description                                                                                    |
-| ---------------- | ---------------------------------------------------------------------------------------------- |
-| `SkeletonLoader` | Modern skeleton placeholders with shimmer effects. with Sophisticated shimmer wave animations. |
+| Component            | Description                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------------- |
+| `SkeletonLoader`     | Modern skeleton placeholders with shimmer effects. with Sophisticated shimmer wave animations. |
+| `AutoSkeletonLoader` | Automatically generates skeleton loaders based on your component structure.                    |
 
 ### Organic & Text-Based Loaders
 
@@ -220,6 +222,125 @@ The SkeletonLoader supports multiple variants to match different content types:
 
 ---
 
+## 🤖 AutoSkeletonLoader Component
+
+The `AutoSkeletonLoader` is an advanced component that automatically generates skeleton loaders based on the structure of your actual components. It analyzes your component's JSX tree and creates matching skeleton placeholders.
+
+### Key Features
+
+- **Automatic Generation**: Scans the JSX tree of your component and replaces each element with a matching skeleton placeholder
+- **Smart Dimension Estimation**: Automatically estimates skeleton dimensions based on element types and content
+- **Style Inheritance**: Optionally inherits inline styles and props directly from the original element
+- **Customizable Class Names**: Override styles per element type for fine-grained control
+- **Variant Support**: Automatically selects appropriate skeleton variants (rect, circle, text) based on element type
+- **Consistent Animations**: Shimmer effect support that's consistent with SkeletonLoader
+- **Smooth Transitions**: Built-in fade-in/out animations between skeleton and real component
+- **Accessibility**: Full ARIA support and screen reader compatibility
+- **Performance Optimized**: Uses React.memo and useMemo for optimal re-rendering
+
+### Basic Usage
+
+```jsx
+import { AutoSkeletonLoader } from "react-loadly";
+
+function UserProfile({ user, loading }) {
+  return <AutoSkeletonLoader loading={loading} component={<UserProfileCard user={user} />} />;
+}
+
+function UserProfileCard({ user }) {
+  return (
+    <div>
+      <img src={user.avatar} alt={user.name} width="100" height="100" />
+      <h3>{user.name}</h3>
+      <p>{user.bio}</p>
+      <button>Follow</button>
+    </div>
+  );
+}
+```
+
+### Advanced Usage Examples
+
+#### Style Inheritance
+
+```jsx
+// Inherits styles from original elements for more accurate skeletons
+<AutoSkeletonLoader loading={loading} component={<UserProfileCard user={user} />} inheritStyles={true} />
+```
+
+#### Custom Class Names
+
+```jsx
+// Customize skeleton appearance per element type
+<AutoSkeleton
+  loading={loading}
+  component={<Card data={data} />}
+  styless={{
+    p: { height: "0.8em", width: "80%" },
+    h3: { height: "1.2em", width: "60%", borderRadius: "8px" },
+    img: { borderRadius: "12px" },
+    button: { width: "150px", height: "50px" },
+  }}
+/>
+```
+
+#### With Shimmer Effects
+
+```jsx
+// Enable shimmer animations for a more polished look
+<AutoSkeleton
+  loading={loading}
+  component={<ProductCard product={product} />}
+  shimmer={true}
+  shimmerColor="rgba(255, 255, 255, 0.8)"
+  highlightColor="#f8fafc"
+/>
+```
+
+#### Complex Component Example
+
+```jsx
+function DashboardCard({ title, metrics, loading }) {
+  return (
+    <AutoSkeletonLoader
+      loading={loading}
+      component={
+        <div className="dashboard-card">
+          <h2>{title}</h2>
+          <div className="metrics">
+            {metrics.map((metric, index) => (
+              <div key={index} className="metric">
+                <span className="value">{metric.value}</span>
+                <span className="label">{metric.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      }
+      inheritStyles={true}
+      shimmer={true}
+    />
+  );
+}
+```
+
+### AutoSkeleton Props
+
+| Prop             | Type                                                                     | Default                 | Description                                      |
+| ---------------- | ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------ |
+| `component`      | ReactElement                                                             | -                       | The component to render or analyze for skeletons |
+| `inheritStyles`  | boolean                                                                  | false                   | Whether to inherit styles from original elements |
+| `styless`        | object                                                                   | {}                      | Custom styles for different element types        |
+| `shimmer`        | boolean                                                                  | true                    | Whether to show shimmer animation                |
+| `shimmerColor`   | string                                                                   | "rgba(255,255,255,0.6)" | Shimmer effect color                             |
+| `highlightColor` | string                                                                   | "#f1f5f9"               | Highlight color for shimmer effect               |
+| `waveWidth`      | number \| string                                                         | "200px"                 | Shimmer wave width                               |
+| `waveDirection`  | "left-to-right" \| "right-to-left" \| "top-to-bottom" \| "bottom-to-top" | "left-to-right"         | Direction of shimmer animation                   |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
 ## ⚡ Performance & Best Practices
 
 ### Performance Optimization
@@ -243,32 +364,32 @@ import \* as Loaders from "react-loadly";
 
 // ✅ Good: Use appropriate loader for context
 function UserProfile({ user, loading }) {
-if (loading) {
-return (
-<div>
-<SkeletonLoader variant="avatar" size={60} />
-<SkeletonLoader lines={2} />
-</div>
-);
-}
-return <div>{/_ User content _/}</div>;
+  if (loading) {
+    return (
+      <div>
+        <SkeletonLoader variant="avatar" size={60} />
+        <SkeletonLoader lines={2} />
+      </div>
+    );
+  }
+  return <div>{/_ User content _/}</div>;
 }
 
 // ✅ Good: Conditional rendering
 function DataComponent({ data, loading }) {
-return <div>{loading ? <SpinLoader /> : <div>{data}</div>}</div>;
+  return <div>{loading ? <SpinLoader /> : <div>{data}</div>}</div>;
 }
 
 // ✅ Good: Use fullscreen for page-level loading
 function App() {
-const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-return (
-<div>
-{isLoading && <SpinLoader fullscreen loaderCenter screenBackground="rgba(255, 255, 255, 0.9)" />}
-{/_ App content _/}
-</div>
-);
+  return (
+    <div>
+      {isLoading && <SpinLoader fullscreen loaderCenter screenBackground="rgba(255, 255, 255, 0.9)" />}
+      {/_ App content _/}
+    </div>
+  );
 }
 
 ```
@@ -287,7 +408,7 @@ import dynamic from "next/dynamic";
 
 const SkeletonLoader = dynamic(() => import("react-loadly").then((mod) => ({ default: mod.SkeletonLoader })));
 
-````
+```
 
 ---
 
@@ -301,13 +422,13 @@ Accessibility is a core feature, not an afterthought. All loaders include:
 
 <!-- end list -->
 
-```jsx
+``jsx
 // Accessible by default
 <SpinLoader aria-label="Loading content" />
 
 // Custom accessible text
 <PulseLoader showText loadingText="Processing your request..." />
-````
+```
 
 ---
 
@@ -392,7 +513,7 @@ Display any loader in fullscreen mode with customizable dimensions and backgroun
   loaderCenter={true}
   screenBackground="rgba(0, 0, 0, 0.5)"
 />
-````
+```
 
 ---
 
@@ -404,7 +525,7 @@ Display any loader in fullscreen mode with customizable dimensions and backgroun
 import { SkeletonLoader, SpinLoader, PulseLoader } from "react-loadly";
 
 function ContentLoader() {
-return (
+  return (
 
 <div>
 {/_ Blog post loading Dashboard loading _/}
@@ -426,7 +547,7 @@ return (
       </div>
     </div>
 
-);
+  );
 }
 
 ```
@@ -461,8 +582,8 @@ function FormWithLoading() {
 
 ``jsx
 function DataTable({ data, loading }) {
-if (loading) {
-return (
+  if (loading) {
+    return (
 
 <div className="data-table">
 {/_ Header skeleton _/}
@@ -483,9 +604,9 @@ return (
       </div>
     );
 
-}
+  }
 
-return <div className="data-table">{/_ Actual table content _/}</div>;
+  return <div className="data-table">{/_ Actual table content _/}</div>;
 }
 
 ```
@@ -676,3 +797,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ by the React Loadly community**
+````

@@ -1,3 +1,4 @@
+import { WaveDirectionType } from "../types/WaveDirectionType";
 import { IBaseLoaderProps } from "./IBaseLoaderProps";
 
 export interface ISkeletonLoaderProps extends IBaseLoaderProps {
@@ -23,5 +24,5 @@ export interface ISkeletonLoaderProps extends IBaseLoaderProps {
   waveWidth?: number | string;
 
   /** Wave direction */
-  waveDirection?: "left-to-right" | "right-to-left" | "top-to-bottom" | "bottom-to-top";
+  waveDirection?: WaveDirectionType;
 }
