@@ -116,11 +116,245 @@ function App() {
 
 ### Flexible Loaders
 
-| Component        | Description                                                                          |
-| ---------------- | ------------------------------------------------------------------------------------ |
-| `ElementLoader`  | A flexible loader that can display any React element with various animation effects. |
-| `FallbackLoader` | Error handling and retry functionality with customizable UI.                         |
-| `LogoSpinLoader` | Specialized loader for logos and brand elements.                                     |
+| Component            | Description                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------ | --- |
+| `ElementLoader`      | A flexible loader that can display any React element with various animation effects. |
+| `FallbackLoader`     | Error handling and retry functionality with customizable UI.                         |
+| `LogoSpinLoader`     | Specialized loader for logos and brand elements.                                     |
+| `ProgressRingLoader` | Accessible progress ring with optional determinate mode.                             |
+| `MorphLoader`        | Smooth morphing SVG shapes that interpolate between paths.                           |
+| `SpinDotsLoader`     | Circular orbit of dots; perfect for inline text.                                     |
+| `HeatmapLoader`      | Grid of pulses with staggered timing; useful for dashboards.                         |     |
+
+### ProgressRingLoader Component
+
+The `ProgressRingLoader` is an accessible progress ring component that supports both determinate and indeterminate modes. In determinate mode, it shows the exact progress percentage, while in indeterminate mode, it provides a continuous spinning animation.
+
+#### Basic Usage
+
+```jsx
+import { ProgressRingLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Indeterminate mode (default) */}
+      <ProgressRingLoader />
+
+      {/* Determinate mode */}
+      <ProgressRingLoader progress={75} />
+
+      {/* Custom size and color */}
+      <ProgressRingLoader size={60} color="#10b981" thickness={6} />
+    </div>
+  );
+}
+```
+
+#### ProgressRingLoader Props
+
+| Prop        | Type             | Default   | Description                                      |
+| ----------- | ---------------- | --------- | ------------------------------------------------ |
+| `progress`  | number \| null   | null      | Progress value (0-100) or null for indeterminate |
+| `thickness` | number           | 4         | Thickness of the ring                            |
+| `size`      | number \| string | 40        | Size of the loader                               |
+| `color`     | string           | "#6366f1" | Color of the progress ring                       |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### MorphLoader Component
+
+The `MorphLoader` creates smooth morphing SVG shapes that interpolate between different paths. It supports three variants: blob, soft, and sharp.
+
+#### Basic Usage
+
+```jsx
+import { MorphLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default blob variant */}
+      <MorphLoader />
+
+      {/* Soft variant */}
+      <MorphLoader variant="soft" />
+
+      {/* Sharp variant */}
+      <MorphLoader variant="sharp" />
+
+      {/* Custom size and color */}
+      <MorphLoader size={60} color="#10b981" />
+    </div>
+  );
+}
+```
+
+#### MorphLoader Props
+
+| Prop      | Type                        | Default   | Description                 |
+| --------- | --------------------------- | --------- | --------------------------- |
+| `variant` | "blob" \| "soft" \| "sharp" | "blob"    | Morph variant type          |
+| `speed`   | number                      | 1         | Animation speed multiplier  |
+| `size`    | number \| string            | 40        | Size of the loader          |
+| `color`   | string                      | "#6366f1" | Color of the morphing shape |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### SpinDotsLoader Component
+
+The `SpinDotsLoader` creates a circular orbit of dots, perfect for inline text loading indicators.
+
+#### Basic Usage
+
+```jsx
+import { SpinDotsLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default 3 dots */}
+      <SpinDotsLoader />
+
+      {/* Custom number of dots */}
+      <SpinDotsLoader dots={5} />
+
+      {/* Custom size and color */}
+      <SpinDotsLoader size={50} color="#10b981" />
+    </div>
+  );
+}
+```
+
+#### SpinDotsLoader Props
+
+| Prop    | Type             | Default   | Description                |
+| ------- | ---------------- | --------- | -------------------------- |
+| `dots`  | number           | 3         | Number of dots in orbit    |
+| `gap`   | number           | 8         | Gap between dots           |
+| `size`  | number \| string | 40        | Size of the loader         |
+| `color` | string           | "#6366f1" | Color of the dots          |
+| `speed` | number           | 1         | Animation speed multiplier |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### HeatmapLoader Component
+
+The `HeatmapLoader` displays a grid of pulses with staggered timing, useful for dashboard data placeholders.
+
+#### Basic Usage
+
+```jsx
+import { HeatmapLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default 3x5 grid */}
+      <HeatmapLoader />
+
+      {/* Custom grid size */}
+      <HeatmapLoader rows={4} cols={6} />
+
+      {/* Custom size and color */}
+      <HeatmapLoader size={60} color="#10b981" />
+    </div>
+  );
+}
+```
+
+#### HeatmapLoader Props
+
+| Prop    | Type             | Default   | Description                |
+| ------- | ---------------- | --------- | -------------------------- |
+| `rows`  | number           | 3         | Number of rows in grid     |
+| `cols`  | number           | 5         | Number of columns in grid  |
+| `size`  | number \| string | 40        | Size of the loader         |
+| `color` | string           | "#6366f1" | Color of the cells         |
+| `speed` | number           | 1         | Animation speed multiplier |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### ClockLoader Component
+
+The `ClockLoader` animates like a traditional clock with hour, minute, and second hands.
+
+#### Basic Usage
+
+```jsx
+import { ClockLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default clock */}
+      <ClockLoader />
+
+      {/* Custom size */}
+      <ClockLoader size={60} />
+
+      {/* Custom tick speed */}
+      <ClockLoader tickSpeed={2} />
+    </div>
+  );
+}
+```
+
+#### ClockLoader Props
+
+| Prop        | Type             | Default   | Description              |
+| ----------- | ---------------- | --------- | ------------------------ |
+| `size`      | number \| string | 40        | Size of the clock        |
+| `tickSpeed` | number           | 1         | Speed of clock animation |
+| `color`     | string           | "#6366f1" | Color of the clock hands |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### NeumorphicLoader Component
+
+The `NeumorphicLoader` creates a soft neumorphic pill/dots loader for modern UI designs.
+
+#### Basic Usage
+
+```jsx
+import { NeumorphicLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default elevation */}
+      <NeumorphicLoader />
+
+      {/* Custom elevation */}
+      <NeumorphicLoader elevation={8} />
+
+      {/* Custom size and color */}
+      <NeumorphicLoader size={50} color="#10b981" />
+    </div>
+  );
+}
+```
+
+#### NeumorphicLoader Props
+
+| Prop        | Type             | Default   | Description                |
+| ----------- | ---------------- | --------- | -------------------------- |
+| `elevation` | number           | 5         | Elevation level (1-10)     |
+| `size`      | number \| string | 40        | Size of the loader         |
+| `color`     | string           | "#6366f1" | Color of the loader        |
+| `speed`     | number           | 1         | Animation speed multiplier |
+
+All other props are inherited from `IBaseLoaderProps`.
 
 ---
 

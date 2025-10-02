@@ -6,6 +6,8 @@ export interface IFallbackLoaderProps extends IBaseLoaderProps {
   error?: string;
   /** Retry function */
   onRetry?: () => void;
+  /** Retry button label */
+  retryLabel?: string;
   /** Show retry button */
   showRetry?: boolean;
   /** Custom fallback content */

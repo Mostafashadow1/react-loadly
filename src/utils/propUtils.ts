@@ -2,12 +2,25 @@ import { ILoaderCSSVariables } from "@/@types";
 
 /**
  * Merges default props with user props, handling undefined values gracefully
+ * This utility ensures that all default values from IBaseLoaderProps are applied
+ * while allowing user props to override them.
+ *
  * @param defaultProps - The default props to merge
  * @param userProps - The user provided props
- * @returns Merged props object
+ * @returns Merged props object with defaults applied
  */
+
 export function mergeProps<T extends object, U extends object>(defaultProps: T, userProps: U): T & U {
-  return { ...defaultProps, ...userProps } as T & U;
+  const merged = { ...defaultProps } as T & U;
+
+  for (const key in userProps) {
+    const value = userProps[key];
+    if (value !== undefined) {
+      merged[key as keyof (T & U)] = value as any;
+    }
+  }
+
+  return merged;
 }
 
 /**

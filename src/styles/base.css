@@ -243,6 +243,40 @@
     opacity: 0;
   }
 }
+
+/* Neumorphic loader animation */
+@keyframes react-loadly-neumorphic-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.1), inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: inset 8px 8px 15px rgba(255, 255, 255, 0.15), inset -8px -8px 15px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes react-loadly-neumorphic-rotate {
+  0% {
+    transform: rotate(0deg);
+    box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.1), inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+  }
+  25% {
+    box-shadow: inset -5px 5px 10px rgba(255, 255, 255, 0.1), inset 5px -5px 10px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: rotate(180deg);
+    box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.1), inset 5px 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  75% {
+    box-shadow: inset 5px -5px 10px rgba(255, 255, 255, 0.1), inset -5px 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    transform: rotate(360deg);
+    box-shadow: inset 5px 5px 10px rgba(255, 255, 255, 0.1), inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+  }
+}
 @keyframes react-loadly-bars {
   0%,
   100% {
@@ -285,6 +319,70 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes react-loadly-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes react-loadly-morph {
+  0%,
+  100% {
+    d: path("M 20,5 C 30,5 35,10 35,20 C 35,30 30,35 20,35 C 10,35 5,30 5,20 C 5,10 10,5 20,5 Z");
+  }
+  25% {
+    d: path("M 20,5 C 28,5 35,12 35,20 C 35,28 28,35 20,35 C 12,35 5,28 5,20 C 5,12 12,5 20,5 Z");
+  }
+  50% {
+    d: path("M 20,5 C 25,5 35,15 35,20 C 35,25 25,35 20,35 C 15,35 5,25 5,20 C 5,15 15,5 20,5 Z");
+  }
+  75% {
+    d: path("M 20,5 C 30,5 35,10 35,20 C 35,30 30,35 20,35 C 10,35 5,30 5,20 C 5,10 10,5 20,5 Z");
+  }
+}
+
+@keyframes react-loadly-dots {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+}
+
+@keyframes react-loadly-clock-hour {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@keyframes react-loadly-clock-minute {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@keyframes react-loadly-clock-second {
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg);
   }
 }
 
@@ -345,6 +443,40 @@
   transition: opacity 0.3s ease-in-out;
 }
 
+/* Progress Ring Loader styles */
+.react-loadly-progress-ring {
+  will-change: transform;
+}
+
+.react-loadly-progress-ring svg {
+  animation: react-loadly-progress-ring-rotate 2s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.react-loadly-progress-ring svg circle {
+  transform-origin: center;
+}
+
+.react-loadly-progress-ring svg circle:last-child {
+  animation: react-loadly-progress-ring-pulse 1.5s ease-in-out infinite;
+}
+
+/* Neumorphic Loader styles */
+.react-loadly-neumorphic {
+  will-change: transform, box-shadow;
+}
+
+.react-loadly-neumorphic > div {
+  animation: react-loadly-neumorphic-pulse var(--react-loadly-speed, 1s) ease-in-out infinite;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.react-loadly-neumorphic.react-loadly-rotate > div {
+  animation: react-loadly-neumorphic-rotate var(--react-loadly-speed, 1s) linear infinite;
+}
+
 /* Enhanced geometric animations */
 @keyframes react-loadly-rotate-3d {
   0% {
@@ -389,23 +521,11 @@
   }
 }
 
-/* Spinner with gradient */
-@keyframes react-loadly-spinner-gradient {
+@keyframes react-loadly-progress-ring-rotate {
   0% {
     transform: rotate(0deg);
-    border-color: #6366f1 transparent transparent transparent;
-  }
-  25% {
-    border-color: #8b5cf6 transparent transparent transparent;
-  }
-  50% {
-    border-color: #ec4899 transparent transparent transparent;
-  }
-  75% {
-    border-color: #f59e0b transparent transparent transparent;
   }
   100% {
     transform: rotate(360deg);
-    border-color: #6366f1 transparent transparent transparent;
   }
 }

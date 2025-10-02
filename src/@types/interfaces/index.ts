@@ -8,6 +8,11 @@ export type { ILogoLoaderProps } from "./ILogoLoaderProps";
 export type { ITextLoaderProps } from "./ITextLoaderProps";
 export type { ISkeletonLoaderProps } from "./ISkeletonLoaderProps";
 export type { IAutoSkeletonProps } from "./IAutoSkeletonProps";
+export type { IMorphLoaderProps } from "./IMorphLoaderProps";
+export type { ISpinDotsLoaderProps } from "./ISpinDotsLoaderProps";
+export type { IProgressRingLoaderProps } from "./IProgressRingLoaderProps";
+export type { IHeatmapLoaderProps } from "./IHeatmapLoaderProps";
+
 // Export all hooks interfaces
 export type { ILoaderState } from "./ILoaderState";
 export type { IUseLoaderStateOptions } from "./IUseLoaderStateOptions";

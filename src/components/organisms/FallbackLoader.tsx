@@ -35,6 +35,7 @@ const TimeoutIcon: FC<{ className?: string }> = ({ className = "" }) => (
 export const FallbackLoader: FC<IFallbackLoaderProps> = ({
   error = "Something went wrong",
   onRetry,
+  retryLabel,
   showRetry = true,
   children,
   type = "error",
@@ -100,7 +101,7 @@ export const FallbackLoader: FC<IFallbackLoaderProps> = ({
       <p className="react-loadly-error-message">{getMessage()}</p>
       {showRetry && onRetry && (
         <button className="react-loadly-retry-button" onClick={onRetry} type="button" aria-label="Retry loading">
-          Try Again
+          {retryLabel || "Try Again"}
         </button>
       )}
     </div>

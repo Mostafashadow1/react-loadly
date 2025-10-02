@@ -16,6 +16,10 @@ export { SpinLoader } from "./SpinLoader";
 export { TypingLoader } from "./TypingLoader";
 export { WaveLoader } from "./WaveLoader";
 export { AutoSkeletonLoader } from "./AutoSkeletonLoader";
+export { ProgressRingLoader } from "./ProgressRingLoader";
+export { MorphLoader } from "./MorphLoader";
+export { SpinDotsLoader } from "./SpinDotsLoader";
+export { HeatmapLoader } from "./HeatmapLoader";
 export type {
   IFallbackLoaderProps,
   IFluidLoaderProps,
@@ -30,4 +34,8 @@ export type {
   IUseLoaderStateReturn,
   IUseLoaderStateOptions,
   IAutoSkeletonProps,
+  IProgressRingLoaderProps,
+  IMorphLoaderProps,
+  ISpinDotsLoaderProps,
+  IHeatmapLoaderProps,
 } from "@/@types/interfaces";
