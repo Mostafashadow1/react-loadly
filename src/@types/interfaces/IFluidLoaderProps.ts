@@ -5,4 +5,6 @@ export interface IFluidLoaderProps extends IBaseLoaderProps {
   fluidity?: number;
   /** Wave amplitude for wave-based loaders */
   amplitude?: number;
+
+  secondaryColor?: string;
 }

@@ -25,6 +25,28 @@ Perfect for building **React apps, dashboards, forms, and data-driven UIs** wher
 
 ---
 
+## 🆕 What's New
+
+We've added **7 exciting new loaders** to expand your loading animation options:
+
+1. **OrbitLoader** - Beautiful orbiting elements around a central point
+2. **PlaneLoader** - 3D rotating cube with perspective transforms
+3. **RippleLoader** - Expanding ripple rings from a central point
+4. **SquaresLoader** - Multiple rotating squares with dynamic grid effect
+5. **StairLoader** - Cascading stair steps with progress-like effect
+6. **HashtagLoader** - Animated hashtag with progressive drawing
+7. **SnakeLoader** - Snake-like slithering animation with flowing segments
+
+All new loaders support:
+
+- ✅ Customizable colors with `secondaryColor` prop
+- ✅ Adjustable element count (where applicable)
+- ✅ Fullscreen mode support
+- ✅ Accessibility features (ARIA labels, reduced motion)
+- ✅ Performance optimizations with hardware acceleration
+
+---
+
 ## 🚀 Getting Started
 
 ### Installation
@@ -84,16 +106,23 @@ function App() {
 
 ### Geometric Loaders
 
-| Component      | Description                                      |
-| -------------- | ------------------------------------------------ |
-| `SpinLoader`   | A classic spinner with a minimalist design.      |
-| `PulseLoader`  | A dynamic animation of pulsing dots.             |
-| `WaveLoader`   | A series of bars creating a wave-like effect.    |
-| `GridLoader`   | A grid of squares that animate in sequence.      |
-| `RingLoader`   | A sophisticated ring spinner with dual rotation. |
-| `BarsLoader`   | Animated bars with staggered timing.             |
-| `BounceLoader` | Bouncing dots with elastic animation.            |
-| `RotateLoader` | 3D rotating elements with depth.                 |
+| Component       | Description                                                                  |
+| --------------- | ---------------------------------------------------------------------------- |
+| `SpinLoader`    | A classic spinner with a minimalist design.                                  |
+| `PulseLoader`   | A dynamic animation of pulsing dots.                                         |
+| `WaveLoader`    | A series of bars creating a wave-like effect.                                |
+| `GridLoader`    | A grid of squares that animate in sequence.                                  |
+| `RingLoader`    | A sophisticated ring spinner with dual rotation.                             |
+| `BarsLoader`    | Animated bars with staggered timing.                                         |
+| `BounceLoader`  | Bouncing dots with elastic animation.                                        |
+| `RotateLoader`  | 3D rotating elements with depth.                                             |
+| `OrbitLoader`   | Orbiting elements around a central point with customizable count and colors. |
+| `PlaneLoader`   | 3D rotating cube with perspective transforms.                                |
+| `SquaresLoader` | Multiple rotating squares with varying delays and scales.                    |
+| `StairLoader`   | Cascading stair steps creating a progress effect.                            |
+| `HashtagLoader` | Animated hashtag symbol with progressive drawing effect.                     |
+| `SnakeLoader`   | Snake-like slithering animation with flowing segments.                       |
+| `RippleLoader`  | Expanding ripple rings from a central point.                                 |
 
 ---
 
@@ -358,6 +387,278 @@ All other props are inherited from `IBaseLoaderProps`.
 
 ---
 
+### OrbitLoader Component
+
+The `OrbitLoader` creates a beautiful orbital animation with elements rotating around a central point, similar to planets orbiting a star.
+
+#### Basic Usage
+
+```jsx
+import { OrbitLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default with 3 orbiting elements */}
+      <OrbitLoader />
+
+      {/* Custom number of orbiting elements */}
+      <OrbitLoader count={5} />
+
+      {/* With secondary color */}
+      <OrbitLoader count={4} color="#3b82f6" secondaryColor="#f59e0b" />
+    </div>
+  );
+}
+```
+
+#### OrbitLoader Props
+
+| Prop             | Type             | Default   | Description                              |
+| ---------------- | ---------------- | --------- | ---------------------------------------- |
+| `count`          | number           | 3         | Number of orbiting elements              |
+| `secondaryColor` | string           | undefined | Secondary color for alternating elements |
+| `size`           | number \| string | 60        | Size of the loader                       |
+| `color`          | string           | "#6366f1" | Primary color of the orbit elements      |
+| `speed`          | number           | 1         | Animation speed multiplier               |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### PlaneLoader Component
+
+The `PlaneLoader` displays a 3D rotating cube with perspective transforms, creating a modern 3D loading experience.
+
+#### Basic Usage
+
+```jsx
+import { PlaneLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default cube */}
+      <PlaneLoader />
+
+      {/* Custom size and color */}
+      <PlaneLoader size={60} color="#10b981" />
+
+      {/* With secondary color for cube faces */}
+      <PlaneLoader size={70} color="#3b82f6" secondaryColor="#8b5cf6" />
+    </div>
+  );
+}
+```
+
+#### PlaneLoader Props
+
+| Prop             | Type             | Default   | Description                         |
+| ---------------- | ---------------- | --------- | ----------------------------------- |
+| `secondaryColor` | string           | undefined | Color for the cube face backgrounds |
+| `size`           | number \| string | 50        | Size of the loader                  |
+| `color`          | string           | "#6366f1" | Primary color of the cube edges     |
+| `speed`          | number           | 1         | Animation speed multiplier          |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### RippleLoader Component
+
+The `RippleLoader` creates expanding ripple rings from a central point, similar to water ripples.
+
+#### Basic Usage
+
+```jsx
+import { RippleLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default with 3 ripples */}
+      <RippleLoader />
+
+      {/* Custom number of ripples */}
+      <RippleLoader count={5} />
+
+      {/* With secondary color and custom border width */}
+      <RippleLoader count={4} color="#3b82f6" secondaryColor="#8b5cf6" borderWidth={3} />
+    </div>
+  );
+}
+```
+
+#### RippleLoader Props
+
+| Prop             | Type             | Default   | Description                             |
+| ---------------- | ---------------- | --------- | --------------------------------------- |
+| `count`          | number           | 3         | Number of ripple rings                  |
+| `secondaryColor` | string           | undefined | Secondary color for alternating ripples |
+| `borderWidth`    | number           | 2         | Width of the ripple border              |
+| `size`           | number \| string | 50        | Size of the loader                      |
+| `color`          | string           | "#6366f1" | Primary color of the ripples            |
+| `speed`          | number           | 1         | Animation speed multiplier              |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### SquaresLoader Component
+
+The `SquaresLoader` displays multiple rotating squares with varying delays and scales for a dynamic grid effect.
+
+#### Basic Usage
+
+```jsx
+import { SquaresLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default with 4 squares */}
+      <SquaresLoader />
+
+      {/* Custom number of squares */}
+      <SquaresLoader count={6} />
+
+      {/* With secondary color */}
+      <SquaresLoader count={9} color="#3b82f6" secondaryColor="#f59e0b" />
+    </div>
+  );
+}
+```
+
+#### SquaresLoader Props
+
+| Prop             | Type             | Default   | Description                             |
+| ---------------- | ---------------- | --------- | --------------------------------------- |
+| `count`          | number           | 4         | Number of squares                       |
+| `secondaryColor` | string           | undefined | Secondary color for alternating squares |
+| `size`           | number \| string | 40        | Size of the loader                      |
+| `color`          | string           | "#6366f1" | Primary color of the squares            |
+| `speed`          | number           | 1         | Animation speed multiplier              |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### StairLoader Component
+
+The `StairLoader` creates cascading stair steps that animate in sequence, creating a progress-like effect.
+
+#### Basic Usage
+
+```jsx
+import { StairLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default with 5 steps */}
+      <StairLoader />
+
+      {/* Custom number of steps */}
+      <StairLoader count={7} />
+
+      {/* With secondary color */}
+      <StairLoader count={6} color="#3b82f6" secondaryColor="#8b5cf6" />
+    </div>
+  );
+}
+```
+
+#### StairLoader Props
+
+| Prop             | Type             | Default   | Description                           |
+| ---------------- | ---------------- | --------- | ------------------------------------- |
+| `count`          | number           | 5         | Number of stair steps                 |
+| `secondaryColor` | string           | undefined | Secondary color for alternating steps |
+| `size`           | number \| string | 35        | Size of the loader                    |
+| `color`          | string           | "#6366f1" | Primary color of the steps            |
+| `speed`          | number           | 1         | Animation speed multiplier            |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### HashtagLoader Component
+
+The `HashtagLoader` animates a hashtag symbol with a progressive drawing effect.
+
+#### Basic Usage
+
+```jsx
+import { HashtagLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default hashtag */}
+      <HashtagLoader />
+
+      {/* Custom size and color */}
+      <HashtagLoader size={60} color="#10b981" />
+
+      {/* With secondary color */}
+      <HashtagLoader size={70} color="#3b82f6" secondaryColor="#8b5cf6" />
+    </div>
+  );
+}
+```
+
+#### HashtagLoader Props
+
+| Prop             | Type             | Default   | Description                                   |
+| ---------------- | ---------------- | --------- | --------------------------------------------- |
+| `secondaryColor` | string           | undefined | Secondary color for alternating path segments |
+| `size`           | number \| string | 50        | Size of the loader                            |
+| `color`          | string           | "#6366f1" | Primary color of the hashtag stroke           |
+| `speed`          | number           | 1         | Animation speed multiplier                    |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
+### SnakeLoader Component
+
+The `SnakeLoader` creates a snake-like animation with flowing segments that move in a wave pattern.
+
+#### Basic Usage
+
+```jsx
+import { SnakeLoader } from "react-loadly";
+
+function App() {
+  return (
+    <div>
+      {/* Default with 6 segments */}
+      <SnakeLoader />
+
+      {/* Custom number of segments */}
+      <SnakeLoader count={8} />
+
+      {/* With secondary color */}
+      <SnakeLoader count={10} color="#3b82f6" secondaryColor="#f59e0b" />
+    </div>
+  );
+}
+```
+
+#### SnakeLoader Props
+
+| Prop             | Type             | Default   | Description                              |
+| ---------------- | ---------------- | --------- | ---------------------------------------- |
+| `count`          | number           | 6         | Number of snake segments                 |
+| `secondaryColor` | string           | undefined | Secondary color for alternating segments |
+| `size`           | number \| string | 60        | Size of the loader                       |
+| `color`          | string           | "#6366f1" | Primary color of the snake segments      |
+| `speed`          | number           | 1         | Animation speed multiplier               |
+
+All other props are inherited from `IBaseLoaderProps`.
+
+---
+
 ## 🦴 SkeletonLoader Component
 
 The `SkeletonLoader` is perfect for modern loading states, creating placeholder content that mimics the actual content structure.
@@ -575,6 +876,88 @@ All other props are inherited from `IBaseLoaderProps`.
 
 ---
 
+## 🎨 New Loaders Feature Guide
+
+### Using Multiple New Loaders Together
+
+Here's how to combine the new loaders for amazing visual effects:
+
+```jsx
+import { OrbitLoader, PlaneLoader, RippleLoader, SquaresLoader, StairLoader, HashtagLoader, SnakeLoader } from "react-loadly";
+
+function MultiLoaderShowcase() {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "40px", padding: "40px" }}>
+      {/* Orbital system animation */}
+      <div style={{ textAlign: "center" }}>
+        <h3>OrbitLoader - Space Theme</h3>
+        <OrbitLoader size={80} count={5} color="#0ea5e9" secondaryColor="#fbbf24" />
+      </div>
+
+      {/* 3D cube for tech products */}
+      <div style={{ textAlign: "center" }}>
+        <h3>PlaneLoader - 3D Effect</h3>
+        <PlaneLoader size={70} color="#6366f1" secondaryColor="#8b5cf6" />
+      </div>
+
+      {/* Ripple for notifications */}
+      <div style={{ textAlign: "center" }}>
+        <h3>RippleLoader - Pulse Effect</h3>
+        <RippleLoader size={60} count={4} color="#10b981" borderWidth={3} />
+      </div>
+
+      {/* Dynamic grid */}
+      <div style={{ textAlign: "center" }}>
+        <h3>SquaresLoader - Grid Animation</h3>
+        <SquaresLoader size={50} count={6} color="#3b82f6" />
+      </div>
+
+      {/* Progress stairs */}
+      <div style={{ textAlign: "center" }}>
+        <h3>StairLoader - Step Effect</h3>
+        <StairLoader size={45} count={7} color="#f59e0b" />
+      </div>
+
+      {/* Social media hashtag */}
+      <div style={{ textAlign: "center" }}>
+        <h3>HashtagLoader - Social Media</h3>
+        <HashtagLoader size={65} color="#1da1f2" speed={1.5} />
+      </div>
+
+      {/* Flowing snake */}
+      <div style={{ textAlign: "center" }}>
+        <h3>SnakeLoader - Organic Motion</h3>
+        <SnakeLoader size={70} count={8} color="#ec4899" secondaryColor="#8b5cf6" />
+      </div>
+    </div>
+  );
+}
+```
+
+### Color Themes for New Loaders
+
+All new loaders support `secondaryColor` for beautiful gradient and alternating color effects:
+
+```jsx
+// Ocean theme
+<OrbitLoader color="#0ea5e9" secondaryColor="#06b6d4" />
+<RippleLoader color="#0891b2" borderWidth={2} />
+
+// Fire theme
+<SnakeLoader color="#f97316" secondaryColor="#ef4444" />
+<StairLoader color="#ff9500" secondaryColor="#ff6b00" />
+
+// Purple theme
+<PlaneLoader color="#7c3aed" secondaryColor="#a78bfa" />
+<SquaresLoader color="#8b5cf6" secondaryColor="#c4b5fd" />
+
+// Social media theme
+<HashtagLoader color="#1da1f2" /> // Twitter blue
+<HashtagLoader color="#E1306C" /> // Instagram pink
+```
+
+---
+
 ## ⚡ Performance & Best Practices
 
 ### Performance Optimization
@@ -713,7 +1096,15 @@ React Loadly provides comprehensive TypeScript definitions for all components an
 import type { IBaseLoaderProps, ISkeletonLoaderProps } from "react-loadly";
 
 // For component-specific props
-import type { CircleProps } from "react-loadly/components";
+import type {
+IOrbitLoaderProps,
+IPlaneLoaderProps,
+IRippleLoaderProps,
+ISquaresLoaderProps,
+IStairLoaderProps,
+IHashtagLoaderProps,
+ISnakeLoaderProps
+} from "react-loadly";
 
 // For hook return types
 import type { IUseLoaderStateReturn } from "react-loadly/hooks";
@@ -724,6 +1115,12 @@ import type { AnimationDirectionType } from "react-loadly";
 ````
 
 All types are properly exported and can be used in your TypeScript projects for better type safety and autocompletion.
+
+**Available Interface Exports:**
+- `IBaseLoaderProps` - Base props for all loaders
+- `IGeometricLoaderProps` - Base props for geometric loaders (includes `count`, `secondaryColor`, etc.)
+- `IOrbitLoaderProps`, `IPlaneLoaderProps`, `IRippleLoaderProps`, etc. - Specific loader props
+- `ISkeletonLoaderProps`, `IProgressRingLoaderProps`, `IMorphLoaderProps` - Specialized loader props
 
 Avoid importing directly from internal paths like `react-loadly/types` or `react-loadly/interfaces` as these are not part of the public API and may change.
 
@@ -877,6 +1274,71 @@ function ImageGallery({ images, loading }) {
   );
 }
 ```
+
+### Social Media Feed Loading
+
+``jsx
+function SocialFeed({ posts, loading }) {
+  if (loading) {
+    return (
+      <div className="social-feed">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="feed-card">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+              <SkeletonLoader variant="avatar" size={40} />
+              <SkeletonLoader lines={2} width="80%" />
+            </div>
+            <SkeletonLoader variant="card" width="100%" height={200} />
+            <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+              <SnakeLoader size={20} count={4} />
+              <span>Processing...</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return <div className="social-feed">{posts.map(renderPost)}</div>;
+}
+```
+
+### Gaming/Entertainment Loading States
+
+``jsx
+function GameLoader() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
+      {/* Futuristic game loading */}
+      <OrbitLoader size={80} count={6} color="#00f5ff" secondaryColor="#ff0080" />
+
+      {/* Social media hashtag */}
+      <HashtagLoader size={60} color="#1da1f2" speed={1.5} />
+
+      {/* Snake game effect */}
+      <SnakeLoader size={70} count={8} color="#10b981" secondaryColor="#f59e0b" />
+    </div>
+  );
+}
+```
+
+### 3D and Modern UI Loading
+
+``jsx
+function ModernDashboardLoader() {
+  return (
+    <div className="dashboard-loader">
+      {/* 3D rotating cube for tech products */}
+      <PlaneLoader size={60} color="#6366f1" secondaryColor="#8b5cf6" />
+
+      {/* Ripple effect for notifications */}
+      <RippleLoader size={50} count={4} color="#3b82f6" borderWidth={3} />
+
+      {/* Staircase for progress indication */}
+      <StairLoader count={7} size={40} color="#10b981" />
+    </div>
+  );
+}
 
 ---
 

@@ -17,8 +17,6 @@ export interface IBaseLoaderProps {
   height?: number | string;
   /** Primary color of the loader */
   color?: string;
-  /** Secondary color for multi-color loaders */
-  secondaryColor?: string;
   /** Animation speed multiplier (1 = normal, 2 = double speed, 0.5 = half speed) */
   speed?: number;
   /** Whether the loader is currently loading */

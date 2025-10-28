@@ -88,40 +88,12 @@ export const ElementLoader: FC<IElementLoaderProps> = (userProps) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  };
-
-  // Add additional animated elements for enhanced visual effect
-  const innerElementStyle: CSSProperties = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    width: "60%",
-    height: "60%",
-    borderRadius: "50%",
-    backgroundColor: color,
-    opacity: 0.3,
-    transform: "translate(-50%, -50%)",
-    animation: `react-loadly-pulse ${getAnimationDuration(1500, speed * 1.5)} infinite`,
-    zIndex: -1,
-  };
-
-  const outerElementStyle: CSSProperties = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    width: "120%",
-    height: "120%",
-    borderRadius: "50%",
-    border: `2px solid ${color}`,
-    opacity: 0.2,
-    transform: "translate(-50%, -50%)",
-    animation: `react-loadly-spin ${getAnimationDuration(3000, speed * 0.8)} infinite reverse`,
-    zIndex: -2,
+    transformOrigin: "center center",
   };
 
   return (
     <div
-      className={classNameGen("`react-loadly react-loadly-element-loader", className)}
+      className={classNameGen("react-loadly react-loadly-element-loader", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}
@@ -130,12 +102,8 @@ export const ElementLoader: FC<IElementLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={outerElementStyle} />
-        <div style={innerElementStyle} />
-        <div style={elementStyle} className="react-loadly-element" data-testid={dataTestId ? `${dataTestId}-element` : undefined}>
-          {children}
-        </div>
+      <div style={elementStyle} className="react-loadly-element" data-testid={dataTestId ? `${dataTestId}-element` : undefined}>
+        {children}
       </div>
       {showText && (
         <div className="react-loadly-text" aria-live="polite">

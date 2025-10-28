@@ -20,6 +20,13 @@ export { ProgressRingLoader } from "./ProgressRingLoader";
 export { MorphLoader } from "./MorphLoader";
 export { SpinDotsLoader } from "./SpinDotsLoader";
 export { HeatmapLoader } from "./HeatmapLoader";
+export { SquaresLoader } from "./SquaresLoader";
+export { RippleLoader } from "./RippleLoader";
+export { StairLoader } from "./StairLoader";
+export { OrbitLoader } from "./OrbitLoader";
+export { PlaneLoader } from "./PlaneLoader";
+export { HashtagLoader } from "./HashtagLoader";
+export { SnakeLoader } from "./SnakeLoader";
 export type {
   IFallbackLoaderProps,
   IFluidLoaderProps,
@@ -38,4 +45,15 @@ export type {
   IMorphLoaderProps,
   ISpinDotsLoaderProps,
   IHeatmapLoaderProps,
+  IBarsLoaderProps,
+  IBounceLoaderProps,
+  IDotsLoaderProps,
+  IHashtagLoaderProps,
+  IOrbitLoaderProps,
+  IPlaneLoaderProps,
+  IRippleLoaderProps,
+  IRotateLoaderProps,
+  ISnakeLoaderProps,
+  ISquaresLoaderProps,
+  IStairLoaderProps,
 } from "@/@types/interfaces";

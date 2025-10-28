@@ -16,6 +16,7 @@ export const ProgressRingLoader: React.FC<IProgressRingLoaderProps> = (props) =>
     thickness = 4,
     size = 40,
     color = "var(--react-loadly-color)",
+    secondaryColor,
     speed = 1,
     loading = true,
     className = "",
@@ -90,7 +91,7 @@ export const ProgressRingLoader: React.FC<IProgressRingLoaderProps> = (props) =>
 
   const backgroundCircleStyle: React.CSSProperties = {
     ...circleStyle,
-    stroke: "var(--react-loadly-secondary-color, rgba(0,0,0,0.1))",
+    stroke: secondaryColor || "var(--react-loadly-secondary-color, rgba(0,0,0,0.1))",
     opacity: 0.2,
   };
 

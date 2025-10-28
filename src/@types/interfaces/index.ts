@@ -13,6 +13,19 @@ export type { ISpinDotsLoaderProps } from "./ISpinDotsLoaderProps";
 export type { IProgressRingLoaderProps } from "./IProgressRingLoaderProps";
 export type { IHeatmapLoaderProps } from "./IHeatmapLoaderProps";
 
+// Geometric loader interfaces
+export type { IBarsLoaderProps } from "./IBarsLoaderProps";
+export type { IBounceLoaderProps } from "./IBounceLoaderProps";
+export type { IDotsLoaderProps } from "./IDotsLoaderProps";
+export type { IHashtagLoaderProps } from "./IHashtagLoaderProps";
+export type { IOrbitLoaderProps } from "./IOrbitLoaderProps";
+export type { IPlaneLoaderProps } from "./IPlaneLoaderProps";
+export type { IRippleLoaderProps } from "./IRippleLoaderProps";
+export type { IRotateLoaderProps } from "./IRotateLoaderProps";
+export type { ISnakeLoaderProps } from "./ISnakeLoaderProps";
+export type { ISquaresLoaderProps } from "./ISquaresLoaderProps";
+export type { IStairLoaderProps } from "./IStairLoaderProps";
+
 // Export all hooks interfaces
 export type { ILoaderState } from "./ILoaderState";
 export type { IUseLoaderStateOptions } from "./IUseLoaderStateOptions";

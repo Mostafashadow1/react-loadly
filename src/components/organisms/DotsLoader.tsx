@@ -1,9 +1,9 @@
-import { IGeometricLoaderProps } from "@/@types";
+import { IDotsLoaderProps } from "@/@types/interfaces/IDotsLoaderProps";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
 import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
-const defaultProps: Partial<IGeometricLoaderProps> = {
+const defaultProps: Partial<IDotsLoaderProps> = {
   size: 12,
   color: "var(--react-loadly-color)",
   speed: 1,
@@ -12,11 +12,12 @@ const defaultProps: Partial<IGeometricLoaderProps> = {
   "aria-label": "Loading...",
 };
 
-export const DotsLoader: FC<IGeometricLoaderProps> = (userProps) => {
+export const DotsLoader: FC<IDotsLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
     size,
     color,
+    secondaryColor,
     speed,
     loading,
     className = "",
@@ -73,15 +74,17 @@ export const DotsLoader: FC<IGeometricLoaderProps> = (userProps) => {
     animationPlayState: animationSettings.playState,
   };
 
-  // Create dots with different animation delays
+  // Create dots with different animation delays and colors
   const dots = Array.from({ length: count }).map((_, index) => {
     const delay = `${index * 0.2}s`;
+    const dotColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
     return (
       <div
         key={index}
         style={{
           ...dotStyle,
           animationDelay: delay,
+          backgroundColor: dotColor,
         }}
         data-testid={dataTestId ? `${dataTestId}-dot-${index}` : undefined}
       />
@@ -90,7 +93,7 @@ export const DotsLoader: FC<IGeometricLoaderProps> = (userProps) => {
 
   return (
     <div
-      className={classNameGen("`react-loadly react-loadly-dots", className)}
+      className={classNameGen("react-loadly react-loadly-dots", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}

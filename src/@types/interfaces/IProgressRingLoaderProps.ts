@@ -5,4 +5,6 @@ export interface IProgressRingLoaderProps extends IBaseLoaderProps {
   progress?: number | null;
   /** Thickness of the ring */
   thickness?: number;
+  /** Secondary color for multi-color loaders */
+  secondaryColor?: string;
 }

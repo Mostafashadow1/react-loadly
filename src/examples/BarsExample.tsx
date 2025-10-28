@@ -1,0 +1,101 @@
+import React, { useState } from "react";
+import { BarsLoader } from "@/components/organisms";
+
+export const BarsExample = () => {
+  const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(5);
+  const size = 40;
+
+  return (
+    <div style={{ padding: "40px" }}>
+      <h2 style={{ marginBottom: "20px" }}>Bars Loader Examples</h2>
+
+      <div style={{ marginBottom: "30px" }}>
+        <button onClick={() => setLoading(!loading)}>{loading ? "Stop Loading" : "Start Loading"}</button>
+      </div>
+
+      {/* Basic Bars Loader */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Basic Bars Loader</h3>
+        <BarsLoader loading={loading} size={size} />
+      </div>
+
+      {/* Bars with Text */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Bars with Text</h3>
+        <BarsLoader loading={loading} size={size} showText loadingText="Loading data..." />
+      </div>
+
+      {/* Custom Count */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Custom Bar Count</h3>
+        <div style={{ marginBottom: "10px" }}>
+          <label>
+            Count: <input type="number" value={count} onChange={(e) => setCount(parseInt(e.target.value) || 5)} min="1" max="10" />
+          </label>
+        </div>
+        <BarsLoader loading={loading} size={size} count={count} />
+      </div>
+
+      {/* Secondary Color */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>With Secondary Color</h3>
+        <BarsLoader loading={loading} size={size} color="#3b82f6" secondaryColor="#8b5cf6" count={count} />
+      </div>
+
+      {/* Different Sizes */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Different Sizes</h3>
+        <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+          <BarsLoader loading={loading} size={20} color="#ef4444" secondaryColor="#8b5cf6" />
+          <BarsLoader loading={loading} size={40} />
+          <BarsLoader loading={loading} size={60} />
+        </div>
+      </div>
+
+      {/* Custom Speed */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Different Speeds</h3>
+        <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+          <div>
+            <p>Slow (0.5x)</p>
+            <BarsLoader loading={loading} size={size} speed={0.5} />
+          </div>
+          <div>
+            <p>Normal (1x)</p>
+            <BarsLoader loading={loading} size={size} speed={1} />
+          </div>
+          <div>
+            <p>Fast (2x)</p>
+            <BarsLoader loading={loading} size={size} speed={2} />
+          </div>
+        </div>
+      </div>
+
+      {/* Fullscreen Mode */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Fullscreen Mode</h3>
+        <button
+          onClick={() => {
+            setLoading(true);
+            setTimeout(() => setLoading(false), 3000);
+          }}
+        >
+          Show Fullscreen Loader (3s)
+        </button>
+        {loading && <BarsLoader loading={true} size={size} fullscreen loaderCenter screenBackground="rgba(0,0,0,0.85)" />}
+      </div>
+
+      {/* Custom Styling */}
+      <div style={{ marginBottom: "40px" }}>
+        <h3>Custom Styling</h3>
+        <BarsLoader
+          loading={loading}
+          size={size}
+          style={{ border: "2px solid #3b82f6", padding: "20px", borderRadius: "8px" }}
+          className="custom-bars-loader"
+        />
+      </div>
+    </div>
+  );
+};

@@ -1,9 +1,9 @@
-import { IGeometricLoaderProps } from "@/@types";
+import { IRotateLoaderProps } from "@/@types/interfaces/IRotateLoaderProps";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
 import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
-const defaultProps: Partial<IGeometricLoaderProps> = {
+const defaultProps: Partial<IRotateLoaderProps> = {
   size: 15,
   color: "var(--react-loadly-color)",
   speed: 1,
@@ -12,11 +12,12 @@ const defaultProps: Partial<IGeometricLoaderProps> = {
   "aria-label": "Loading...",
 };
 
-export const RotateLoader: FC<IGeometricLoaderProps> = (userProps) => {
+export const RotateLoader: FC<IRotateLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
     size,
     color,
+    secondaryColor,
     speed,
     loading,
     className = "",
@@ -76,11 +77,12 @@ export const RotateLoader: FC<IGeometricLoaderProps> = (userProps) => {
     transform: "rotate(0deg)",
   };
 
-  // Create rotating elements
+  // Create rotating elements with different colors
   const elements = Array.from({ length: count }).map((_, index) => {
     const sizeFactor = 1 - index * 0.2;
     const borderWidth = 2 + index;
     const delay = `${index * -0.15}s`;
+    const borderColor = secondaryColor ? (index % 2 === 1 ? secondaryColor : color) : color;
     return (
       <div
         key={index}
@@ -89,6 +91,8 @@ export const RotateLoader: FC<IGeometricLoaderProps> = (userProps) => {
           width: `${parseFloat(sizeValue) * sizeFactor}px`,
           height: `${parseFloat(sizeValue) * sizeFactor}px`,
           borderWidth: `${borderWidth}px`,
+          borderTopColor: borderColor,
+          borderBottomColor: borderColor,
           animationDuration: `${parseFloat(animationSettings.duration) * (1 + index * 0.5)}ms`,
           animationDelay: delay,
         }}

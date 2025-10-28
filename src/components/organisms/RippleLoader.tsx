@@ -1,18 +1,18 @@
-import { IBarsLoaderProps } from "@/@types/interfaces/IBarsLoaderProps";
+import { IRippleLoaderProps } from "@/@types/interfaces/IRippleLoaderProps";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
 import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
-const defaultProps: Partial<IBarsLoaderProps> = {
-  size: 20,
+const defaultProps: Partial<IRippleLoaderProps> = {
+  size: 50,
   color: "var(--react-loadly-color)",
   speed: 1,
   loading: true,
-  count: 5,
+  count: 3,
   "aria-label": "Loading...",
 };
 
-export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
+export const RippleLoader: FC<IRippleLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
     size,
@@ -22,7 +22,7 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
     loading,
     className = "",
     style = {},
-    count = 5,
+    count = 3,
     showText,
     loadingText = "Loading...",
     "aria-label": ariaLabel,
@@ -32,10 +32,11 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
     screenHeight,
     loaderCenter,
     screenBackground,
+    borderWidth = 2,
     ...restProps
   } = props;
 
-  const id = useMemo(() => generateId("bars-loader"), []);
+  const id = useMemo(() => generateId("ripple-loader"), []);
   const sizeValue = getSizeValue(size);
   const animationSettings = getOptimizedAnimationSettings(speed);
 
@@ -58,44 +59,49 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
     }),
   };
 
-  const barsContainerStyle: CSSProperties = {
-    display: "flex",
+  const rippleContainerStyle: CSSProperties = {
+    position: "relative",
+    display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: "4px",
-  };
-
-  const barStyle: CSSProperties = {
-    width: "4px",
+    width: sizeValue,
     height: sizeValue,
-    backgroundColor: color,
-    borderRadius: "2px",
-    animation: `react-loadly-bars ${animationSettings.duration} ease-in-out infinite`,
-    animationPlayState: animationSettings.playState,
   };
 
-  // Create bars with different animation delays and colors
-  const bars = Array.from({ length: count }).map((_, index) => {
-    const delay = `${index * 0.1}s`;
-    const heightFactor = 0.5 + (index % 3) * 0.25; // Vary heights for visual interest
-    const barColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
+  const centerDotStyle: CSSProperties = {
+    position: "absolute",
+    width: "8px",
+    height: "8px",
+    borderRadius: "50%",
+    backgroundColor: color,
+    zIndex: 10,
+  };
+
+  // Create ripple rings
+  const ripples = Array.from({ length: count }).map((_, index) => {
+    const delay = `${index * 0.2}s`;
+    const borderColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
     return (
       <div
         key={index}
         style={{
-          ...barStyle,
+          position: "absolute",
+          width: sizeValue,
+          height: sizeValue,
+          border: `${borderWidth}px solid ${borderColor}`,
+          borderRadius: "50%",
+          animation: `react-loadly-ripple ${animationSettings.duration} ease-out infinite`,
           animationDelay: delay,
-          height: `${parseFloat(sizeValue) * heightFactor}px`,
-          backgroundColor: barColor,
+          animationPlayState: animationSettings.playState,
         }}
-        data-testid={dataTestId ? `${dataTestId}-bar-${index}` : undefined}
+        data-testid={dataTestId ? `${dataTestId}-ripple-${index}` : undefined}
       />
     );
   });
 
   return (
     <div
-      className={classNameGen("react-loadly react-loadly-bars", className)}
+      className={classNameGen("react-loadly react-loadly-ripple", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}
@@ -104,7 +110,10 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <div style={barsContainerStyle}>{bars}</div>
+      <div style={rippleContainerStyle}>
+        <div style={centerDotStyle}></div>
+        {ripples}
+      </div>
       {showText && (
         <div className="react-loadly-text" id={`${id}-text`} aria-live="polite">
           {loadingText}

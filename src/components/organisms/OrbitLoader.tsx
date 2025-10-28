@@ -1,10 +1,10 @@
-import { IBounceLoaderProps } from "@/@types/interfaces/IBounceLoaderProps";
+import { IOrbitLoaderProps } from "@/@types/interfaces/IOrbitLoaderProps";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
 import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
-const defaultProps: Partial<IBounceLoaderProps> = {
-  size: 15,
+const defaultProps: Partial<IOrbitLoaderProps> = {
+  size: 60,
   color: "var(--react-loadly-color)",
   speed: 1,
   loading: true,
@@ -12,7 +12,7 @@ const defaultProps: Partial<IBounceLoaderProps> = {
   "aria-label": "Loading...",
 };
 
-export const BounceLoader: FC<IBounceLoaderProps> = (userProps) => {
+export const OrbitLoader: FC<IOrbitLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
     size,
@@ -35,7 +35,7 @@ export const BounceLoader: FC<IBounceLoaderProps> = (userProps) => {
     ...restProps
   } = props;
 
-  const id = useMemo(() => generateId("bounce-loader"), []);
+  const id = useMemo(() => generateId("orbit-loader"), []);
   const sizeValue = getSizeValue(size);
   const animationSettings = getOptimizedAnimationSettings(speed);
 
@@ -58,42 +58,68 @@ export const BounceLoader: FC<IBounceLoaderProps> = (userProps) => {
     }),
   };
 
-  const bounceContainerStyle: CSSProperties = {
-    display: "flex",
+  const orbitContainerStyle: CSSProperties = {
+    position: "relative",
+    display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: "8px",
-  };
-
-  const bounceBallStyle: CSSProperties = {
     width: sizeValue,
     height: sizeValue,
-    borderRadius: "50%",
-    backgroundColor: color,
-    animation: `react-loadly-bounce ${animationSettings.duration} ease-in-out infinite`,
-    animationPlayState: animationSettings.playState,
   };
 
-  // Create bounce animation delays for each ball with alternating colors
-  const balls = Array.from({ length: count }).map((_, index) => {
-    const delay = `${index * 0.1}s`;
-    const ballColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
+  const centerDotStyle: CSSProperties = {
+    position: "absolute",
+    width: "10px",
+    height: "10px",
+    borderRadius: "50%",
+    backgroundColor: color,
+    zIndex: 10,
+    boxShadow: `0 0 8px ${color}`,
+  };
+
+  // Create orbiting elements
+  const orbitElements = Array.from({ length: count }).map((_, index) => {
+    const orbitRadius = parseFloat(sizeValue) * 0.25;
+    const planetSize = 8 + index * 2;
+    const planetColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
+    const initialAngle = (360 / count) * index;
+
     return (
       <div
         key={index}
         style={{
-          ...bounceBallStyle,
-          animationDelay: delay,
-          backgroundColor: ballColor,
+          position: "absolute",
+          width: `${orbitRadius * 2}px`,
+          height: `${orbitRadius * 2}px`,
+          top: `calc(50% - ${orbitRadius}px)`,
+          left: `calc(50% - ${orbitRadius}px)`,
+          animation: `react-loadly-spin ${animationSettings.duration} linear infinite`,
+          animationDelay: `${index * 0.2}s`,
+          animationPlayState: animationSettings.playState,
+          transform: `rotate(${initialAngle}deg)`,
         }}
-        data-testid={dataTestId ? `${dataTestId}-ball-${index}` : undefined}
-      />
+        data-testid={dataTestId ? `${dataTestId}-orbit-${index}` : undefined}
+      >
+        <div
+          style={{
+            position: "absolute",
+            width: `${planetSize}px`,
+            height: `${planetSize}px`,
+            borderRadius: "50%",
+            backgroundColor: planetColor,
+            top: 0,
+            left: "50%",
+            marginLeft: `-${planetSize / 2}px`,
+            boxShadow: `0 0 6px ${planetColor}`,
+          }}
+        />
+      </div>
     );
   });
 
   return (
     <div
-      className={classNameGen("react-loadly react-loadly-bounce", className)}
+      className={classNameGen("react-loadly react-loadly-orbit", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}
@@ -102,7 +128,10 @@ export const BounceLoader: FC<IBounceLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <div style={bounceContainerStyle}>{balls}</div>
+      <div style={orbitContainerStyle}>
+        <div style={centerDotStyle}></div>
+        {orbitElements}
+      </div>
       {showText && (
         <div className="react-loadly-text" id={`${id}-text`} aria-live="polite">
           {loadingText}

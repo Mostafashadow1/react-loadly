@@ -529,3 +529,193 @@
     transform: rotate(360deg);
   }
 }
+
+/* Squares Loader animations */
+@keyframes react-loadly-squares-rotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.8) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+/* Ripple Loader animations */
+@keyframes react-loadly-ripple {
+  0% {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Stair Loader animations */
+@keyframes react-loadly-stair-cascade {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(-15px);
+    opacity: 1;
+  }
+}
+
+/* Orbit Loader animations */
+@keyframes react-loadly-orbit {
+  0% {
+    transform: rotate(0deg) translateX(var(--orbit-radius, 20px)) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(var(--orbit-radius, 20px)) rotate(-360deg);
+  }
+}
+
+/* Plane Loader 3D animations */
+@keyframes react-loadly-plane-rotate {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: rotateX(90deg) rotateY(90deg);
+  }
+  50% {
+    transform: rotateX(180deg) rotateY(180deg);
+  }
+  75% {
+    transform: rotateX(270deg) rotateY(270deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+/* Orbit animation for wrapper rotation */
+@keyframes react-loadly-orbit-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hashtag Loader animations */
+@keyframes react-loadly-hashtag {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+}
+
+/* Flower Loader animations */
+@keyframes react-loadly-flower-bloom {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 0.5;
+  }
+  25% {
+    transform: scale(0.5) rotate(90deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(0.8) rotate(180deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scale(1.1) rotate(270deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes react-loadly-flower-petal-bloom {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 0.2;
+    filter: blur(1px);
+  }
+  20% {
+    transform: scale(0.4) rotate(18deg);
+    opacity: 0.4;
+    filter: blur(0.5px);
+  }
+  40% {
+    transform: scale(0.7) rotate(36deg);
+    opacity: 0.7;
+    filter: blur(0px);
+  }
+  60% {
+    transform: scale(0.9) rotate(54deg);
+    opacity: 0.9;
+    filter: blur(0px);
+  }
+  80% {
+    transform: scale(1.1) rotate(72deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(1) rotate(90deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes react-loadly-flower-center-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px var(--react-loadly-color);
+  }
+  50% {
+    transform: scale(1.3);
+    box-shadow: 0 0 25px var(--react-loadly-color), 0 0 40px var(--react-loadly-color);
+  }
+}
+
+@keyframes react-loadly-flower-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px var(--react-loadly-color));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px var(--react-loadly-color)) drop-shadow(0 0 25px var(--react-loadly-secondary-color));
+  }
+}
+
+/* Snake Loader animations */
+@keyframes react-loadly-snake {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  75% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+}

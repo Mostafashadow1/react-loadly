@@ -5,4 +5,6 @@ export interface IGeometricLoaderProps extends IBaseLoaderProps {
   count?: number;
   /** Border width for outlined shapes */
   borderWidth?: number;
+  /** Secondary color for multi-color loaders */
+  secondaryColor?: string;
 }

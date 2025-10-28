@@ -1,10 +1,10 @@
-import { IBarsLoaderProps } from "@/@types/interfaces/IBarsLoaderProps";
+import { IStairLoaderProps } from "@/@types/interfaces/IStairLoaderProps";
 import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
 import { classNameGen } from "@/utils/classNameGen";
 import React, { type CSSProperties, FC, useMemo } from "react";
 
-const defaultProps: Partial<IBarsLoaderProps> = {
-  size: 20,
+const defaultProps: Partial<IStairLoaderProps> = {
+  size: 35,
   color: "var(--react-loadly-color)",
   speed: 1,
   loading: true,
@@ -12,7 +12,7 @@ const defaultProps: Partial<IBarsLoaderProps> = {
   "aria-label": "Loading...",
 };
 
-export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
+export const StairLoader: FC<IStairLoaderProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
     size,
@@ -35,7 +35,7 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
     ...restProps
   } = props;
 
-  const id = useMemo(() => generateId("bars-loader"), []);
+  const id = useMemo(() => generateId("stair-loader"), []);
   const sizeValue = getSizeValue(size);
   const animationSettings = getOptimizedAnimationSettings(speed);
 
@@ -58,44 +58,45 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
     }),
   };
 
-  const barsContainerStyle: CSSProperties = {
+  // Calculate size-based scaling factors (based on default size of 35)
+  const sizeNum = parseFloat(sizeValue);
+  const baseWidth = sizeNum * 0.57; // 20px at default size 35
+  const widthIncrement = sizeNum * 0.23; // 8px at default size 35
+  const stepHeight = sizeNum * 0.17; // 6px at default size 35
+  const gapSize = sizeNum * 0.11; // 4px at default size 35
+
+  const stairContainerStyle: CSSProperties = {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "4px",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: `${gapSize}px`,
   };
 
-  const barStyle: CSSProperties = {
-    width: "4px",
-    height: sizeValue,
-    backgroundColor: color,
-    borderRadius: "2px",
-    animation: `react-loadly-bars ${animationSettings.duration} ease-in-out infinite`,
-    animationPlayState: animationSettings.playState,
-  };
-
-  // Create bars with different animation delays and colors
-  const bars = Array.from({ length: count }).map((_, index) => {
+  // Create stair steps with cascade effect
+  const steps = Array.from({ length: count }).map((_, index) => {
     const delay = `${index * 0.1}s`;
-    const heightFactor = 0.5 + (index % 3) * 0.25; // Vary heights for visual interest
-    const barColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
+    const width = `${baseWidth + index * widthIncrement}px`;
+    const stepColor = secondaryColor && index % 2 === 1 ? secondaryColor : color;
     return (
       <div
         key={index}
         style={{
-          ...barStyle,
+          width,
+          height: `${stepHeight}px`,
+          backgroundColor: stepColor,
+          borderRadius: "4px",
+          animation: `react-loadly-stair-cascade ${animationSettings.duration} ease-in-out infinite`,
           animationDelay: delay,
-          height: `${parseFloat(sizeValue) * heightFactor}px`,
-          backgroundColor: barColor,
+          animationPlayState: animationSettings.playState,
         }}
-        data-testid={dataTestId ? `${dataTestId}-bar-${index}` : undefined}
+        data-testid={dataTestId ? `${dataTestId}-step-${index}` : undefined}
       />
     );
   });
 
   return (
     <div
-      className={classNameGen("react-loadly react-loadly-bars", className)}
+      className={classNameGen("react-loadly react-loadly-stair", className)}
       style={containerStyle}
       role="status"
       aria-label={ariaLabel}
@@ -104,7 +105,7 @@ export const BarsLoader: FC<IBarsLoaderProps> = (userProps) => {
       data-testid={dataTestId}
       {...restProps}
     >
-      <div style={barsContainerStyle}>{bars}</div>
+      <div style={stairContainerStyle}>{steps}</div>
       {showText && (
         <div className="react-loadly-text" id={`${id}-text`} aria-live="polite">
           {loadingText}
