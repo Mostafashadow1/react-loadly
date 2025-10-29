@@ -7,4 +7,5 @@ dist
 react-loadly-*.tgz
 main
 
-examples
+
+examples/*

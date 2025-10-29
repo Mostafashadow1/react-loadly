@@ -1,9 +1,14 @@
-# ⚛️ React Loadly — React Loader, Spinner & Loading Indicator Components for React
+# ⚛️ React Loadly — React Loader, Spinner & Loading Indicator Components Library
 
-**React Loadly** is a modern, high-performance library of **React loaders, spinners, and loading indicators**.  
-It’s built with **TypeScript**, optimized for **Next.js / SSR**, and designed with **accessibility** and **developer experience** in mind.
+<p align="center">
+  <img src="./public/images/react-loadly-hero.png" alt="React Loadly - Modern React Loaders, Spinners, Skeleton Loaders, and Loading Indicators for React and Next.js" width="900" />
+</p>
 
-Perfect for building **React apps, dashboards, forms, and data-driven UIs** where you need smooth, customizable loading states. Includes **AutoSkeletonLoader** for automatically generating skeleton loaders based on your component structure.
+**React Loadly** is a modern, high-performance **React loader, spinner, and skeleton loader components library** with **30+ customizable loading animations**. Built with **TypeScript**, optimized for **Next.js and SSR**, and designed with **accessibility (ARIA)** and **developer experience** in mind.
+
+Perfect for building **React applications, React dashboards, forms, and data-driven UIs** where you need smooth, customizable loading states and skeleton screens. Includes **AutoSkeletonLoader** for automatically generating skeleton loaders based on your component structure.
+
+🔍 **Search-friendly features**: React loading spinner | React loader components | React skeleton loader | React loading indicator | Next.js loader | TypeScript loader | Accessible React loader | React loading animation
 
 🏠 **Home Page**: [https://Mostafashadow1.github.io/react-loadly-showCases/](https://Mostafashadow1.github.io/react-loadly-showCases/)
 
