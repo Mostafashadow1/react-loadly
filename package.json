@@ -1,6 +1,6 @@
 {
   "name": "react-loadly",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "type": "module",
   "description": "⚛️ React Loadly - Modern React loader, spinner, and skeleton loader components. High-performance loading indicators for React apps with TypeScript support, Next.js compatibility, accessibility, and 30+ customizable animations. Perfect for dashboards, forms, and data UIs.",
   "main": "dist/index.cjs.js",
