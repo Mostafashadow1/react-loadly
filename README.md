@@ -133,10 +133,12 @@ function App() {
 
 ### Modern Content Loaders
 
-| Component            | Description                                                                                    |
-| -------------------- | ---------------------------------------------------------------------------------------------- |
-| `SkeletonLoader`     | Modern skeleton placeholders with shimmer effects. with Sophisticated shimmer wave animations. |
-| `AutoSkeletonLoader` | Automatically generates skeleton loaders based on your component structure.                    |
+| Component            | Description                                                                                   |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `SkeletonLoader`     | Modern skeleton placeholders with shimmer effects and sophisticated shimmer wave animations.  |
+| `AutoSkeletonLoader` | Automatically generates skeleton loaders based on your component structure.                   |
+
+---
 
 ### Organic & Text-Based Loaders
 
@@ -148,17 +150,20 @@ function App() {
 | `LiquidLoader` | Fluid, morphing shapes with organic movement.       |
 | `FlowLoader`   | Flowing particles with smooth transitions.          |
 
+---
+
 ### Flexible Loaders
 
 | Component            | Description                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------ | --- |
+| -------------------- | ------------------------------------------------------------------------------------ |
 | `ElementLoader`      | A flexible loader that can display any React element with various animation effects. |
 | `FallbackLoader`     | Error handling and retry functionality with customizable UI.                         |
 | `LogoSpinLoader`     | Specialized loader for logos and brand elements.                                     |
 | `ProgressRingLoader` | Accessible progress ring with optional determinate mode.                             |
 | `MorphLoader`        | Smooth morphing SVG shapes that interpolate between paths.                           |
 | `SpinDotsLoader`     | Circular orbit of dots; perfect for inline text.                                     |
-| `HeatmapLoader`      | Grid of pulses with staggered timing; useful for dashboards.                         |     |
+| `HeatmapLoader`      | Grid of pulses with staggered timing; useful for dashboards.                         |
+
 
 ### ProgressRingLoader Component
 
@@ -1018,7 +1023,7 @@ function App() {
 
 ### Bundle Size Optimization
 
-``jsx
+```jsx
 // ✅ Tree-shakable imports
 import { SpinLoader } from "react-loadly";
 
@@ -1044,7 +1049,7 @@ Accessibility is a core feature, not an afterthought. All loaders include:
 
 <!-- end list -->
 
-``jsx
+```jsx
 // Accessible by default
 <SpinLoader aria-label="Loading content" />
 
@@ -1096,7 +1101,7 @@ interface BaseLoaderProps {
 
 React Loadly provides comprehensive TypeScript definitions for all components and hooks. You can import types and interfaces directly from the library:
 
-``tsx
+```tsx
 // ✅ Correct way to import shared interfaces
 import type { IBaseLoaderProps, ISkeletonLoaderProps } from "react-loadly";
 
@@ -1157,7 +1162,7 @@ Display any loader in fullscreen mode with customizable dimensions and backgroun
 
 ### Loading States for Different Content Types
 
-``jsx
+```jsx
 import { SkeletonLoader, SpinLoader, PulseLoader } from "react-loadly";
 
 function ContentLoader() {
@@ -1190,7 +1195,7 @@ function ContentLoader() {
 
 ### Form Loading States
 
-``jsx
+```jsx
 function FormWithLoading() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -1216,7 +1221,7 @@ function FormWithLoading() {
 
 ### Data Table Loading
 
-``jsx
+```jsx
 function DataTable({ data, loading }) {
   if (loading) {
     return (
@@ -1249,7 +1254,7 @@ function DataTable({ data, loading }) {
 
 ### Image Gallery Loading
 
-``jsx
+```jsx
 function ImageGallery({ images, loading }) {
   if (loading) {
     return (
@@ -1282,7 +1287,7 @@ function ImageGallery({ images, loading }) {
 
 ### Social Media Feed Loading
 
-``jsx
+```jsx
 function SocialFeed({ posts, loading }) {
   if (loading) {
     return (
@@ -1310,7 +1315,7 @@ function SocialFeed({ posts, loading }) {
 
 ### Gaming/Entertainment Loading States
 
-``jsx
+```jsx
 function GameLoader() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
@@ -1329,7 +1334,7 @@ function GameLoader() {
 
 ### 3D and Modern UI Loading
 
-``jsx
+```jsx
 function ModernDashboardLoader() {
   return (
     <div className="dashboard-loader">
@@ -1344,8 +1349,7 @@ function ModernDashboardLoader() {
     </div>
   );
 }
-
----
+```
 
 ## 🧩 Advanced Usage
 
@@ -1392,7 +1396,6 @@ function DataComponent() {
 }
 ```
 
----
 
 ## 🤝 Contributing
 
@@ -1498,4 +1501,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ by the React Loadly community**
-````
