@@ -219,9 +219,42 @@ const WorkerCardMolecule: React.FC<{
 
 WorkerCardMolecule.displayName = "WorkerCardMolecule";
 
+// Centered Profile Card for Alignment Testing
+const CenteredProfileCard: React.FC = () => {
+    return (
+        <div
+            className="profile-card text-center"
+            style={{
+                padding: "40px",
+                border: "1px solid #e5e7eb",
+                borderRadius: "20px",
+                backgroundColor: "#fff",
+                maxWidth: "400px",
+                margin: "0 auto"
+            }}
+        >
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+                <div style={{ width: "120px", height: "120px", borderRadius: "50%", backgroundColor: "#f3f4f6", overflow: "hidden" }}>
+                    <img
+                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                </div>
+            </div>
+            <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "8px", textAlign: "center" }}>Jane Smith</h2>
+            <p style={{ color: "#6b7280", marginBottom: "24px", textAlign: "center" }}>Product Designer & UI Expert</p>
+            <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
+                <button style={{ padding: "10px 24px", borderRadius: "12px", border: "1px solid #d1d5db", backgroundColor: "white", fontWeight: "600" }}>Portfolio</button>
+                <button style={{ padding: "10px 24px", borderRadius: "12px", border: "none", backgroundColor: "#3b82f6", color: "white", fontWeight: "600" }}>Hire Me</button>
+            </div>
+        </div>
+    );
+};
+
 // Main Example Component
 export const AutoSkeletonV2Example: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [viewMode, setViewMode] = useState<"grid" | "centered">("centered");
 
     const mockWorkers: IWorker[] = [
         {
@@ -278,7 +311,7 @@ export const AutoSkeletonV2Example: React.FC = () => {
                 </p>
 
                 {/* Controls */}
-                <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
+                <div style={{ display: "flex", gap: "12px", marginBottom: "24px", flexWrap: "wrap" }}>
                     <button
                         onClick={() => setIsLoading(!isLoading)}
                         style={{
@@ -293,6 +326,22 @@ export const AutoSkeletonV2Example: React.FC = () => {
                     >
                         {isLoading ? "✅ Show Content" : "⏳ Show Skeleton"}
                     </button>
+
+                    <button
+                        onClick={() => setViewMode(viewMode === "grid" ? "centered" : "grid")}
+                        style={{
+                            padding: "12px 24px",
+                            backgroundColor: "#10b981",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "8px",
+                            fontWeight: "600",
+                            cursor: "pointer",
+                        }}
+                    >
+                        🔄 Switch to {viewMode === "grid" ? "Centered Profile" : "Worker Grid"}
+                    </button>
+
                     <div
                         style={{
                             padding: "12px 24px",
@@ -328,29 +377,42 @@ export const AutoSkeletonV2Example: React.FC = () => {
                 </div>
             </div>
 
-            {/* Worker Cards Grid */}
-            <div
-                style={{
-                    maxWidth: "1200px",
-                    margin: "0 auto",
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                    gap: "24px",
-                }}
-            >
-                {mockWorkers.map((worker) => (
-                    <div key={worker.id}>
-                        <AutoSkeletonLoader
-                            className="w-full h-full"
-                            loading={isLoading}
-                            color="#e5e7eb"
-                            highlightColor="#f3f4f6"
-                            inheritStyles
-                            component={<WorkerCardMolecule workerData={worker} bookNowHandler={() => handleBookNow(worker)} />}
-                        />
-                    </div>
-                ))}
-            </div>
+            {/* Main Content Area */}
+            {viewMode === "centered" ? (
+                <div style={{ padding: "40px 0" }}>
+                    <AutoSkeletonLoader
+                        loading={isLoading}
+                        color="#e5e7eb"
+                        highlightColor="#f3f4f6"
+                        inheritStyles
+                        component={<CenteredProfileCard />}
+                    />
+                </div>
+            ) : (
+                /* Worker Cards Grid */
+                <div
+                    style={{
+                        maxWidth: "1200px",
+                        margin: "0 auto",
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                        gap: "24px",
+                    }}
+                >
+                    {mockWorkers.map((worker) => (
+                        <div key={worker.id}>
+                            <AutoSkeletonLoader
+                                className="w-full h-full"
+                                loading={isLoading}
+                                color="#e5e7eb"
+                                highlightColor="#f3f4f6"
+                                inheritStyles
+                                component={<WorkerCardMolecule workerData={worker} bookNowHandler={() => handleBookNow(worker)} />}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Console Instructions */}
             <div

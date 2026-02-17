@@ -40,37 +40,29 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
    * Handles React.memo, forwardRef, lazy, and other HOCs
    */
   const getComponentType = (type: any): any => {
-    // Direct function component
     if (typeof type === "function") return type;
-
-    // React.memo, forwardRef, lazy, etc.
     if (typeof type === "object" && type?.$$typeof) {
-      // React.memo has type property
       if (type.type) return getComponentType(type.type);
-      // forwardRef has render property
       if (type.render) return getComponentType(type.render);
     }
-
     return type;
   };
 
   /**
    * Safely execute a component function
-   * Catches hooks errors when called outside React render tree
    */
   const safeRender = (Component: any, props: any): ReactElement | null => {
     try {
       const result = Component(props);
       return React.isValidElement(result) ? result : null;
     } catch (error) {
-      // Hooks error, context missing, etc.
-      console.debug("[AutoSkeletonLoader] Component render failed (expected for hooks-heavy components):", (error as Error).message);
+      console.debug("[AutoSkeletonLoader] Safe render failed:", (error as Error).message);
       return null;
     }
   };
 
   /**
-   * Smart dimension estimation with fallbacks for atoms and molecules
+   * Smart dimension estimation with alignment awareness
    */
   const estimateDimensions = (element: ReactElement, componentName?: string): CSSProperties => {
     const { type, props: elementProps } = element;
@@ -80,44 +72,20 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
       borderRadius: "6px",
     };
 
-    // Smart fallbacks based on component naming conventions
     if (componentName) {
       const lowerName = componentName.toLowerCase();
-      
-      // Button atoms
-      if (lowerName.includes("button")) {
-        return { width: "100px", height: "40px", borderRadius: "8px" };
-      }
-      
-      // Badge atoms
-      if (lowerName.includes("badge")) {
-        return { width: "80px", height: "24px", borderRadius: "12px" };
-      }
-      
-      // Text atoms
-      if (lowerName.includes("text") || lowerName.includes("label")) {
-        return { width: "120px", height: "1em", borderRadius: "4px" };
-      }
-      
-      // Image/Avatar atoms
-      if (lowerName.includes("image") || lowerName.includes("avatar") || lowerName.includes("photo")) {
-        return { width: "56px", height: "56px", borderRadius: "8px" };
-      }
-      
-      // Card molecules
-      if (lowerName.includes("card")) {
-        return { width: "100%", height: "200px", borderRadius: "12px" };
-      }
+      if (lowerName.includes("button")) return { width: "100px", height: "40px", borderRadius: "8px" };
+      if (lowerName.includes("badge")) return { width: "80px", height: "24px", borderRadius: "12px" };
+      if (lowerName.includes("text") || lowerName.includes("label")) return { width: "120px", height: "1em", borderRadius: "4px" };
+      if (lowerName.includes("image") || lowerName.includes("avatar") || lowerName.includes("photo")) return { width: "56px", height: "56px", borderRadius: "8px" };
+      if (lowerName.includes("card")) return { width: "100%", height: "200px", borderRadius: "12px" };
     }
 
     if (typeof type === "string") {
       switch (type) {
-        case "h1":
-          return { width: "100%", height: "2.2em", borderRadius: "6px" };
-        case "h2":
-          return { width: "100%", height: "1.8em", borderRadius: "6px" };
-        case "h3":
-          return { width: "100%", height: "1.6em", borderRadius: "6px" };
+        case "h1": return { width: "100%", height: "2.2em", borderRadius: "6px" };
+        case "h2": return { width: "100%", height: "1.8em", borderRadius: "6px" };
+        case "h3": return { width: "100%", height: "1.6em", borderRadius: "6px" };
         case "p":
         case "span":
           if (typeof elementProps.children === "string") {
@@ -136,94 +104,87 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
             borderRadius: elementProps.style?.borderRadius || "8px",
           };
         case "button":
-          if (typeof elementProps.children === "string") {
-            const textLength = elementProps.children.length;
-            return {
-              width: `${Math.max(80, textLength * 8)}px`,
-              height: "40px",
-              borderRadius: elementProps.style?.borderRadius || "8px",
-            };
-          }
           return { width: "120px", height: "40px", borderRadius: "8px" };
-        case "div":
-        case "section":
-          // Container fallback
-          return { width: "90%", height: "20px", borderRadius: "6px" };
         default:
-          return {
-            width: elementProps.style?.width || defaults.width,
-            height: elementProps.style?.height || defaults.height,
-            borderRadius: elementProps.style?.borderRadius || defaults.borderRadius,
-          };
+          return defaults;
       }
     }
 
-    return {
-      width: element.props?.style?.width || defaults.width,
-      height: element.props?.style?.height || defaults.height,
-      borderRadius: element.props?.style?.borderRadius || defaults.borderRadius,
-    };
+    return defaults;
   };
 
   const getShimmerGradient = () => {
-    const gradientDirection =
-      waveDirection === "left-to-right"
-        ? "90deg"
-        : waveDirection === "right-to-left"
-        ? "270deg"
-        : waveDirection === "top-to-bottom"
-        ? "180deg"
-        : "0deg";
-
+    const gradientDirection = waveDirection === "left-to-right" ? "90deg" : waveDirection === "right-to-left" ? "270deg" : waveDirection === "top-to-bottom" ? "180deg" : "0deg";
     return `linear-gradient(${gradientDirection}, ${color} 0%, ${highlightColor} 50%, ${color} 100%)`;
   };
 
-  const createSkeletonBlock = (baseStyle: CSSProperties, key: string | number): ReactElement => {
+  /**
+   * Creates a skeleton block with layout awareness
+   */
+  const createSkeletonBlock = (baseStyle: CSSProperties, stableKey: string, isCentered = false): ReactElement => {
     const isBlock = baseStyle.display ? baseStyle.display !== "inline" : true;
-    const gradient = shimmer
-      ? {
-          background: getShimmerGradient(),
-          backgroundSize: `${waveWidthValue} 100%`,
-          animation: `react-loadly-shimmer ${1.5 / (speed || 1)}s ease-in-out infinite`,
-        }
-      : { backgroundColor: color };
 
-    const style: CSSProperties = {
+    const blockStyle: CSSProperties = {
       display: isBlock ? "block" : "inline-block",
       width: baseStyle.width,
       height: baseStyle.height,
       borderRadius: baseStyle.borderRadius,
       margin: baseStyle.margin || "6px 0",
-      ...gradient,
+      backgroundColor: color,
       position: "relative",
       overflow: "hidden",
+      ...(isCentered && isBlock ? { marginLeft: "auto", marginRight: "auto" } : {}),
     };
 
-    return <div key={String(key)} style={style} aria-hidden="true" className="react-loadly-skeleton-block" />;
+    const shimmerOverlayStyle: CSSProperties = shimmer
+      ? {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: getShimmerGradient(),
+        backgroundSize: `${waveWidthValue} 100%`,
+        animation: `react-loadly-shimmer ${1.5 / (speed || 1)}s linear infinite`,
+        pointerEvents: "none",
+      }
+      : {};
+
+    return (
+      <div key={stableKey} style={blockStyle} aria-hidden="true" className="react-loadly-skeleton-block">
+        {shimmer && <div style={shimmerOverlayStyle} className="react-loadly-skeleton-shimmer" />}
+      </div>
+    );
+  };
+
+  const generateStableKey = (path: string[], type: any, componentName?: string): string => {
+    const pathStr = path.join("-");
+    const typeStr = typeof type === "string" ? type : componentName || "component";
+    return `skeleton-${pathStr}-${typeStr}`;
   };
 
   /**
-   * Advanced Virtual Traversal
-   * Maps React elements to skeleton blocks with support for:
-   * - React.memo wrapped components
-   * - forwardRef wrapped components
-   * - Hooks-heavy components (safe rendering)
-   * - Deep Fragment nesting
-   * - Smart dimension fallbacks
+   * Advanced Virtual Traversal v2.5.0
+   * Handles alignment inheritance and root style cloning
    */
-  const mapElementToSkeleton = (el: ReactElement | string | number | null | undefined, idx = 0): ReactElement | null => {
+  const mapElementToSkeleton = (
+    el: ReactElement | string | number | null | undefined,
+    path: string[] = ["0"],
+    parentIsCentered = false
+  ): ReactElement | null => {
     if (el == null || typeof el === "string" || typeof el === "number") return null;
 
     if (Array.isArray(el)) {
-      return <>{el.map((c, i) => mapElementToSkeleton(c as ReactElement, i))}</>;
+      return <>{el.map((c, i) => mapElementToSkeleton(c as ReactElement, [...path, String(i)], parentIsCentered))}</>;
     }
 
-    // Enhanced Fragment support with deep recursion
     if ((el as ReactElement).type === React.Fragment) {
       const frag = el as ReactElement;
       return (
-        <React.Fragment key={idx}>
-          {React.Children.map(frag.props.children, (child, i) => mapElementToSkeleton(child as ReactElement, i))}
+        <React.Fragment key={generateStableKey(path, "fragment")}>
+          {React.Children.map(frag.props.children, (child, i) =>
+            mapElementToSkeleton(child as ReactElement, [...path, "frag", String(i)], parentIsCentered)
+          )}
         </React.Fragment>
       );
     }
@@ -231,72 +192,91 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
     const typed = el as ReactElement;
     const { type, props: elProps } = typed;
 
+    // Detect centering in the current element
+    const elClassName = elProps?.className || "";
+    const elStyle = elProps?.style || {};
+    const isCentered =
+      parentIsCentered ||
+      elClassName.includes("text-center") ||
+      elClassName.includes("items-center") ||
+      elClassName.includes("justify-center") ||
+      elStyle.textAlign === "center" ||
+      elStyle.alignItems === "center" ||
+      elStyle.justifyContent === "center";
+
     // Handle native HTML elements
     if (typeof type === "string") {
       const containerTags = ["div", "section", "article", "header", "footer", "nav", "main", "ul", "ol", "li", "figure"];
+
       if (containerTags.includes(type)) {
-        const containerStyle: CSSProperties = inheritStyles && elProps.style ? { ...elProps.style } : {};
+        // Layout Context Awareness: Keep alignment and layout styles
+        const containerStyle: CSSProperties = inheritStyles ? { ...elStyle } : {};
+
+        // Preserve flex/grid layouts if necessary
+        if (elStyle.display === "flex" || elStyle.display === "grid") {
+          containerStyle.display = elStyle.display;
+          containerStyle.flexDirection = elStyle.flexDirection;
+          containerStyle.alignItems = elStyle.alignItems;
+          containerStyle.justifyContent = elStyle.justifyContent;
+          containerStyle.gap = elStyle.gap;
+        }
+
         return React.createElement(
           type,
-          { key: idx, ...elProps, style: containerStyle },
-          React.Children.map(elProps.children, (child, i) => mapElementToSkeleton(child as ReactElement, i)),
+          {
+            key: generateStableKey(path, type),
+            className: elClassName, // Root Style Cloning: Inherit original className
+            style: containerStyle
+          },
+          React.Children.map(elProps.children, (child, i) =>
+            mapElementToSkeleton(child as ReactElement, [...path, type, String(i)], isCentered)
+          )
         );
       }
 
-      let elStyle: CSSProperties = { ...estimateDimensions(typed) };
-      if (inheritStyles && elProps.style) elStyle = { ...elStyle, ...elProps.style };
-      if (styless[type as string]) elStyle = { ...elStyle, ...styless[type as string] };
+      let blockDims: CSSProperties = { ...estimateDimensions(typed) };
+      if (inheritStyles) blockDims = { ...blockDims, ...elStyle };
+      if (styless[type as string]) blockDims = { ...blockDims, ...styless[type as string] };
 
-      return createSkeletonBlock(elStyle, `${idx}-${type}`);
+      // Ensure block matches display property exactly
+      if (elStyle.display) blockDims.display = elStyle.display;
+
+      return createSkeletonBlock(blockDims, generateStableKey(path, type), isCentered);
     }
 
-    // Handle React components (function components, React.memo, forwardRef, etc.)
+    // Handle React components
     const actualType = getComponentType(type);
-    
+
     if (typeof actualType === "function") {
-      // Attempt safe render
       const rendered = safeRender(actualType, elProps);
-      
+
       if (rendered) {
-        // Successfully rendered - traverse the result
-        return mapElementToSkeleton(rendered, idx);
+        // ROOT STYLE CLONING: If the component returns a root element, we merge its styles
+        const componentName = actualType.displayName || actualType.name || "comp";
+        return mapElementToSkeleton(rendered, [...path, componentName], isCentered);
       }
-      
-      // Failed to render (hooks error, etc.) - use smart fallback
-      const componentName = actualType.displayName || actualType.name || "";
+
+      const componentName = actualType.displayName || actualType.name || "component";
       const fallbackStyle = estimateDimensions(typed, componentName);
-      return createSkeletonBlock(fallbackStyle, `${idx}-${componentName || "component"}`);
+      return createSkeletonBlock(fallbackStyle, generateStableKey(path, actualType, componentName), isCentered);
     }
 
-    // Handle children if the component has them
     if (elProps && elProps.children) {
       return (
-        <React.Fragment key={idx}>
-          {React.Children.map(elProps.children, (child: any, i: number) => mapElementToSkeleton(child, i))}
+        <React.Fragment key={generateStableKey(path, "children")}>
+          {React.Children.map(elProps.children, (child: any, i: number) =>
+            mapElementToSkeleton(child, [...path, "child", String(i)], isCentered)
+          )}
         </React.Fragment>
       );
     }
 
-    // Final fallback
-    const fallbackStyle = estimateDimensions(typed);
-    return createSkeletonBlock(fallbackStyle, `${idx}-fallback`);
+    return createSkeletonBlock(estimateDimensions(typed), generateStableKey(path, "fallback"), isCentered);
   };
 
-  // Optimized memoization with component identity
   const processed = useMemo(
     () => mapElementToSkeleton(component),
-    [
-      component,
-      component?.type,
-      styless,
-      inheritStyles,
-      shimmer,
-      highlightColor,
-      waveWidthValue,
-      waveDirection,
-      color,
-      speed,
-    ],
+    [component, component?.type, styless, inheritStyles, shimmer, highlightColor, waveWidthValue, waveDirection, color, speed],
   );
 
   if (!loading) {
