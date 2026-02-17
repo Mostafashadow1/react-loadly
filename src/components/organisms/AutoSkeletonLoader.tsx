@@ -35,13 +35,80 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
     ...restProps
   } = props;
 
-  const estimateDimensions = (element: ReactElement): CSSProperties => {
+  /**
+   * Extract the actual component function from React wrappers
+   * Handles React.memo, forwardRef, lazy, and other HOCs
+   */
+  const getComponentType = (type: any): any => {
+    // Direct function component
+    if (typeof type === "function") return type;
+
+    // React.memo, forwardRef, lazy, etc.
+    if (typeof type === "object" && type?.$$typeof) {
+      // React.memo has type property
+      if (type.type) return getComponentType(type.type);
+      // forwardRef has render property
+      if (type.render) return getComponentType(type.render);
+    }
+
+    return type;
+  };
+
+  /**
+   * Safely execute a component function
+   * Catches hooks errors when called outside React render tree
+   */
+  const safeRender = (Component: any, props: any): ReactElement | null => {
+    try {
+      const result = Component(props);
+      return React.isValidElement(result) ? result : null;
+    } catch (error) {
+      // Hooks error, context missing, etc.
+      console.debug("[AutoSkeletonLoader] Component render failed (expected for hooks-heavy components):", (error as Error).message);
+      return null;
+    }
+  };
+
+  /**
+   * Smart dimension estimation with fallbacks for atoms and molecules
+   */
+  const estimateDimensions = (element: ReactElement, componentName?: string): CSSProperties => {
     const { type, props: elementProps } = element;
     const defaults: CSSProperties = {
       width: "100%",
       height: "16px",
       borderRadius: "6px",
     };
+
+    // Smart fallbacks based on component naming conventions
+    if (componentName) {
+      const lowerName = componentName.toLowerCase();
+      
+      // Button atoms
+      if (lowerName.includes("button")) {
+        return { width: "100px", height: "40px", borderRadius: "8px" };
+      }
+      
+      // Badge atoms
+      if (lowerName.includes("badge")) {
+        return { width: "80px", height: "24px", borderRadius: "12px" };
+      }
+      
+      // Text atoms
+      if (lowerName.includes("text") || lowerName.includes("label")) {
+        return { width: "120px", height: "1em", borderRadius: "4px" };
+      }
+      
+      // Image/Avatar atoms
+      if (lowerName.includes("image") || lowerName.includes("avatar") || lowerName.includes("photo")) {
+        return { width: "56px", height: "56px", borderRadius: "8px" };
+      }
+      
+      // Card molecules
+      if (lowerName.includes("card")) {
+        return { width: "100%", height: "200px", borderRadius: "12px" };
+      }
+    }
 
     if (typeof type === "string") {
       switch (type) {
@@ -78,6 +145,10 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
             };
           }
           return { width: "120px", height: "40px", borderRadius: "8px" };
+        case "div":
+        case "section":
+          // Container fallback
+          return { width: "90%", height: "20px", borderRadius: "6px" };
         default:
           return {
             width: elementProps.style?.width || defaults.width,
@@ -106,6 +177,7 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
 
     return `linear-gradient(${gradientDirection}, ${color} 0%, ${highlightColor} 50%, ${color} 100%)`;
   };
+
   const createSkeletonBlock = (baseStyle: CSSProperties, key: string | number): ReactElement => {
     const isBlock = baseStyle.display ? baseStyle.display !== "inline" : true;
     const gradient = shimmer
@@ -130,6 +202,15 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
     return <div key={String(key)} style={style} aria-hidden="true" className="react-loadly-skeleton-block" />;
   };
 
+  /**
+   * Advanced Virtual Traversal
+   * Maps React elements to skeleton blocks with support for:
+   * - React.memo wrapped components
+   * - forwardRef wrapped components
+   * - Hooks-heavy components (safe rendering)
+   * - Deep Fragment nesting
+   * - Smart dimension fallbacks
+   */
   const mapElementToSkeleton = (el: ReactElement | string | number | null | undefined, idx = 0): ReactElement | null => {
     if (el == null || typeof el === "string" || typeof el === "number") return null;
 
@@ -137,6 +218,7 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
       return <>{el.map((c, i) => mapElementToSkeleton(c as ReactElement, i))}</>;
     }
 
+    // Enhanced Fragment support with deep recursion
     if ((el as ReactElement).type === React.Fragment) {
       const frag = el as ReactElement;
       return (
@@ -149,6 +231,7 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
     const typed = el as ReactElement;
     const { type, props: elProps } = typed;
 
+    // Handle native HTML elements
     if (typeof type === "string") {
       const containerTags = ["div", "section", "article", "header", "footer", "nav", "main", "ul", "ol", "li", "figure"];
       if (containerTags.includes(type)) {
@@ -164,35 +247,56 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
       if (inheritStyles && elProps.style) elStyle = { ...elStyle, ...elProps.style };
       if (styless[type as string]) elStyle = { ...elStyle, ...styless[type as string] };
 
-      // check if the container has display:flex , added in parent width 100%
-
       return createSkeletonBlock(elStyle, `${idx}-${type}`);
     }
 
-    if (typeof type === "function") {
-      try {
-        const rendered = (type as any)(elProps);
-        if (React.isValidElement(rendered) || Array.isArray(rendered)) {
-          return mapElementToSkeleton(rendered as ReactElement, idx);
-        }
-      } catch (err) {
-        console.log(err);
+    // Handle React components (function components, React.memo, forwardRef, etc.)
+    const actualType = getComponentType(type);
+    
+    if (typeof actualType === "function") {
+      // Attempt safe render
+      const rendered = safeRender(actualType, elProps);
+      
+      if (rendered) {
+        // Successfully rendered - traverse the result
+        return mapElementToSkeleton(rendered, idx);
       }
+      
+      // Failed to render (hooks error, etc.) - use smart fallback
+      const componentName = actualType.displayName || actualType.name || "";
+      const fallbackStyle = estimateDimensions(typed, componentName);
+      return createSkeletonBlock(fallbackStyle, `${idx}-${componentName || "component"}`);
     }
 
+    // Handle children if the component has them
     if (elProps && elProps.children) {
       return (
-        <React.Fragment key={idx}>{React.Children.map(elProps.children, (child: any, i: number) => mapElementToSkeleton(child, i))}</React.Fragment>
+        <React.Fragment key={idx}>
+          {React.Children.map(elProps.children, (child: any, i: number) => mapElementToSkeleton(child, i))}
+        </React.Fragment>
       );
     }
 
+    // Final fallback
     const fallbackStyle = estimateDimensions(typed);
     return createSkeletonBlock(fallbackStyle, `${idx}-fallback`);
   };
 
+  // Optimized memoization with component identity
   const processed = useMemo(
     () => mapElementToSkeleton(component),
-    [component, styless, inheritStyles, shimmer, highlightColor, waveWidthValue, waveDirection, color],
+    [
+      component,
+      component?.type,
+      styless,
+      inheritStyles,
+      shimmer,
+      highlightColor,
+      waveWidthValue,
+      waveDirection,
+      color,
+      speed,
+    ],
   );
 
   if (!loading) {

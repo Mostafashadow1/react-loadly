@@ -16,12 +16,13 @@ import { OrbitExample } from "./examples/OrbitExample";
 import { PlaneExample } from "./examples/PlaneExample";
 import { HashtagExample } from "./examples/HashtagExample";
 import { SnakeExample } from "./examples/SnakeExample";
-
+import { AutoSkeletonV2Example } from "./examples/AutoSkeletonV2Example";
 // Navigation Component
 const Navigation = () => {
-  const [activeTab, setActiveTab] = React.useState("auto-skeleton-api");
+  const [activeTab, setActiveTab] = React.useState("auto-skeleton-v2");
 
   const tabs = [
+    { id: "auto-skeleton-v2", label: "🎉 Auto Skeleton v2.4.0" },
     { id: "auto-skeleton", label: "Auto Skeleton" },
     { id: "auto-skeleton-api", label: "Auto Skeleton API" },
     { id: "bars", label: "Bars Loader" },
@@ -85,6 +86,7 @@ const Navigation = () => {
       </nav>
 
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+        {activeTab === "auto-skeleton-v2" && <AutoSkeletonV2Example />}
         {activeTab === "auto-skeleton" && <AutoSkeletonExample />}
         {activeTab === "auto-skeleton-api" && <AutoSkeletonAPIExample />}
         {activeTab === "bars" && <BarsExample />}

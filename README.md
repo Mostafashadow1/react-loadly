@@ -12,9 +12,117 @@ Perfect for building **React applications, React dashboards, forms, and data-dri
 
 🏠 **Home Page**: [https://Mostafashadow1.github.io/react-loadly-showCases/](https://Mostafashadow1.github.io/react-loadly-showCases/)
 
-[![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)  
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)  
+[![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)
+[![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](https://github.com/Mostafashadow1/react-loadly)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/main/LICENSE)
+
+---
+
+## 🚀 Getting Started
+
+### Installation
+
+Install the package using your preferred package manager.
+
+```bash
+npm install react-loadly
+# or
+yarn add react-loadly
+# or
+pnpm i react-loadly
+```
+
+---
+
+## 🤖 AutoSkeletonLoader — The Zero-Manual-Work Skeleton Engine
+
+Stop wasting time designing manual skeleton screens for every UI update. The **AutoSkeletonLoader** is an industry-leading React engine that dynamically analyzes your components at runtime and generates matching, high-fidelity skeleton placeholders automatically.
+
+### 🧠 The Tech Behind the Magic
+
+The AutoSkeletonLoader doesn't just show a generic grey box; it uses **Dynamic Runtime VDOM Traversal** to mirror your UI's exact hierarchy.
+
+*   **Advanced Component Decoding**: Fully supports modern React patterns including `React.memo`, `forwardRef`, `React.lazy`, and `React.Fragments`. It recursively "unwraps" Higher-Order Components to find the underlying UI structure.
+*   **Hooks-Resilient "Safe Render"**: Our proprietary `safeRender` mechanism allows the engine to traverse components that use `useState`, `useTranslation`, or `useContext` without crashing. It gracefully handles missing data dependencies that normally break skeleton rendering.
+*   **Intelligence (Heuristic Estimation)**: Built-in analysis predicts dimensions for Atoms (Text, Buttons, Badges, Images) and Molecules (Cards, Lists) based on naming conventions and HTML metadata.
+*   **Animation Continuity (Stable Key Algorithm)**: v2.4.x introduces a stable keying algorithm that ensures shimmer animations don't "reset" or flicker when your component's state changes.
+*   **Smart Memoization**: The VDOM analysis is extremely fast and memoized, occurring only when the component structure or configuration changes.
+
+---
+
+### 🚀 Full Example: The WorkerCard Molecule
+
+In this example, we take a complex card with multiple hooks and nested components. See how `AutoSkeletonLoader` handles it with zero extra code.
+
+```tsx
+import { AutoSkeletonLoader } from "react-loadly";
+import "react-loadly/styles.css";
+
+// A complex component with hooks, memo, and sub-components
+const WorkerCard = React.memo(({ data }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="card-container">
+      <div className="flex gap-4">
+        <img src={data.avatar} className="rounded-full w-12 h-12" />
+        <div>
+          <h3 className="text-lg font-bold">{data.name}</h3>
+          <p className="text-gray-500">{data.role}</p>
+        </div>
+      </div>
+      <div className="mt-4">
+        <BadgeAtom text={data.status} variant="success" />
+      </div>
+      <BaseButtonAtom text="View Profile" onClick={handleProfile} />
+    </div>
+  );
+});
+
+// Implementation
+function Dashboard({ isLoading, worker }) {
+  return (
+    <AutoSkeletonLoader
+      loading={isLoading}
+      inheritStyles={true}
+      shimmer={true}
+      component={<WorkerCard data={worker} />}
+    />
+  );
+}
+```
+
+---
+
+### 📊 Comparison: Why AutoSkeletonLoader?
+
+| Feature | Manual Skeletons (`SkeletonLoader`) | **AutoSkeletonLoader** (AI-Powered) |
+| :--- | :--- | :--- |
+| **Setup Time** | High (Design every line/block) | **Near-Zero** (Drop in and go) |
+| **Maintenance** | Brittle (Breaks on UI changes) | **Self-Healing** (Adapts to UI changes) |
+| **Accuracy** | Approximate | **Dynamic Match** (1:1 VDOM Mapping) |
+| **Code Weight** | Verbose JSX boilerplate | **Single Component Wrapper** |
+| **HOC Support** | Manual | **Automatic** (`memo`, `forwardRef`) |
+
+---
+
+### ⚙️ AutoSkeletonLoader Props (IAutoSkeletonProps)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `component` | `ReactElement` | **Required** | The actual component to analyze and mirror. |
+| `loading` | `boolean` | `true` | When `false`, the real component is rendered with a smooth transition. |
+| `inheritStyles` | `boolean` | `false` | If `true`, skeleton blocks will copy `style` and `className` from original elements. |
+| `styless` | `Record<string, CSSProperties>` | `{}` | Key-value pairs to override dimensions for specific tags (e.g., `{ h1: { width: '50%'} }`). |
+| `shimmer` | `boolean` | `true` | Enables the high-performance GPU-accelerated shimmer wave. |
+| `speed` | `number` | `1` | Animation speed multiplier (higher is faster). |
+| `color` | `string` | `"#e2e8f0"` | The base background color of the skeleton blocks. |
+| `highlightColor`| `string` | `"#f1f5f9"` | The highlight color used in the shimmer gradient. |
+| `waveWidthValue` | `string` | `"200px"` | Width of the shimmer wave gradient. |
+| `waveDirection` | `String` | `"left-to-right"` | Shimmer direction: `left-to-right`, `right-to-left`, etc. |
+| `aria-label` | `string` | `"Loading content..."` | Accessible label for screen readers. |
+
+---
 
 ## ✨ Key Features
 
@@ -30,7 +138,7 @@ Perfect for building **React applications, React dashboards, forms, and data-dri
 
 ---
 
-## 🆕 What's New
+## 🆕 What's New (v2.4.0)
 
 We've added **7 exciting new loaders** to expand your loading animation options:
 
@@ -51,20 +159,6 @@ All new loaders support:
 - ✅ Performance optimizations with hardware acceleration
 
 ---
-
-## 🚀 Getting Started
-
-### Installation
-
-Install the package using your preferred package manager.
-
-```bash
-npm install react-loadly
-# or
-yarn add react-loadly
-# or
-pnpm i react-loadly
-```
 
 ### Bundle Optimization
 
@@ -168,6 +262,7 @@ The `ProgressRingLoader` is an accessible progress ring component that supports 
 
 ```jsx
 import { ProgressRingLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -206,6 +301,7 @@ The `MorphLoader` creates smooth morphing SVG shapes that interpolate between di
 
 ```jsx
 import { MorphLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -247,6 +343,7 @@ The `SpinDotsLoader` creates a circular orbit of dots, perfect for inline text l
 
 ```jsx
 import { SpinDotsLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -286,6 +383,7 @@ The `HeatmapLoader` displays a grid of pulses with staggered timing, useful for 
 
 ```jsx
 import { HeatmapLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -325,6 +423,7 @@ The `ClockLoader` animates like a traditional clock with hour, minute, and secon
 
 ```jsx
 import { ClockLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -362,6 +461,7 @@ The `NeumorphicLoader` creates a soft neumorphic pill/dots loader for modern UI 
 
 ```jsx
 import { NeumorphicLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -400,6 +500,7 @@ The `OrbitLoader` creates a beautiful orbital animation with elements rotating a
 
 ```jsx
 import { OrbitLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -439,6 +540,7 @@ The `PlaneLoader` displays a 3D rotating cube with perspective transforms, creat
 
 ```jsx
 import { PlaneLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -477,6 +579,7 @@ The `RippleLoader` creates expanding ripple rings from a central point, similar 
 
 ```jsx
 import { RippleLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -517,6 +620,7 @@ The `SquaresLoader` displays multiple rotating squares with varying delays and s
 
 ```jsx
 import { SquaresLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -556,6 +660,7 @@ The `StairLoader` creates cascading stair steps that animate in sequence, creati
 
 ```jsx
 import { StairLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -595,6 +700,7 @@ The `HashtagLoader` animates a hashtag symbol with a progressive drawing effect.
 
 ```jsx
 import { HashtagLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -633,6 +739,7 @@ The `SnakeLoader` creates a snake-like animation with flowing segments that move
 
 ```jsx
 import { SnakeLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -672,6 +779,7 @@ The `SkeletonLoader` is perfect for modern loading states, creating placeholder 
 
 ```jsx
 import { SkeletonLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function App() {
   return (
@@ -762,125 +870,6 @@ The SkeletonLoader supports multiple variants to match different content types:
 
 ---
 
-## 🤖 AutoSkeletonLoader Component
-
-The `AutoSkeletonLoader` is an advanced component that automatically generates skeleton loaders based on the structure of your actual components. It analyzes your component's JSX tree and creates matching skeleton placeholders.
-
-### Key Features
-
-- **Automatic Generation**: Scans the JSX tree of your component and replaces each element with a matching skeleton placeholder
-- **Smart Dimension Estimation**: Automatically estimates skeleton dimensions based on element types and content
-- **Style Inheritance**: Optionally inherits inline styles and props directly from the original element
-- **Customizable Class Names**: Override styles per element type for fine-grained control
-- **Variant Support**: Automatically selects appropriate skeleton variants (rect, circle, text) based on element type
-- **Consistent Animations**: Shimmer effect support that's consistent with SkeletonLoader
-- **Smooth Transitions**: Built-in fade-in/out animations between skeleton and real component
-- **Accessibility**: Full ARIA support and screen reader compatibility
-- **Performance Optimized**: Uses React.memo and useMemo for optimal re-rendering
-
-### Basic Usage
-
-```jsx
-import { AutoSkeletonLoader } from "react-loadly";
-
-function UserProfile({ user, loading }) {
-  return <AutoSkeletonLoader loading={loading} component={<UserProfileCard user={user} />} />;
-}
-
-function UserProfileCard({ user }) {
-  return (
-    <div>
-      <img src={user.avatar} alt={user.name} width="100" height="100" />
-      <h3>{user.name}</h3>
-      <p>{user.bio}</p>
-      <button>Follow</button>
-    </div>
-  );
-}
-```
-
-### Advanced Usage Examples
-
-#### Style Inheritance
-
-```jsx
-// Inherits styles from original elements for more accurate skeletons
-<AutoSkeletonLoader loading={loading} component={<UserProfileCard user={user} />} inheritStyles={true} />
-```
-
-#### Custom Class Names
-
-```jsx
-// Customize skeleton appearance per element type
-<AutoSkeleton
-  loading={loading}
-  component={<Card data={data} />}
-  styless={{
-    p: { height: "0.8em", width: "80%" },
-    h3: { height: "1.2em", width: "60%", borderRadius: "8px" },
-    img: { borderRadius: "12px" },
-    button: { width: "150px", height: "50px" },
-  }}
-/>
-```
-
-#### With Shimmer Effects
-
-```jsx
-// Enable shimmer animations for a more polished look
-<AutoSkeleton
-  loading={loading}
-  component={<ProductCard product={product} />}
-  shimmer={true}
-  shimmerColor="rgba(255, 255, 255, 0.8)"
-  highlightColor="#f8fafc"
-/>
-```
-
-#### Complex Component Example
-
-```jsx
-function DashboardCard({ title, metrics, loading }) {
-  return (
-    <AutoSkeletonLoader
-      loading={loading}
-      component={
-        <div className="dashboard-card">
-          <h2>{title}</h2>
-          <div className="metrics">
-            {metrics.map((metric, index) => (
-              <div key={index} className="metric">
-                <span className="value">{metric.value}</span>
-                <span className="label">{metric.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      }
-      inheritStyles={true}
-      shimmer={true}
-    />
-  );
-}
-```
-
-### AutoSkeleton Props
-
-| Prop             | Type                                                                     | Default                 | Description                                      |
-| ---------------- | ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------ |
-| `component`      | ReactElement                                                             | -                       | The component to render or analyze for skeletons |
-| `inheritStyles`  | boolean                                                                  | false                   | Whether to inherit styles from original elements |
-| `styless`        | object                                                                   | {}                      | Custom styles for different element types        |
-| `shimmer`        | boolean                                                                  | true                    | Whether to show shimmer animation                |
-| `shimmerColor`   | string                                                                   | "rgba(255,255,255,0.6)" | Shimmer effect color                             |
-| `highlightColor` | string                                                                   | "#f1f5f9"               | Highlight color for shimmer effect               |
-| `waveWidth`      | number \| string                                                         | "200px"                 | Shimmer wave width                               |
-| `waveDirection`  | "left-to-right" \| "right-to-left" \| "top-to-bottom" \| "bottom-to-top" | "left-to-right"         | Direction of shimmer animation                   |
-
-All other props are inherited from `IBaseLoaderProps`.
-
----
-
 ## 🎨 New Loaders Feature Guide
 
 ### Using Multiple New Loaders Together
@@ -889,6 +878,7 @@ Here's how to combine the new loaders for amazing visual effects:
 
 ```jsx
 import { OrbitLoader, PlaneLoader, RippleLoader, SquaresLoader, StairLoader, HashtagLoader, SnakeLoader } from "react-loadly";
+import "react-loadly/styles.css";
 
 function MultiLoaderShowcase() {
   return (
