@@ -1,11 +1,9 @@
 node_modules
-node-compile-cache
 dist
-.idea
-.vscode
+dist.bak
+coverage
+*.tsbuildinfo
 .DS_Store
-react-loadly-*.tgz
-main
-
-
-examples/*
+*.tgz
+node-compile-cache
+.pnpm-store

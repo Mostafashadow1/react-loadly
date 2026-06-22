@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+
+  --primary: 263 70% 59%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 263 70% 59%;
+
+  --radius: 0.75rem;
+
+  /* Beautiful gradients for the design */
+  --gradient-hero: linear-gradient(135deg,
+      hsl(263 70% 59%),
+      hsl(280 70% 65%),
+      hsl(340 70% 65%));
+  --gradient-card: linear-gradient(145deg,
+      hsl(var(--background)),
+      hsl(220 14% 96%));
+  --gradient-feature: linear-gradient(135deg,
+      hsl(263 70% 59% / 0.05),
+      hsl(280 70% 65% / 0.05));
+  --gradient-glow: linear-gradient(135deg,
+      hsl(263 70% 59% / 0.3),
+      hsl(340 70% 65% / 0.3));
+
+  /* Custom shadows */
+  --shadow-elegant: 0 10px 30px -10px hsl(263 70% 59% / 0.3);
+  --shadow-glow: 0 0 40px hsl(263 70% 59% / 0.4);
+  --shadow-card: 0 4px 20px -2px hsl(263 70% 59% / 0.1);
+
+  /* Animation variables */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+.dark {
+  --background: 240 25% 4%; /* Deepest dark navy */
+  --foreground: 210 40% 98%;
+
+  --card: 240 22% 8%; /* Slightly lighter card background */
+  --card-foreground: 210 40% 98%;
+
+  --popover: 240 22% 8%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 263 70% 59%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 240 15% 12%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 240 15% 12%;
+  --muted-foreground: 240 5% 65%;
+
+  --accent: 240 15% 15%;
+  --accent-foreground: 210 40% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 240 15% 14% / 0.6;
+  --input: 240 15% 12%;
+  --ring: 263 70% 59%;
+
+  --gradient-hero: linear-gradient(135deg,
+      hsl(263 80% 64%),
+      hsl(280 85% 68%),
+      hsl(250 85% 68%));
+  --gradient-card: linear-gradient(145deg,
+      hsl(var(--card)),
+      hsl(240 25% 6%));
+  --gradient-feature: linear-gradient(135deg,
+      hsl(263 70% 59% / 0.12),
+      hsl(280 70% 65% / 0.04));
+  --gradient-glow: linear-gradient(135deg,
+      hsl(263 70% 59% / 0.25),
+      hsl(280 70% 65% / 0.15));
+
+  --shadow-elegant: 0 10px 30px -10px hsl(263 70% 59% / 0.5);
+  --shadow-glow: 0 0 50px hsl(263 70% 59% / 0.35);
+  --shadow-card: 0 4px 24px -2px hsl(263 70% 59% / 0.2);
+}
+
+@theme inline {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  
+  --color-brand-indigo: #6366f1;
+  --color-brand-violet: #8b5cf6;
+  --color-brand-emerald: #10b981;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border/40 outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400;
+  }
+
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-md border border-white/5 shadow-xl transition-all duration-300 hover:border-white/10;
+  }
+
+  .glow-primary {
+    @apply relative after:absolute after:inset-0 after:-z-10 after:bg-primary/20 after:blur-xl after:rounded-full;
+  }
+
+  .dot-grid-bg {
+    background-image: radial-gradient(rgba(99, 102, 241, 0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  .checkerboard-bg {
+    background-color: transparent;
+    background-image: 
+      linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%), 
+      linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%), 
+      linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%), 
+      linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+  }
+
+  .animate-shimmer-badge {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.3) 50%, rgba(99, 102, 241, 0.1) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite linear;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s infinite ease-in-out;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* base container class to enable the custom scrollbar look */
+  .scrollbar-beauty {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(107, 114, 128, 0.6) rgba(31, 41, 55, 0.6);
+  }
+
+  /* WebKit browsers (Chrome/Safari/Edge) */
+  .scrollbar-beauty::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scrollbar-beauty::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.45);
+    border-radius: 9999px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.35);
+  }
+
+  .scrollbar-beauty::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.9), rgba(16, 185, 129, 0.9));
+    border-radius: 9999px;
+    border: 2px solid rgba(15, 23, 42, 0.45);
+    min-height: 28px;
+  }
+
+  .scrollbar-beauty::-webkit-scrollbar-thumb:hover {
+    filter: brightness(0.95) saturate(1.05);
+    transform: translateZ(0);
+  }
+
+  /* Thin variant */
+  .scrollbar-beauty-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-beauty-thin {
+    scrollbar-width: thin;
+  }
+
+  /* Rounded subtle neutral thumb (light/dark friendly) */
+  .scrollbar-beauty-subtle::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.55);
+  }
+
+  .scrollbar-beauty-subtle::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.35);
+  }
+
+  /* Inset glow effect for thumb */
+  .scrollbar-beauty-glow::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.06), 0 0 12px rgba(79, 70, 229, 0.18);
+  }
+}

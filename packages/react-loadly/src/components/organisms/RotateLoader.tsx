@@ -1,0 +1,119 @@
+import { IRotateLoaderProps } from "@/@types/interfaces/IRotateLoaderProps";
+import { generateId, getOptimizedAnimationSettings, getSizeValue, mergeProps } from "@/utils";
+import { classNameGen } from "@/utils/classNameGen";
+import React, { type CSSProperties, FC, useMemo } from "react";
+import { useFullscreen } from "@/hooks/useFullscreen";
+
+const defaultProps: Partial<IRotateLoaderProps> = {
+  size: 15,
+  color: "var(--react-loadly-color)",
+  speed: 1,
+  loading: true,
+  count: 2,
+  "aria-label": "Loading...",
+};
+
+export const RotateLoader: FC<IRotateLoaderProps> = (userProps) => {
+  const props = mergeProps(defaultProps, userProps);
+  const {
+    size,
+    color,
+    secondaryColor,
+    speed,
+    loading,
+    className = "",
+    style = {},
+    count = 2,
+    showText,
+    loadingText = "Loading...",
+    "aria-label": ariaLabel,
+    "data-testid": dataTestId,
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
+    ...restProps
+  } = props;
+
+  const id = useMemo(() => generateId("rotate-loader"), []);
+  const sizeValue = getSizeValue(size);
+  const animationSettings = getOptimizedAnimationSettings(speed);
+
+  const containerStyle = useFullscreen({
+    fullscreen,
+    screenWidth,
+    screenHeight,
+    loaderCenter,
+    screenBackground,
+    style,
+  });
+
+  if (!loading) return null;
+
+  const rotateContainerStyle: CSSProperties = {
+    position: "relative",
+    width: sizeValue,
+    height: sizeValue,
+  };
+
+  const rotateElementStyle: CSSProperties = {
+    position: "absolute",
+    width: sizeValue,
+    height: sizeValue,
+    border: "2px solid transparent",
+    borderTopColor: color,
+    borderBottomColor: color,
+    borderRadius: "50%",
+    animation: `react-loadly-ring ${animationSettings.duration} cubic-bezier(0.5, 0, 0.5, 1) infinite`,
+    animationPlayState: animationSettings.playState,
+    transform: "rotate(0deg)",
+  };
+
+  // Create rotating elements with different colors
+  const elements = Array.from({ length: count }).map((_, index) => {
+    const sizeFactor = 1 - index * 0.2;
+    const borderWidth = 2 + index;
+    const delay = `${index * -0.15}s`;
+    const borderColor = secondaryColor ? (index % 2 === 1 ? secondaryColor : color) : color;
+    return (
+      <div
+        key={index}
+        style={{
+          ...rotateElementStyle,
+          width: `${parseFloat(sizeValue) * sizeFactor}px`,
+          height: `${parseFloat(sizeValue) * sizeFactor}px`,
+          borderWidth: `${borderWidth}px`,
+          borderTopColor: borderColor,
+          borderBottomColor: borderColor,
+          animationDuration: `${parseFloat(animationSettings.duration) * (1 + index * 0.5)}ms`,
+          animationDelay: delay,
+        }}
+        data-testid={dataTestId ? `${dataTestId}-element-${index}` : undefined}
+      />
+    );
+  });
+
+  return (
+    <div
+      className={classNameGen("react-loadly react-loadly-rotate", className)}
+      style={containerStyle}
+      role="status"
+      aria-label={ariaLabel}
+      aria-live="polite"
+      aria-busy={loading}
+      data-testid={dataTestId}
+      {...restProps}
+    >
+      <div style={rotateContainerStyle}>{elements}</div>
+      {showText && (
+        <div className="react-loadly-text" id={`${id}-text`} aria-live="polite">
+          {loadingText}
+        </div>
+      )}
+      <span className="react-loadly-sr-only">{ariaLabel}</span>
+    </div>
+  );
+};
+
+RotateLoader.displayName = "RotateLoader";
