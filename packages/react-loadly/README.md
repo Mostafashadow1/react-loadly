@@ -1,7 +1,7 @@
 # React Loadly — Reliable React Loading Experience Toolkit
 
 <p align="center">
-  <img src="./public/images/react-loadly-hero.png" alt="React Loadly - Modern React Loaders, Spinners, Skeleton Loaders, and Loading Indicators for React and Next.js" width="900" />
+  <img src="./public/images/react-loadly-banner.png" alt="React Loadly - Modern React Loaders, Spinners, Skeleton Loaders, and Loading Indicators for React and Next.js" width="900" />
 </p>
 
 **React Loadly** is a reliable React loading experience toolkit for modern loaders, `SkeletonLoader`, `SkeletonGroupLoader`, loading state hooks, accessibility, SSR support, and production-ready loading patterns. Built with **TypeScript**, optimized for **Next.js and SSR**, and designed with **ARIA**, reduced motion, and developer experience in mind.

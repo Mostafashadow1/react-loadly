@@ -6,12 +6,10 @@ export function FooterSection() {
   return (
     <footer className="relative bg-zinc-950 text-zinc-400 border-t border-border/20 pt-20 pb-10 overflow-hidden">
       <div className="absolute inset-0 dot-grid-bg opacity-20 pointer-events-none" />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Top Section: Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16 border-b border-border/20">
-          
           {/* Column 1: Brand & Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center space-x-2.5">
@@ -23,8 +21,9 @@ export function FooterSection() {
               </span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-sm">
-              A premium, high-performance loading state and skeleton framework for the modern React ecosystem. 
-              Designed for speed, accessibility, and zero-configuration setups.
+              A premium, high-performance loading state and skeleton framework
+              for the modern React ecosystem. Designed for speed, accessibility,
+              and zero-configuration setups.
             </p>
             <div className="flex items-center space-x-3 pt-2">
               <a
@@ -53,27 +52,42 @@ export function FooterSection() {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               <li>
-                <a href="#overview" className="hover:text-white transition-colors">
+                <a
+                  href="#overview"
+                  className="hover:text-white transition-colors"
+                >
                   Overview
                 </a>
               </li>
               <li>
-                <a href="#installation" className="hover:text-white transition-colors">
+                <a
+                  href="#installation"
+                  className="hover:text-white transition-colors"
+                >
                   Installation
                 </a>
               </li>
               <li>
-                <a href="#features" className="hover:text-white transition-colors">
+                <a
+                  href="#features"
+                  className="hover:text-white transition-colors"
+                >
                   Features
                 </a>
               </li>
               <li>
-                <a href="#playground" className="hover:text-white transition-colors">
-                  Playground
+                <a
+                  href="#skeleton-library"
+                  className="hover:text-white transition-colors"
+                >
+                  Skeleton Showcase
                 </a>
               </li>
               <li>
-                <a href="#loaders" className="hover:text-white transition-colors">
+                <a
+                  href="#loaders"
+                  className="hover:text-white transition-colors"
+                >
                   Loaders Showcase
                 </a>
               </li>
@@ -130,14 +144,11 @@ export function FooterSection() {
               </li>
             </ul>
           </div>
-
         </div>
 
         {/* Bottom Section */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <div>
-            © {currentYear} react-loadly. All rights reserved.
-          </div>
+          <div>© {currentYear} react-loadly. All rights reserved.</div>
           <div className="flex items-center gap-1 text-zinc-500 font-medium">
             <span>Made with</span>
             <Heart className="size-3.5 text-rose-500 fill-rose-500" />
@@ -152,7 +163,6 @@ export function FooterSection() {
             </a>
           </div>
         </div>
-
       </div>
     </footer>
   );

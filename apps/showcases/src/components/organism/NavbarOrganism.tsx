@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Github, Menu, X, Layers, Code, Play, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import logo from "@/assets/react-loadly-logo.png";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -18,7 +18,11 @@ export function Navbar() {
     { name: "Overview", href: "#overview", icon: Layers },
     { name: "Installation", href: "#installation", icon: Code },
     { name: "Features", href: "#features", icon: CpuIcon },
-    { name: "Playground", href: "#playground", icon: Play },
+    {
+      name: "Skeleton Showcase",
+      href: "#skeleton-library",
+      icon: Play,
+    },
     { name: "Loaders", href: "#loaders", icon: GridIcon },
   ];
 
@@ -33,12 +37,14 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center space-x-2.5 group">
-            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent group-hover:from-indigo-300 group-hover:to-purple-400 transition-all duration-300">
-              ⚛ react-loadly
-            </span>
-            <span className="px-2 py-0.5 text-[10px] font-semibold tracking-wider text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 rounded-full uppercase">
-              v3.0.0
+          <a href="#" className="flex items-center  group">
+            <img
+              src={logo}
+              alt="React Loadly"
+              className="h-10 w-auto max-w-[150px] object-contain transition-opacity duration-300 group-hover:opacity-90 sm:h-12 sm:max-w-[180px] scale-105"
+            />
+            <span className="px-2 py-0.5 text-md font-semibold tracking-wider text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 rounded-full uppercase">
+              React Loadly
             </span>
           </a>
 
@@ -110,9 +116,9 @@ export function Navbar() {
               </a>
             ))}
           </nav>
-          
+
           <div className="h-px bg-border/40 my-3" />
-          
+
           <div className="grid grid-cols-2 gap-3 pt-1">
             <a
               href="https://github.com/Mostafashadow1/react-loadly"
