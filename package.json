@@ -8,5 +8,6 @@
     "test": "pnpm -r test",
     "type-check": "pnpm -r type-check",
     "deploy:showcases": "pnpm build:lib && pnpm --filter react-loadly-showcases deploy"
-  }
+  },
+  "version": "0.0.1"
 }
