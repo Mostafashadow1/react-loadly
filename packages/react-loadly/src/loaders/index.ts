@@ -11,6 +11,7 @@ export { LogoSpinLoader } from "../components/organisms/LogoSpinLoader";
 export { PulseLoader } from "../components/organisms/PulseLoader";
 export { RingLoader } from "../components/organisms/RingLoader";
 export { RotateLoader } from "../components/organisms/RotateLoader";
+export { SkeletonPatternLoader } from "../components/organisms/SkeletonPatternLoader";
 export { SpinLoader } from "../components/organisms/SpinLoader";
 export { TypingLoader } from "../components/organisms/TypingLoader";
 export { WaveLoader } from "../components/organisms/WaveLoader";
@@ -38,6 +39,7 @@ export type {
   ILogoLoaderProps,
   ITextLoaderProps,
   IBaseLoaderProps,
+  ISkeletonPatternLoaderProps,
   IElementLoaderProps,
   ILoaderCSSVariables,
   IProgressRingLoaderProps,

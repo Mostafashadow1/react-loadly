@@ -132,6 +132,60 @@ describe("AutoSkeletonLoader safety and stability", () => {
       ]);
       expect(warnSpy).not.toHaveBeenCalled();
     });
+
+    test("memo component unwraps to real structure", () => {
+      const PhotoBase = ({ caption }: { caption: string }) => (
+        <figure>
+          <img src="/lake.png" alt={caption} className="w-full h-40 rounded-xl" />
+          <figcaption>{caption}</figcaption>
+        </figure>
+      );
+      PhotoBase.displayName = "Photo";
+      const Photo = React.memo(PhotoBase);
+      Photo.displayName = "Photo";
+
+      render(<AutoSkeletonLoader component={<Photo caption="Sunset at the lake" />} />);
+
+      expect(getSignature(screen.getByRole("status"))).toEqual([
+        { width: "100%", height: "10rem", radius: "0.75rem" },
+        { width: "30%", height: "1em", radius: "6px" },
+      ]);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    test("forwardRef component unwraps to real structure", () => {
+      const IconButtonBase = ({ label }: { label: string }, ref: React.Ref<HTMLButtonElement>) => (
+        <button ref={ref} style={{ width: 120, height: 40 }}>
+          <span>{label}</span>
+        </button>
+      );
+      IconButtonBase.displayName = "IconButton";
+      const IconButton = React.forwardRef(IconButtonBase);
+      IconButton.displayName = "IconButton";
+
+      render(<AutoSkeletonLoader component={<IconButton label="Favorite" />} />);
+
+      expect(getSignature(screen.getByRole("status"))).toEqual([
+        { width: "120px", height: "40px", radius: "8px" },
+      ]);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    test("nested memo and forwardRef wrappers unwrap recursively", () => {
+      const AvatarBase = ({ src }: { src: string }, ref: React.Ref<HTMLImageElement>) => (
+        <img ref={ref} src={src} alt="Ada" className="size-14 rounded-full" />
+      );
+      AvatarBase.displayName = "Avatar";
+      const Avatar = React.memo(React.forwardRef(AvatarBase));
+      Avatar.displayName = "Avatar";
+
+      render(<AutoSkeletonLoader component={<Avatar src="/avatar.png" />} />);
+
+      expect(getSignature(screen.getByRole("status"))).toEqual([
+        { width: "3.5rem", height: "3.5rem", radius: "9999px" },
+      ]);
+      expect(warnSpy).not.toHaveBeenCalled();
+    });
   });
 
   describe("falls back safely", () => {
@@ -186,6 +240,23 @@ describe("AutoSkeletonLoader safety and stability", () => {
 
       expect(getBlocks(screen.getByRole("status"))).toHaveLength(1);
       expect(warnSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test("component using custom hook naming convention falls back safely", () => {
+      function useAuthPreview() {
+        return { user: { name: "Ada" } };
+      }
+
+      function ProfileHeader() {
+        const { user } = useAuthPreview();
+        return <h1>{user.name}</h1>;
+      }
+
+      render(<AutoSkeletonLoader component={<ProfileHeader />} />);
+
+      expect(getBlocks(screen.getByRole("status"))).toHaveLength(3);
+      expect(warnSpy).toHaveBeenCalledTimes(1);
+      expect(warnSpy.mock.calls[0][0]).toContain("useAuthPreview");
     });
 
     test("component using useTranslation", () => {
@@ -305,7 +376,7 @@ describe("AutoSkeletonLoader safety and stability", () => {
     });
   });
 
-  test("failed component should not be executed twice", () => {
+  test("failed component retries introspection on later renders", () => {
     const failingRender = jest.fn(() => {
       throw new Error("nope");
     });
@@ -314,7 +385,7 @@ describe("AutoSkeletonLoader safety and stability", () => {
 
     rerender(<AutoSkeletonLoader component={<FailedOnceCard />} />);
 
-    expect(failingRender).toHaveBeenCalledTimes(1);
+    expect(failingRender).toHaveBeenCalledTimes(2);
     expect(getBlocks(screen.getByRole("status"))).toHaveLength(1);
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });

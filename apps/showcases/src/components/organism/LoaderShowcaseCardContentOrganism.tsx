@@ -2,6 +2,7 @@ import { LOADER_CONFIGS } from "@/utils/LoaderConfig";
 import { Badge } from "../ui/badge";
 import type { PropValues } from "../sections";
 import { transformJSXToNode } from "@/lib/transformToNode";
+import type { ComponentType } from "react";
 
 type Props = {
   loader: (typeof LOADER_CONFIGS)[keyof typeof LOADER_CONFIGS];
@@ -9,6 +10,7 @@ type Props = {
 };
 const LoaderShowcaseCardContent = ({ loader, propValues }: Props) => {
   const processedProps: Record<string, unknown> = { ...propValues };
+  const LoaderComponent = loader.component as ComponentType<Record<string, unknown>>;
 
   //  Transform string children into real React nodes
   Object.entries(processedProps).forEach(([propName, value]) => {
@@ -26,8 +28,7 @@ const LoaderShowcaseCardContent = ({ loader, propValues }: Props) => {
         <div className="absolute inset-0 checkerboard-bg opacity-35" />
         <div className="absolute size-24 rounded-full bg-indigo-500/10 blur-2xl" />
         <div className="relative z-10 flex size-full items-center justify-center">
-          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-          <loader.component {...(processedProps as any)} />
+          <LoaderComponent {...processedProps} />
         </div>
       </div>
 

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
 import CodeSnippetEditableMolecule from "../molecules/CodeSnippetEditableMolecule";
+import type { AnyLoaderConfig } from "@/types/ILoaderConfig";
 
 interface CodeSnippetProps {
-  activeLoaderData: any;
-  currentProps: Record<string, any>;
+  activeLoaderData: AnyLoaderConfig;
+  currentProps: Record<string, unknown>;
 }
 
 export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps) {
@@ -13,7 +14,6 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
   const [generatedCode, setGeneratedCode] = useState("");
   useEffect(() => {
     setGeneratedCode(generateCodeSnippet());
-    ;
   }, [currentProps, activeLoaderData]);
 
   const generateCodeSnippet = () => {
@@ -63,7 +63,7 @@ ${propsString}
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full min-h-[420px] flex-col">
       <div className="flex justify-between items-center mb-3 shrink-0">
         <h4 className="font-semibold text-gray-200 flex items-center gap-2">
           <span className="w-2 h-2 bg-green-500 rounded-full"></span>
@@ -80,7 +80,7 @@ ${propsString}
       </div>
 
       {/* Editor Container */}
-      <div className="flex-1 min-h-0 rounded-lg border border-gray-800 bg-zinc-950 overflow-hidden text-sm">
+      <div className="flex-1 min-h-[320px] rounded-lg border border-gray-800 bg-zinc-950 overflow-hidden text-sm">
         <CodeSnippetEditableMolecule generatedCode={generatedCode} setGeneratedCode={setGeneratedCode} />
       </div>
 

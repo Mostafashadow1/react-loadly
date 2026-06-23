@@ -1,4 +1,4 @@
-import React, { type CSSProperties, FC, ReactElement, cloneElement, useMemo } from "react";
+import React, { type CSSProperties, FC, ReactElement, ReactNode, cloneElement, useMemo } from "react";
 import { mergeProps } from "@/utils";
 import { IAutoSkeletonProps } from "@/@types/interfaces/IAutoSkeletonProps";
 import { classNameGen } from "@/utils/classNameGen";
@@ -17,8 +17,46 @@ const defaultProps: Partial<IAutoSkeletonProps> = {
   maxDepth: 30,
 };
 
-const failedComponentTypes = new WeakSet<object>();
 const warnedComponentTypes = new WeakSet<object>();
+
+const REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+const REACT_MEMO_TYPE = Symbol.for("react.memo");
+const REACT_LAZY_TYPE = Symbol.for("react.lazy");
+
+type ComponentLike = ((props: unknown, ref?: unknown) => unknown) & {
+  displayName?: string;
+  name?: string;
+  prototype?: {
+    isReactComponent?: unknown;
+  };
+  constructor?: {
+    name?: string;
+  };
+};
+
+type ReactWrapperLike = {
+  $$typeof?: symbol;
+  type?: unknown;
+  render?: unknown;
+  displayName?: string;
+  name?: string;
+};
+
+type SkeletonElementProps = {
+  children?: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  width?: string | number;
+  height?: string | number;
+};
+
+const isRecord = (value: unknown): value is Record<PropertyKey, unknown> => typeof value === "object" && value !== null;
+
+const isWeakSetKey = (value: unknown): value is object => (typeof value === "object" && value !== null) || typeof value === "function";
+
+const isComponentLike = (value: unknown): value is ComponentLike => typeof value === "function";
+
+const isReactWrapperLike = (value: unknown): value is ReactWrapperLike => isRecord(value) && "$$typeof" in value;
 
 const riskySourceTokens = [
   "useState",
@@ -41,15 +79,39 @@ const riskySourceTokens = [
   "useForm",
   "useController",
   "useWatch",
+  "useSelector",
+  "useDispatch",
+  "useStore",
+  "useAtom",
+  "useAtomValue",
+  "useRecoilState",
+  "useRecoilValue",
+  "useSWR",
 ];
 
 const isDev = () => typeof process !== "undefined" && process.env?.NODE_ENV !== "production";
 
-const getComponentName = (Component: any): string => Component?.displayName || Component?.name || "component";
+const getComponentName = (Component: unknown): string => {
+  const resolvedName = getComponentDisplayName(Component);
+  return resolvedName || "component";
+};
 
-const warnFallbackOnce = (Component: any, reason: string) => {
-  if (!isDev() || (typeof Component !== "function" && typeof Component !== "object") || Component === null || warnedComponentTypes.has(Component))
-    return;
+const getComponentDisplayName = (Component: unknown): string | null => {
+  if (isComponentLike(Component)) return Component.displayName || Component.name || null;
+  if (isRecord(Component)) {
+    const displayName = Component.displayName;
+    const name = Component.name;
+    if (typeof displayName === "string" && displayName) return displayName;
+    if (typeof name === "string" && name) return name;
+  }
+  return null;
+};
+
+const getPreferredComponentName = (type: unknown, actualType: unknown, fallback: string): string =>
+  getComponentDisplayName(type) || getComponentDisplayName(actualType) || fallback;
+
+const warnFallbackOnce = (Component: unknown, reason: string) => {
+  if (!isDev() || !isWeakSetKey(Component) || warnedComponentTypes.has(Component)) return;
 
   warnedComponentTypes.add(Component);
   console.warn(
@@ -61,11 +123,11 @@ const warnFallbackOnce = (Component: any, reason: string) => {
 const isThenable = (value: unknown): value is PromiseLike<unknown> =>
   typeof value === "object" && value !== null && "then" in value && typeof (value as { then?: unknown }).then === "function";
 
-const isReactLazyType = (type: any): boolean => Boolean(type?.$$typeof && String(type.$$typeof) === "Symbol(react.lazy)");
+const isReactLazyType = (type: unknown): boolean => isReactWrapperLike(type) && type.$$typeof === REACT_LAZY_TYPE;
 
-const isClassComponent = (Component: any): boolean => Boolean(Component?.prototype?.isReactComponent);
+const isClassComponent = (Component: unknown): boolean => isComponentLike(Component) && Boolean(Component.prototype?.isReactComponent);
 
-const isAsyncFunction = (Component: any): boolean => Component?.constructor?.name === "AsyncFunction";
+const isAsyncFunction = (Component: unknown): boolean => isComponentLike(Component) && Component.constructor?.name === "AsyncFunction";
 
 const stripNonExecutableSource = (source: string): string =>
   source
@@ -75,7 +137,9 @@ const stripNonExecutableSource = (source: string): string =>
 
 const escapeRegExp = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-const getUnsafeSourceToken = (Component: any): string | null => {
+const getUnsafeSourceToken = (Component: unknown): string | null => {
+  if (!isComponentLike(Component)) return null;
+
   let source = "";
   try {
     source = stripNonExecutableSource(Function.prototype.toString.call(Component));
@@ -83,12 +147,21 @@ const getUnsafeSourceToken = (Component: any): string | null => {
     return null;
   }
 
-  return (
-    riskySourceTokens.find((token) => {
-      const hookCallPattern = new RegExp(`(^|[^\\w$])(?:[A-Za-z_$][\\w$]*\\.)?${escapeRegExp(token)}\\s*\\(`);
-      return hookCallPattern.test(source);
-    }) || null
-  );
+  const knownToken = riskySourceTokens.find((token) => {
+    const hookCallPattern = new RegExp(`(^|[^\\w$])(?:[A-Za-z_$][\\w$]*\\.)?${escapeRegExp(token)}\\s*\\(`);
+    return hookCallPattern.test(source);
+  });
+  if (knownToken) return knownToken;
+
+  const genericHookMatch = /(^|[^\w$.])(?:[A-Za-z_$][\w$]*\.)?use[A-Z]\w*\s*\(/.exec(source);
+  if (genericHookMatch) {
+    const nameMatch = /use[A-Z]\w*/.exec(genericHookMatch[0]);
+    return nameMatch?.[0] || "a custom hook";
+  }
+
+  if (/(^|[^\w$.])use\s*\(/.test(source)) return "use()";
+
+  return null;
 };
 
 const tailwindSpacingScale: Record<string, string> = {
@@ -190,18 +263,23 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
    * Extract the actual component function from React wrappers
    * Handles React.memo, forwardRef, lazy, and other HOCs
    */
-  const getComponentType = (type: any): any => {
-    if (typeof type === "function") return type;
-    if (isReactLazyType(type)) return type;
+  const getComponentType = (type: unknown): unknown => {
+    if (isComponentLike(type)) return type;
+
+    if (isReactWrapperLike(type)) {
+      if (type.$$typeof === REACT_FORWARD_REF_TYPE && type.render) return getComponentType(type.render);
+      if (type.$$typeof === REACT_MEMO_TYPE && type.type) return getComponentType(type.type);
+    }
+
     return type;
   };
 
-  const mapChildrenToSkeleton = (children: unknown, path: string[], parentIsCentered: boolean): ReactElement | null => {
+  const mapChildrenToSkeleton = (children: ReactNode, path: string[], parentIsCentered: boolean): ReactElement | null => {
     if (!hasReactElementChild(children)) return null;
 
     return (
       <React.Fragment key={generateStableKey(path, "children")}>
-        {React.Children.map(children, (child, i) => mapElementToSkeleton(child as ReactElement, [...path, "child", String(i)], parentIsCentered))}
+        {React.Children.map(children, (child, i) => mapElementToSkeleton(child, [...path, "child", String(i)], parentIsCentered))}
       </React.Fragment>
     );
   };
@@ -209,14 +287,9 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
   /**
    * Safely execute a component function
    */
-  const safeRender = (Component: any, props: any): ReactElement | null => {
+  const safeRender = (Component: unknown, props: unknown): ReactElement | null => {
     if (typeof window === "undefined") {
       warnFallbackOnce(Component, "introspection is skipped during SSR");
-      return null;
-    }
-
-    if (failedComponentTypes.has(Component)) {
-      warnFallbackOnce(Component, "component previously failed introspection");
       return null;
     }
 
@@ -241,16 +314,16 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
       return null;
     }
 
+    if (!isComponentLike(Component)) return null;
+
     try {
       const result = Component(props);
       if (isThenable(result)) {
-        failedComponentTypes.add(Component);
         warnFallbackOnce(Component, "component returned a Promise during introspection");
         return null;
       }
       return React.isValidElement(result) ? result : null;
     } catch (error) {
-      failedComponentTypes.add(Component);
       const reason = isThenable(error)
         ? "component suspended during introspection"
         : `introspection failed${error instanceof Error ? ` (${error.message})` : ""}`;
@@ -262,7 +335,7 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
   /**
    * Smart dimension estimation with alignment awareness
    */
-  const estimateDimensions = (element: ReactElement, componentName?: string): CSSProperties => {
+  const estimateDimensions = (element: ReactElement<SkeletonElementProps>, componentName?: string): CSSProperties => {
     const { type, props: elementProps } = element;
     const defaults: CSSProperties = {
       width: "100%",
@@ -366,7 +439,7 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
     );
   };
 
-  const generateStableKey = (path: string[], type: any, componentName?: string): string => {
+  const generateStableKey = (path: string[], type: unknown, componentName?: string): string => {
     const pathStr = path.join("-");
     const typeStr = typeof type === "string" ? type : componentName || "component";
     return `skeleton-${pathStr}-${typeStr}`;
@@ -473,7 +546,11 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
       );
     }
 
-    return createSkeletonBlock({ ...estimateDimensions({ type: "div", props: {} } as ReactElement, componentName) }, generateStableKey(path, componentName), isCentered);
+    return createSkeletonBlock(
+      { ...estimateDimensions({ type: "div", props: {} } as ReactElement<SkeletonElementProps>, componentName) },
+      generateStableKey(path, componentName),
+      isCentered,
+    );
   };
 
   /**
@@ -481,38 +558,38 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
    * Handles alignment inheritance and root style cloning
    */
   const mapElementToSkeleton = (
-    el: ReactElement | string | number | null | undefined,
+    el: ReactNode,
     path: string[] = ["0"],
     parentIsCentered = false,
   ): ReactElement | null => {
-    if (el == null || typeof el === "string" || typeof el === "number") return null;
+    if (el == null || typeof el === "string" || typeof el === "number" || typeof el === "boolean") return null;
 
     if (path.length > (maxDepth || 30)) {
-      const depthType = (el as ReactElement).type;
-      const depthComponentName = typeof depthType === "function" ? getComponentName(depthType) : undefined;
+      if (!React.isValidElement<SkeletonElementProps>(el)) return null;
+      const depthType = el.type;
+      const depthComponentName = isComponentLike(depthType) ? getComponentName(depthType) : undefined;
       return createSkeletonBlock(
-        estimateDimensions(el as ReactElement, depthComponentName),
+        estimateDimensions(el, depthComponentName),
         generateStableKey(path, depthType, depthComponentName),
         parentIsCentered,
       );
     }
 
     if (Array.isArray(el)) {
-      return <>{el.map((c, i) => mapElementToSkeleton(c as ReactElement, [...path, String(i)], parentIsCentered))}</>;
+      return <>{el.map((child, i) => mapElementToSkeleton(child, [...path, String(i)], parentIsCentered))}</>;
     }
 
-    if ((el as ReactElement).type === React.Fragment) {
-      const frag = el as ReactElement;
+    if (!React.isValidElement<SkeletonElementProps>(el)) return null;
+
+    if (el.type === React.Fragment) {
       return (
         <React.Fragment key={generateStableKey(path, "fragment")}>
-          {React.Children.map(frag.props.children, (child, i) =>
-            mapElementToSkeleton(child as ReactElement, [...path, "frag", String(i)], parentIsCentered),
-          )}
+          {React.Children.map(el.props.children, (child, i) => mapElementToSkeleton(child, [...path, "frag", String(i)], parentIsCentered))}
         </React.Fragment>
       );
     }
 
-    const typed = el as ReactElement;
+    const typed = el;
     const { type, props: elProps } = typed;
 
     // Detect centering in the current element
@@ -563,7 +640,7 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
             className: elClassName, // Root Style Cloning: Inherit original className
             style: containerStyle,
           },
-          React.Children.map(elProps.children, (child, i) => mapElementToSkeleton(child as ReactElement, [...path, type, String(i)], isCentered)),
+          React.Children.map(elProps.children, (child, i) => mapElementToSkeleton(child, [...path, type, String(i)], isCentered)),
         );
       }
 
@@ -587,26 +664,26 @@ export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
       return createSkeletonBlock(fallbackStyle, generateStableKey(path, actualType, componentName), isCentered);
     }
 
-    if (typeof actualType === "function") {
+    if (isComponentLike(actualType)) {
       const rendered = safeRender(actualType, elProps);
 
       if (rendered) {
         // ROOT STYLE CLONING: If the component returns a root element, we merge its styles
-        const componentName = actualType.displayName || actualType.name || "comp";
+        const componentName = getPreferredComponentName(type, actualType, "comp");
         return mapElementToSkeleton(rendered, [...path, componentName], isCentered);
       }
 
       const childSkeleton = mapChildrenToSkeleton(elProps?.children, [...path, "fallback-children"], isCentered);
       if (childSkeleton) return childSkeleton;
 
-      const componentName = actualType.displayName || actualType.name || "component";
+      const componentName = getPreferredComponentName(type, actualType, "component");
       return createFallbackPreset(componentName, path, isCentered);
     }
 
     if (elProps && elProps.children) {
       return (
         <React.Fragment key={generateStableKey(path, "children")}>
-          {React.Children.map(elProps.children, (child: any, i: number) => mapElementToSkeleton(child, [...path, "child", String(i)], isCentered))}
+          {React.Children.map(elProps.children, (child, i) => mapElementToSkeleton(child, [...path, "child", String(i)], isCentered))}
         </React.Fragment>
       );
     }

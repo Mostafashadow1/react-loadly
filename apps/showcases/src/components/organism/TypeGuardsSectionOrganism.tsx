@@ -36,11 +36,11 @@ export function TypeGuardsSection() {
   secondaryColor?: string;   // Secondary track/background color
 }`,
     },
-    ISkeletonLoaderProps: {
-      name: "ISkeletonLoaderProps",
+    ISkeletonPatternLoaderProps: {
+      name: "ISkeletonPatternLoaderProps",
       extendsFrom: "IBaseLoaderProps",
       description: "Controls customization of custom skeleton lines and shimmer waves.",
-      code: `interface ISkeletonLoaderProps extends IBaseLoaderProps {
+      code: `interface ISkeletonPatternLoaderProps extends IBaseLoaderProps {
   variant?: "text" | "avatar" | "image" | "rect" | "circle";
   shimmer?: boolean;         // Enable shimmer gradient wave
   shimmerColor?: string;     // Shimmer light/wave hex color

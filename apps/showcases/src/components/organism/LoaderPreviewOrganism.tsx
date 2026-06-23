@@ -1,46 +1,72 @@
 import { useMemo } from "react";
-import { SkeletonGroup, SkeletonLoader } from "react-loadly";
-import type { ISkeletonLoaderProps } from "react-loadly";
-import type { LoaderKind, LoaderPropsMap } from "@/types/ILoaderConfig";
+import type { ComponentType, CSSProperties } from "react";
+import { SkeletonGroupLoader, SkeletonLoader } from "react-loadly";
+import type { ISkeletonPatternLoaderProps } from "react-loadly";
+import type {
+  AnyLoaderConfig,
+  LoaderKind,
+  LoaderPropsMap,
+} from "@/types/ILoaderConfig";
 import { transformJSXToNode } from "@/lib/transformToNode";
 
 interface LoaderPreviewProps {
-  activeLoaderData: any;
+  activeLoaderData: AnyLoaderConfig;
   currentProps: Partial<LoaderPropsMap[LoaderKind]>;
 }
+
+const space = {
+  sm: 6,
+  xl: 16,
+} as const;
+
+const isSkeletonConfig = (
+  config: AnyLoaderConfig,
+): config is Extract<AnyLoaderConfig, { interface: "ISkeletonPatternLoaderProps" }> =>
+  config.interface === "ISkeletonPatternLoaderProps";
+
+const isTypingConfig = (
+  config: AnyLoaderConfig,
+): config is Extract<AnyLoaderConfig, { interface: "ITextLoaderProps" }> =>
+  config.interface === "ITextLoaderProps";
+
+const isElementConfig = (
+  config: AnyLoaderConfig,
+): config is Extract<AnyLoaderConfig, { interface: "IElementLoaderProps" }> =>
+  config.interface === "IElementLoaderProps";
 
 export function LoaderPreview({
   activeLoaderData,
   currentProps,
 }: LoaderPreviewProps) {
-  const ActiveLoaderComponent = activeLoaderData.component;
+  const ActiveLoaderComponent = activeLoaderData.component as ComponentType<
+    Record<string, unknown>
+  >;
 
   // Filter props to only include those relevant to the current loader
   const relevantProps = useMemo(() => {
     const props: Record<string, unknown> = {};
+    const currentPropRecord = currentProps as Record<string, unknown>;
+    const commonProps = activeLoaderData.commonProps as readonly string[];
+    const uniqueProps = activeLoaderData.uniqueProps as readonly string[];
 
     // Add common props
-    activeLoaderData.commonProps.forEach(
-      (prop: keyof LoaderPropsMap[LoaderKind]) => {
-        if (currentProps[prop] !== undefined) {
-          props[prop] = currentProps[prop];
-        }
-      },
-    );
+    commonProps.forEach((prop) => {
+      if (currentPropRecord[prop] !== undefined) {
+        props[prop] = currentPropRecord[prop];
+      }
+    });
 
     // Add unique props
-    activeLoaderData.uniqueProps.forEach(
-      (prop: keyof LoaderPropsMap[LoaderKind]) => {
-        if (currentProps[prop] !== undefined) {
-          props[prop] = currentProps[prop];
-        }
-      },
-    );
+    uniqueProps.forEach((prop) => {
+      if (currentPropRecord[prop] !== undefined) {
+        props[prop] = currentPropRecord[prop];
+      }
+    });
 
     delete props["fullscreen"];
 
     // Handle special cases for specific loaders
-    if (activeLoaderData.title === "Skeleton Loader") {
+    if (isSkeletonConfig(activeLoaderData)) {
       const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
       props.shimmer =
         skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
@@ -48,11 +74,11 @@ export function LoaderPreview({
       props.variant = skeletonProps.variant || "text";
     }
 
-    if (activeLoaderData.title === "Typing Loader") {
+    if (isTypingConfig(activeLoaderData)) {
       const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
       props.loop = textProps.loop !== undefined ? textProps.loop : true;
     }
-    if (activeLoaderData.title === "Element Loader") {
+    if (isElementConfig(activeLoaderData)) {
       const elementProps = currentProps as Partial<LoaderPropsMap["element"]>;
       if (typeof elementProps.children === "string") {
         try {
@@ -69,18 +95,16 @@ export function LoaderPreview({
 
   return (
     <div className="flex h-full w-full items-center justify-center p-4">
-      {activeLoaderData.title === "Skeleton Loader" ? (
-        <SkeletonPreviewPattern props={relevantProps as ISkeletonLoaderProps} />
+      {isSkeletonConfig(activeLoaderData) ? (
+        <SkeletonPreviewPattern props={relevantProps as ISkeletonPatternLoaderProps} />
       ) : (
-        <ActiveLoaderComponent
-          {...(relevantProps as LoaderPropsMap[LoaderKind])}
-        />
+        <ActiveLoaderComponent {...relevantProps} />
       )}
     </div>
   );
 }
 
-function SkeletonPreviewPattern({ props }: { props: ISkeletonLoaderProps }) {
+function SkeletonPreviewPattern({ props }: { props: ISkeletonPatternLoaderProps }) {
   const {
     variant = "text",
     lines = 3,
@@ -93,12 +117,26 @@ function SkeletonPreviewPattern({ props }: { props: ISkeletonLoaderProps }) {
     shimmerColor,
     highlightColor,
     color,
-    waveDirection,
-    waveWidth,
     speed,
     loading,
     "aria-label": ariaLabel,
   } = props;
+  const skeletonAnimation = shimmer === false ? "none" : "shimmer";
+  const primitiveVariant =
+    variant === "avatar"
+      ? "circular"
+      : variant === "card" || variant === "custom"
+        ? "rectangular"
+        : "text";
+  const resolvedHighlightColor = highlightColor ?? shimmerColor;
+  const lineCount = Math.max(1, Math.floor(lines));
+  const lineSpacing = spacing ?? space.sm;
+  const lineHeight = height || (variant === "card" ? 120 : 14);
+  const lineWidth = variant === "avatar" ? size || 52 : width;
+
+  if (loading === false) {
+    return null;
+  }
 
   return (
     <div className="w-full max-w-md rounded-lg border border-zinc-800/90 bg-zinc-950/80 p-4 shadow-xl shadow-black/20">
@@ -110,80 +148,79 @@ function SkeletonPreviewPattern({ props }: { props: ISkeletonLoaderProps }) {
         <div className="h-7 w-16 rounded-md bg-zinc-900" />
       </div>
 
-      <SkeletonGroup shimmerSync stagger={0.07}>
-        <div className="space-y-5">
+      <SkeletonGroupLoader
+        shimmerSync
+        stagger={0.07}
+        baseColor={color}
+        highlightColor={resolvedHighlightColor}
+      >
+        <div>
           <div className="flex items-center gap-4">
             <div className="shrink-0">
               <SkeletonLoader
-                variant="avatar"
-                size={size || 52}
-                borderRadius={variant === "card" ? borderRadius : undefined}
-                color={color}
-                highlightColor={highlightColor}
-                shimmerColor={shimmerColor}
-                shimmer={shimmer}
-                waveDirection={waveDirection}
-                waveWidth={waveWidth}
+                variant="circular"
+                width={size || 52}
+                height={size || 52}
+                baseColor={color}
+                highlightColor={resolvedHighlightColor}
+                animation={skeletonAnimation}
                 speed={speed}
-                loading={loading}
                 aria-label={ariaLabel}
               />
             </div>
-            <div className="min-w-0 flex-1 space-y-2">
+            <div className="min-w-0 flex-1">
               <SkeletonLoader
-                variant="text"
                 width="72%"
                 height={height || 16}
                 borderRadius={borderRadius}
-                spacing={spacing}
-                color={color}
-                highlightColor={highlightColor}
-                shimmerColor={shimmerColor}
-                shimmer={shimmer}
-                waveDirection={waveDirection}
-                waveWidth={waveWidth}
+                baseColor={color}
+                highlightColor={resolvedHighlightColor}
+                animation={skeletonAnimation}
                 speed={speed}
-                loading={loading}
                 aria-label={ariaLabel}
+                style={{ marginBottom: space.sm }}
               />
               <SkeletonLoader
-                variant="text"
                 width="46%"
                 height={12}
                 borderRadius={borderRadius}
-                color={color}
-                highlightColor={highlightColor}
-                shimmerColor={shimmerColor}
-                shimmer={shimmer}
-                waveDirection={waveDirection}
-                waveWidth={waveWidth}
+                baseColor={color}
+                highlightColor={resolvedHighlightColor}
+                animation={skeletonAnimation}
                 speed={speed}
-                loading={loading}
                 aria-label={ariaLabel}
               />
             </div>
           </div>
-          <div className="rounded-lg border border-zinc-800/80 bg-zinc-950/60 p-4">
-            <SkeletonLoader
-              variant={variant}
-              lines={lines}
-              width={width}
-              height={height || (variant === "card" ? 120 : 14)}
-              borderRadius={borderRadius}
-              spacing={spacing}
-              color={color}
-              highlightColor={highlightColor}
-              shimmerColor={shimmerColor}
-              shimmer={shimmer}
-              waveDirection={waveDirection}
-              waveWidth={waveWidth}
-              speed={speed}
-              loading={loading}
-              aria-label={ariaLabel}
-            />
+          <div
+            className="rounded-lg border border-zinc-800/80 bg-zinc-950/60 p-4"
+            style={{ marginTop: space.xl }}
+          >
+            {Array.from({ length: lineCount }).map((_, index) => {
+              const isLast = index === lineCount - 1;
+              const itemStyle: CSSProperties = {
+                marginBottom: isLast ? undefined : lineSpacing,
+              };
+
+              return (
+                <SkeletonLoader
+                  key={index}
+                  variant={primitiveVariant}
+                  width={isLast && variant === "text" ? "72%" : lineWidth}
+                  height={lineHeight}
+                  borderRadius={borderRadius}
+                  baseColor={color}
+                  highlightColor={resolvedHighlightColor}
+                  animation={skeletonAnimation}
+                  speed={speed}
+                  aria-label={ariaLabel}
+                  style={itemStyle}
+                />
+              );
+            })}
           </div>
         </div>
-      </SkeletonGroup>
+      </SkeletonGroupLoader>
     </div>
   );
 }

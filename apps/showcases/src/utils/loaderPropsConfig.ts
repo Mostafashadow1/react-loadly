@@ -209,7 +209,7 @@ export const DEFAULT_PROPS: Record<
   loop: true,
   charDelay: 100,
 
-  // Skeleton / shimmer
+  // SkeletonLoader / shimmer
   shimmer: true,
   shimmerColor: "#ffffff",
   highlightColor: "#f0f0f0",

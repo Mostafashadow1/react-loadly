@@ -1,10 +1,10 @@
 # React Loadly — Reliable React Loading Experience Toolkit
 
 <p align="center">
-  <img src="./public/images/react-loadly-hero.png" alt="React Loadly - Modern React Loaders, Spinners, Skeleton Loaders, and Loading Indicators for React and Next.js" width="900" />
+  <img src="./public/images/react-loadly-banner.png" alt="React Loadly - Modern React Loaders, Spinners, Skeleton Loaders, and Loading Indicators for React and Next.js" width="900" />
 </p>
 
-**React Loadly** is a reliable React loading experience toolkit for modern loaders, `SkeletonLoader`, `SkeletonGroup`, loading state hooks, accessibility, SSR support, and production-ready loading patterns. Built with **TypeScript**, optimized for **Next.js and SSR**, and designed with **ARIA**, reduced motion, and developer experience in mind.
+**React Loadly** is a reliable React loading experience toolkit for modern loaders, `SkeletonLoader`, `SkeletonGroupLoader`, loading state hooks, accessibility, SSR support, and production-ready loading patterns. Built with **TypeScript**, optimized for **Next.js and SSR**, and designed with **ARIA**, reduced motion, and developer experience in mind.
 
 Perfect for building **React applications, dashboards, forms, SaaS tools, and data-driven UIs** where loading states should feel deliberate, accessible, and consistent. `AutoSkeletonLoader` remains available as an experimental feature for backward compatibility and experimentation.
 
@@ -22,11 +22,11 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 ## What's New
 
 - New identity: **Reliable React Loading Experience Toolkit**.
-- `SkeletonGroup` for coordinated production skeleton patterns.
+- `SkeletonGroupLoader` for coordinated production skeleton patterns.
 - New high-value loaders: `GradientRingLoader`, `OrbitDotsLoader`, `SignalLoader`, `EqualizerLoader`, and `CardFlipLoader`.
 - Production skeleton patterns for profile cards, product cards, articles, dashboards, sidebars, todos, tables, and forms.
 - Accessibility, SSR, fullscreen, and reduced-motion improvements across loaders.
-- `AutoSkeletonLoader` is now clearly marked as **Experimental**.
+- `AutoSkeletonLoader` is clearly marked as **Experimental** and now has safer guarded inference for memo, forwardRef, custom hooks, and fallback presets.
 - AutoSkeleton Compiler roadmap documented.
 - The showcase app is now the source of truth for examples.
 
@@ -38,7 +38,7 @@ React Loadly is no longer positioned as an automatic skeleton generator. It is a
 
 - Modern React loaders
 - `SkeletonLoader`
-- `SkeletonGroup`
+- `SkeletonGroupLoader`
 - Loading state hooks
 - Accessibility
 - SSR support
@@ -49,20 +49,20 @@ React Loadly is no longer positioned as an automatic skeleton generator. It is a
 
 ## Production Recommendation
 
-For production-critical loading experiences, prefer explicit skeleton patterns with `SkeletonLoader` and `SkeletonGroup`.
+For production-critical loading experiences, prefer explicit skeleton patterns with `SkeletonLoader` and `SkeletonGroupLoader`.
 
 ```tsx
-import { SkeletonGroup, SkeletonLoader } from "react-loadly";
+import { SkeletonGroupLoader, SkeletonLoader } from "react-loadly";
 import "react-loadly/styles.css";
 
 export function ProfileCardSkeleton() {
   return (
-    <SkeletonGroup shimmerSync stagger={0.08}>
-      <SkeletonLoader variant="avatar" size={56} />
+    <SkeletonGroupLoader shimmerSync stagger={0.08}>
+      <SkeletonLoader variant="circular" width={56} height={56} />
       <SkeletonLoader variant="text" width="70%" height={16} />
       <SkeletonLoader variant="text" width="45%" height={12} />
       <SkeletonLoader variant="text" width="100%" height={12} />
-    </SkeletonGroup>
+    </SkeletonGroupLoader>
   );
 }
 ```
@@ -95,9 +95,20 @@ The current implementation remains available for experimentation and backward co
 
 It works best with native JSX, simple presentational components, className/style-based layouts, and visible component structure. It safely falls back for hook-heavy, context-heavy, Suspense-based, async, lazy, SSR-only, or opaque third-party components.
 
-For production-critical loading experiences, React Loadly recommends `SkeletonLoader` and `SkeletonGroup`.
+For production-critical loading experiences, React Loadly recommends `SkeletonLoader` and `SkeletonGroupLoader`.
 
 Do not treat AutoSkeleton as pixel-perfect or guaranteed for every component tree.
+
+### AutoSkeletonLoader Safety Fixes
+
+The guarded inference path now handles the most common wrapper and fallback cases more predictably:
+
+- `React.memo`, `React.forwardRef`, and nested `memo(forwardRef(...))` components are unwrapped before structural inference.
+- Failed introspection is retried on the next render instead of permanently blacklisting the component type.
+- Custom hooks are detected through the React hook naming convention (`use` + capital letter), including third-party hooks such as Redux, SWR, Recoil, and Jotai-style hooks.
+- Fallback preset matching prefers the wrapper `displayName` before the unwrapped function name, which improves anonymous memo and forwardRef exports.
+
+This means presentational memo/forwardRef components can produce a structural skeleton, while hook-heavy components skip execution and use the safest matching preset.
 
 ### 🧠 The Tech Behind the Magic
 
@@ -155,7 +166,7 @@ function Dashboard({ isLoading, worker }) {
 
 ### Comparison: AutoSkeletonLoader Status
 
-| Feature | Explicit Skeletons (`SkeletonLoader` + `SkeletonGroup`) | **AutoSkeletonLoader** |
+| Feature | Explicit Skeletons (`SkeletonLoader` + `SkeletonGroupLoader`) | **AutoSkeletonLoader** |
 | :--- | :--- | :--- |
 | **Recommendation** | Production | Experimental |
 | **Accuracy** | Intentional and design-reviewable | Best-effort structural match |
@@ -194,6 +205,49 @@ function Dashboard({ isLoading, worker }) {
 ```
 
 For best results, keep the target component presentational and expose meaningful JSX structure with className/style layout information.
+
+```tsx
+import React from "react";
+import { AutoSkeletonLoader } from "react-loadly";
+
+const PhotoBase = ({ src, caption }: { src: string; caption: string }) => (
+  <figure className="w-full">
+    <img src={src} alt={caption} className="h-40 w-full rounded-xl" />
+    <figcaption className="text-sm">{caption}</figcaption>
+  </figure>
+);
+
+PhotoBase.displayName = "Photo";
+const Photo = React.memo(PhotoBase);
+Photo.displayName = "Photo";
+
+export function PhotoSkeletonExample({ loading }: { loading: boolean }) {
+  return (
+    <AutoSkeletonLoader
+      inheritStyles
+      loading={loading}
+      component={<Photo src="/photos/lake.jpg" caption="Sunset at the lake" />}
+    />
+  );
+}
+```
+
+Hook-heavy components are intentionally skipped and mapped to a fallback preset when possible:
+
+```tsx
+function useAuthPreview() {
+  return { user: { name: "Jane Doe", verified: true } };
+}
+
+function ProfileHeader() {
+  const { user } = useAuthPreview();
+  return <span>{user.name}</span>;
+}
+
+<AutoSkeletonLoader loading component={<ProfileHeader />} />;
+```
+
+In this case, the custom hook is detected before the component is executed, and the `ProfileHeader` name maps to the profile fallback preset.
 
 ---
 
@@ -349,7 +403,7 @@ apps/showcases
 React Loadly v3.0.0 introduces major features, performance enhancements, and developer-experience upgrades:
 
 1. **`<LoadlyProvider>`** - A global context system for managing settings overrides, theme modes (`"light"` | `"dark"`), and automatic runtime CSS injection.
-2. **`<SkeletonGroup>`** - Coordinate staggering and synchronize shimmer animation phases across multiple skeleton loader children.
+2. **`<SkeletonGroupLoader>`** - Coordinate staggering and synchronize shimmer animation phases across multiple skeleton loader children.
 3. **`useSkeletonState` Hook** - High-level loader/skeleton orchestrator hook with a `minDisplayTime` stabilizer to prevent UI flickering.
 4. **Tree-shakeable Subpaths** - Dedicated entrypoints (`react-loadly/hooks`, `react-loadly/skeleton`, `react-loadly/loaders`) for optimal bundling.
 5. **Safe Fallbacks** - `AutoSkeletonLoader` skips risky introspection paths and falls back when a component cannot be inspected safely.
@@ -365,7 +419,7 @@ React Loadly v3.0.0 is fully tree-shakeable and supports dedicated subpath expor
 - **CSS Auto-injection**: In v3.0.0, the `<LoadlyProvider>` automatically injects the necessary CSS styles into the document head at runtime, so importing `react-loadly/styles.css` is optional when using the provider.
 - **Tree-shakeable Entrypoints**: Import directly from dedicated subpaths to ensure that your build tools only bundle what you actually use:
   - `react-loadly/hooks`: Re-exports hooks (`useLoaderState`, `useSkeletonState`, `useAsyncLoader`, etc.).
-  - `react-loadly/skeleton`: Re-exports skeleton loaders (`SkeletonLoader`, `AutoSkeletonLoader`, `SkeletonGroup`).
+  - `react-loadly/skeleton`: Re-exports skeleton loaders (`SkeletonLoader`, `AutoSkeletonLoader`, `SkeletonGroupLoader`).
   - `react-loadly/loaders`: Re-exports the 27 standard design loaders.
 
 ```jsx
@@ -972,54 +1026,54 @@ All other props are inherited from `IBaseLoaderProps`.
 
 ---
 
-## 🦴 SkeletonLoader Component
+## 🦴 SkeletonPatternLoader Component
 
-The `SkeletonLoader` is perfect for modern loading states, creating placeholder content that mimics the actual content structure.
+The `SkeletonPatternLoader` is perfect for modern loading states, creating placeholder content that mimics the actual content structure.
 
 ### Basic Usage
 
 ```jsx
-import { SkeletonLoader } from "react-loadly";
+import { SkeletonPatternLoader } from "react-loadly";
 import "react-loadly/styles.css";
 
 function App() {
   return (
     <div>
       {/* Basic skeleton line */}
-      <SkeletonLoader />
+      <SkeletonPatternLoader />
 
       {/* Multiple skeleton lines */}
-      <SkeletonLoader lines={3} />
+      <SkeletonPatternLoader lines={3} />
 
       {/* Card skeleton */}
-      <SkeletonLoader variant="card" width={300} height={200} />
+      <SkeletonPatternLoader variant="card" width={300} height={200} />
 
       {/* Avatar skeleton */}
-      <SkeletonLoader variant="avatar" size={60} />
+      <SkeletonPatternLoader variant="avatar" size={60} />
     </div>
   );
 }
 ```
 
-### Skeleton Variants
+### SkeletonPatternLoader Variants
 
-The SkeletonLoader supports multiple variants to match different content types:
+The SkeletonPatternLoader supports multiple variants to match different content types:
 
 ```jsx
 // Line skeleton (default) - for text content
-<SkeletonLoader variant="line" lines={3} />
+<SkeletonPatternLoader variant="line" lines={3} />
 
 // Card skeleton - for image cards or content blocks
-<SkeletonLoader variant="card" width={300} height={200} />
+<SkeletonPatternLoader variant="card" width={300} height={200} />
 
 // Avatar skeleton - for profile images
-<SkeletonLoader variant="avatar" size={60} />
+<SkeletonPatternLoader variant="avatar" size={60} />
 
 // Text skeleton - for single line text
-<SkeletonLoader variant="text" width="100%" height={16} />
+<SkeletonPatternLoader variant="text" width="100%" height={16} />
 
 // Custom skeleton - for any custom shape
-<SkeletonLoader
+<SkeletonPatternLoader
   variant="custom"
   width={200}
   height={100}
@@ -1040,7 +1094,7 @@ The SkeletonLoader supports multiple variants to match different content types:
 ### Customization Options
 
 ```jsx
-<SkeletonLoader
+<SkeletonPatternLoader
   lines={3}
   color="#f0f0f0"
   highlightColor="#e0e0e0"
@@ -1053,7 +1107,7 @@ The SkeletonLoader supports multiple variants to match different content types:
 />
 ```
 
-### SkeletonLoader Props
+### SkeletonPatternLoader Props
 
 | Prop             | Type                                                                     | Default                 | Description                         |
 | ---------------- | ------------------------------------------------------------------------ | ----------------------- | ----------------------------------- |
@@ -1170,7 +1224,7 @@ React Loadly is built with performance in mind:
 
 ```jsx
 // ✅ Good: Import only what you need
-import { SpinLoader, SkeletonLoader } from "react-loadly";
+import { SpinLoader, SkeletonPatternLoader } from "react-loadly";
 
 // ❌ Avoid: Importing everything
 import \* as Loaders from "react-loadly";
@@ -1180,8 +1234,8 @@ function UserProfile({ user, loading }) {
   if (loading) {
     return (
       <div>
-        <SkeletonLoader variant="avatar" size={60} />
-        <SkeletonLoader lines={2} />
+        <SkeletonPatternLoader variant="avatar" size={60} />
+        <SkeletonPatternLoader lines={2} />
       </div>
     );
   }
@@ -1219,7 +1273,7 @@ import "react-loadly/styles.css";
 // ✅ For Next.js, use dynamic imports for code splitting
 import dynamic from "next/dynamic";
 
-const SkeletonLoader = dynamic(() => import("react-loadly").then((mod) => ({ default: mod.SkeletonLoader })));
+const SkeletonPatternLoader = dynamic(() => import("react-loadly").then((mod) => ({ default: mod.SkeletonPatternLoader })));
 
 ```
 
@@ -1289,7 +1343,7 @@ React Loadly provides comprehensive TypeScript definitions for all components an
 
 ``tsx
 // ✅ Correct way to import shared interfaces
-import type { IBaseLoaderProps, ISkeletonLoaderProps } from "react-loadly";
+import type { IBaseLoaderProps, ISkeletonPatternLoaderProps } from "react-loadly";
 
 // For component-specific props
 import type {
@@ -1316,7 +1370,7 @@ All types are properly exported and can be used in your TypeScript projects for 
 - `IBaseLoaderProps` - Base props for all loaders
 - `IGeometricLoaderProps` - Base props for geometric loaders (includes `count`, `secondaryColor`, etc.)
 - `IOrbitLoaderProps`, `IPlaneLoaderProps`, `IRippleLoaderProps`, etc. - Specific loader props
-- `ISkeletonLoaderProps`, `IProgressRingLoaderProps`, `IMorphLoaderProps` - Specialized loader props
+- `ISkeletonPatternLoaderProps`, `IProgressRingLoaderProps`, `IMorphLoaderProps` - Specialized loader props
 
 Avoid importing directly from internal paths like `react-loadly/types` or `react-loadly/interfaces` as these are not part of the public API and may change.
 
@@ -1349,7 +1403,7 @@ Display any loader in fullscreen mode with customizable dimensions and backgroun
 ### Loading States for Different Content Types
 
 ``jsx
-import { SkeletonLoader, SpinLoader, PulseLoader } from "react-loadly";
+import { SkeletonPatternLoader, SpinLoader, PulseLoader } from "react-loadly";
 
 function ContentLoader() {
   return (
@@ -1357,9 +1411,9 @@ function ContentLoader() {
 <div>
 {/_ Blog post loading Dashboard loading _/}
 <div className="blog-post">
-<SkeletonLoader variant="avatar" size={40} />
-<SkeletonLoader lines={3} spacing="8px" />
-<SkeletonLoader variant="card" width="100%" height={200} />
+<SkeletonPatternLoader variant="avatar" size={40} />
+<SkeletonPatternLoader lines={3} spacing="8px" />
+<SkeletonPatternLoader variant="card" width="100%" height={200} />
 </div>
 
       {/* Button loading */}
@@ -1416,7 +1470,7 @@ function DataTable({ data, loading }) {
 {/_ Header skeleton _/}
 <div className="table-header">
 {Array.from({ length: 5 }).map((\_, i) => (
-<SkeletonLoader key={i} width={120} height={20} />
+<SkeletonPatternLoader key={i} width={120} height={20} />
 ))}
 </div>
 
@@ -1424,7 +1478,7 @@ function DataTable({ data, loading }) {
         {Array.from({ length: 10 }).map((_, i) => (
           <div key={i} className="table-row">
             {Array.from({ length: 5 }).map((_, j) => (
-              <SkeletonLoader key={j} width={100} height={16} />
+              <SkeletonPatternLoader key={j} width={100} height={16} />
             ))}
           </div>
         ))}
@@ -1446,7 +1500,7 @@ function ImageGallery({ images, loading }) {
     return (
       <div className="image-gallery">
         {Array.from({ length: 6 }).map((_, i) => (
-          <SkeletonLoader
+          <SkeletonPatternLoader
             key={i}
             variant="card"
             width={200}
@@ -1481,10 +1535,10 @@ function SocialFeed({ posts, loading }) {
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="feed-card">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-              <SkeletonLoader variant="avatar" size={40} />
-              <SkeletonLoader lines={2} width="80%" />
+              <SkeletonPatternLoader variant="avatar" size={40} />
+              <SkeletonPatternLoader lines={2} width="80%" />
             </div>
-            <SkeletonLoader variant="card" width="100%" height={200} />
+            <SkeletonPatternLoader variant="card" width="100%" height={200} />
             <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
               <SnakeLoader size={20} count={4} />
               <span>Processing...</span>
@@ -1619,26 +1673,25 @@ function App() {
 
 ---
 
-### Skeleton Coordination: `SkeletonGroup`
+### SkeletonPatternLoader Coordination: `SkeletonGroupLoader`
 
-Use the `SkeletonGroup` component to synchronize shimmer animation phases and implement stagger effects across multiple skeleton loader children.
+Use the `SkeletonGroupLoader` component to synchronize shimmer animation phases and implement stagger effects across multiple skeleton loader children.
 
 ```tsx
-import { SkeletonGroup } from "react-loadly/skeleton";
-import { SkeletonLoader } from "react-loadly/skeleton";
+import { SkeletonGroupLoader, SkeletonPatternLoader } from "react-loadly/skeleton";
 
 function ListPlaceholder() {
   return (
-    <SkeletonGroup stagger={0.15} shimmerSync={true}>
-      <SkeletonLoader lines={2} />
-      <SkeletonLoader lines={3} />
-      <SkeletonLoader lines={1} />
-    </SkeletonGroup>
+    <SkeletonGroupLoader stagger={0.15} shimmerSync={true}>
+      <SkeletonPatternLoader lines={2} />
+      <SkeletonPatternLoader lines={3} />
+      <SkeletonPatternLoader lines={1} />
+    </SkeletonGroupLoader>
   );
 }
 ```
 
-#### `SkeletonGroup` Props
+#### `SkeletonGroupLoader` Props
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |

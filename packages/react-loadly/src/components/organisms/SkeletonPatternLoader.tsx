@@ -1,7 +1,7 @@
 import React from "react";
-import { Skeleton, SkeletonProps } from "../Skeleton";
+import { SkeletonLoader, SkeletonLoaderProps } from "../SkeletonLoader";
 
-export interface SkeletonLoaderProps extends Omit<SkeletonProps, "variant" | "count" | "animation" | "as"> {
+export interface SkeletonPatternLoaderProps extends Omit<SkeletonLoaderProps, "variant" | "count" | "animation" | "as"> {
   "data-testid"?: string;
   lines?: number;
   variant?: "line" | "card" | "avatar" | "text" | "custom";
@@ -17,7 +17,7 @@ export interface SkeletonLoaderProps extends Omit<SkeletonProps, "variant" | "co
 const toCssSize = (value: number | string | undefined): string | undefined =>
   typeof value === "number" ? `${value}px` : value;
 
-const getDefaults = (variant: SkeletonLoaderProps["variant"]) => {
+const getDefaults = (variant: SkeletonPatternLoaderProps["variant"]) => {
   switch (variant) {
     case "card":
       return { width: 300, height: 200, radius: 8, skeletonVariant: "rectangular" as const };
@@ -32,7 +32,7 @@ const getDefaults = (variant: SkeletonLoaderProps["variant"]) => {
   }
 };
 
-export function SkeletonLoader({
+export function SkeletonPatternLoader({
   lines = 1,
   variant = "custom",
   size,
@@ -50,7 +50,7 @@ export function SkeletonLoader({
   className,
   "data-testid": dataTestId,
   ...rest
-}: SkeletonLoaderProps) {
+}: SkeletonPatternLoaderProps) {
   if (!loading) return null;
 
   const defaults = getDefaults(variant);
@@ -60,7 +60,7 @@ export function SkeletonLoader({
   const count = variant === "line" || variant === "text" ? Math.max(1, lines) : 1;
 
   const skeleton = (index?: number) => (
-    <Skeleton
+    <SkeletonLoader
       as="div"
       key={index ?? "skeleton"}
       data-testid={
@@ -96,4 +96,4 @@ export function SkeletonLoader({
   );
 }
 
-export default SkeletonLoader;
+export default SkeletonPatternLoader;

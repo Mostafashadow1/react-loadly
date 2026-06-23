@@ -1,7 +1,7 @@
 import { WaveDirectionType } from "../types/WaveDirectionType";
 import { IBaseLoaderProps } from "./IBaseLoaderProps";
 
-export interface ISkeletonLoaderProps extends IBaseLoaderProps {
+export interface ISkeletonPatternLoaderProps extends IBaseLoaderProps {
   /** Number of skeleton lines to display */
   lines?: number;
   /** Variant of skeleton (line, card, avatar, text) */

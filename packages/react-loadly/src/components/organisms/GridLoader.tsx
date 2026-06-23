@@ -1,7 +1,7 @@
 import { IGeometricLoaderProps } from "@/@types";
 import { generateId, getSizeValue, mergeProps } from "@/utils";
 import { classNameGen } from "@/utils/classNameGen";
-import React, { CSSProperties, FC, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { useFullscreen } from "@/hooks/useFullscreen";
 
 const defaultProps: Partial<IGeometricLoaderProps> = {

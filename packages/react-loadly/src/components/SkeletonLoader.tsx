@@ -1,19 +1,19 @@
 import React from "react";
 import {
-  defaultSkeletonTheme,
-  SkeletonAnimation,
-  SkeletonGroupContext,
-  SkeletonVariant,
-} from "../context/SkeletonGroupContext";
+  defaultSkeletonLoaderTheme,
+  SkeletonLoaderAnimation,
+  SkeletonGroupLoaderContext,
+  SkeletonLoaderVariant,
+} from "../context/SkeletonGroupLoaderContext";
 
 type SizeValue = number | string;
 const STYLE_ID = "react-loadly-skeleton-keyframes";
 const useStyleInsertionEffect =
   typeof document === "undefined" ? React.useEffect : React.useInsertionEffect ?? React.useLayoutEffect;
 
-export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
-  variant?: SkeletonVariant;
-  animation?: SkeletonAnimation;
+export interface SkeletonLoaderProps extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
+  variant?: SkeletonLoaderVariant;
+  animation?: SkeletonLoaderAnimation;
   width?: SizeValue;
   height?: SizeValue;
   count?: number;
@@ -28,7 +28,7 @@ export interface SkeletonProps extends Omit<React.HTMLAttributes<HTMLElement>, "
 const toCssSize = (value: SizeValue | undefined): string | undefined =>
   typeof value === "number" ? `${value}px` : value;
 
-const getVariantDefaults = (variant: SkeletonVariant) => {
+const getVariantDefaults = (variant: SkeletonLoaderVariant) => {
   switch (variant) {
     case "rectangular":
       return { width: "100%", height: 140, borderRadius: 0 };
@@ -81,7 +81,7 @@ const getAnimationStyle = ({
   speed,
   direction,
 }: {
-  animation: SkeletonAnimation;
+  animation: SkeletonLoaderAnimation;
   baseColor: string;
   highlightColor: string;
   speed: number;
@@ -110,7 +110,7 @@ const getAnimationStyle = ({
   };
 };
 
-export function Skeleton({
+export function SkeletonLoader({
   variant = "text",
   animation,
   width,
@@ -127,19 +127,19 @@ export function Skeleton({
   role = "status",
   "aria-label": ariaLabel = "Loading",
   ...rest
-}: SkeletonProps) {
+}: SkeletonLoaderProps) {
   useStyleInsertionEffect(injectSkeletonStyles, []);
 
-  const context = React.useContext(SkeletonGroupContext);
+  const context = React.useContext(SkeletonGroupLoaderContext);
   const defaults = getVariantDefaults(variant);
   const Component = as ?? "span";
 
-  const resolvedAnimation = animation ?? context.animation ?? defaultSkeletonTheme.animation;
-  const resolvedSpeed = speed ?? context.speed ?? defaultSkeletonTheme.speed;
-  const resolvedBaseColor = baseColor ?? context.baseColor ?? defaultSkeletonTheme.baseColor;
+  const resolvedAnimation = animation ?? context.animation ?? defaultSkeletonLoaderTheme.animation;
+  const resolvedSpeed = speed ?? context.speed ?? defaultSkeletonLoaderTheme.speed;
+  const resolvedBaseColor = baseColor ?? context.baseColor ?? defaultSkeletonLoaderTheme.baseColor;
   const resolvedHighlightColor =
-    highlightColor ?? context.highlightColor ?? defaultSkeletonTheme.highlightColor;
-  const resolvedDirection = context.direction ?? defaultSkeletonTheme.direction;
+    highlightColor ?? context.highlightColor ?? defaultSkeletonLoaderTheme.highlightColor;
+  const resolvedDirection = context.direction ?? defaultSkeletonLoaderTheme.direction;
   const itemCount = Math.max(1, Math.floor(count));
 
   const baseStyle: React.CSSProperties = {
@@ -207,4 +207,4 @@ export function Skeleton({
   );
 }
 
-export default Skeleton;
+export default SkeletonLoader;

@@ -1,9 +1,9 @@
-export { Skeleton } from "./Skeleton";
-export { SkeletonGroup } from "./SkeletonGroup";
-export { SkeletonSwitch } from "./SkeletonSwitch";
-export type { SkeletonProps } from "./Skeleton";
-export type { SkeletonGroupProps } from "./SkeletonGroup";
-export type { SkeletonSwitchProps } from "./SkeletonSwitch";
+export { SkeletonLoader } from "./SkeletonLoader";
+export { SkeletonGroupLoader } from "./SkeletonGroupLoader";
+export { SkeletonSwitchLoader } from "./SkeletonSwitchLoader";
+export type { SkeletonLoaderProps } from "./SkeletonLoader";
+export type { SkeletonGroupLoaderProps } from "./SkeletonGroupLoader";
+export type { SkeletonSwitchLoaderProps } from "./SkeletonSwitchLoader";
 
 export * from "./atoms";
 

@@ -7,18 +7,29 @@ import {
   Server,
 } from "lucide-react";
 import {
-  SkeletonGroup,
+  SkeletonGroupLoader,
   SkeletonLoader,
   SignalLoader,
   useSkeletonState,
 } from "react-loadly";
 
+const space = {
+  sm: 6,
+  md: 8,
+  lg: 12,
+} as const;
+
 const codeExamples = {
-  skeleton: `<SkeletonLoader variant="text" lines={3} width="100%" />`,
-  group: `<SkeletonGroup shimmerSync stagger={0.08}>
-  <SkeletonLoader variant="avatar" size={48} />
-  <SkeletonLoader variant="text" lines={2} width="100%" />
-</SkeletonGroup>`,
+  skeleton: `<SkeletonGroupLoader>
+  <SkeletonLoader style={{ marginBottom: 6 }} />
+  <SkeletonLoader style={{ marginBottom: 6 }} />
+  <SkeletonLoader width="72%" />
+</SkeletonGroupLoader>`,
+  group: `<SkeletonGroupLoader shimmerSync stagger={0.08}>
+  <SkeletonLoader variant="circular" width={48} height={48} />
+  <SkeletonLoader width="100%" style={{ marginBottom: 6 }} />
+  <SkeletonLoader width="64%" />
+</SkeletonGroupLoader>`,
   hooks: `const { loading, data, retry } = useSkeletonState({
   fetch: getUser,
   minDisplayTime: 400,
@@ -27,7 +38,7 @@ const codeExamples = {
   aria-label="Loading notifications"
   color="#22c55e"
 />`,
-  ssr: `import { SkeletonGroup } from "react-loadly/skeleton";
+  ssr: `import { SkeletonGroupLoader } from "react-loadly/skeleton";
 import "react-loadly/styles.css";`,
   motion: `@media (prefers-reduced-motion: reduce) {
   React Loadly animations pause gracefully.
@@ -49,27 +60,20 @@ function HookDemo() {
   });
 
   return (
-    <div className="rounded-lg border border-zinc-800/8  p-4">
+    <div className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
       {loading ? (
-        <SkeletonGroup
-          shimmerSync
-          stagger={0.08}
-          baseColor="#e5e7eb"
-          highlightColor="#f8fafc"
-        >
-          <div className="space-y-2">
-            <SkeletonLoader variant="text" width="70%" height={14} />
-            <SkeletonLoader variant="text" width="100%" height={28} />
-            <SkeletonLoader variant="text" width="45%" height={12} />
-          </div>
-        </SkeletonGroup>
+        <SkeletonGroupLoader shimmerSync stagger={0.08}>
+          <SkeletonLoader width="70%" height={14} style={{ marginBottom: space.sm }} />
+          <SkeletonLoader width="100%" height={28} style={{ marginBottom: space.sm }} />
+          <SkeletonLoader width="45%" height={12} />
+        </SkeletonGroupLoader>
       ) : (
         <div>
           <p className="text-xs text-zinc-500">Status</p>
-          <p className="mt-1 text-lg font-bold text-emerald-700">Data loaded</p>
+          <p className="mt-1 text-lg font-bold text-emerald-300">Data loaded</p>
           <button
             onClick={retry}
-            className="mt-3 rounded-md border border-zinc-300 px-3 py-1 text-xs text-zinc-700 hover:bg-zinc-100"
+            className="mt-3 rounded-md border border-zinc-800 px-3 py-1 text-xs text-zinc-300 hover:bg-zinc-900"
           >
             Replay
           </button>
@@ -87,39 +91,27 @@ export function ProductionToolkitSection() {
       desc: "Composable primitives for text, cards, avatars, and content placeholders.",
       code: codeExamples.skeleton,
       live: (
-        <SkeletonGroup
-          shimmerSync
-          stagger={0.08}
-          baseColor="#e5e7eb"
-          highlightColor="#f8fafc"
-        >
-          <div className="space-y-2">
-            <SkeletonLoader variant="text" width="80%" height={16} />
-            <SkeletonLoader variant="text" width="100%" height={16} />
-            <SkeletonLoader variant="text" width="55%" height={16} />
-          </div>
-        </SkeletonGroup>
+        <SkeletonGroupLoader shimmerSync stagger={0.08}>
+          <SkeletonLoader width="80%" height={16} style={{ marginBottom: space.sm }} />
+          <SkeletonLoader width="100%" height={16} style={{ marginBottom: space.sm }} />
+          <SkeletonLoader width="55%" height={16} />
+        </SkeletonGroupLoader>
       ),
     },
     {
       icon: Code2,
-      title: "SkeletonGroup",
+      title: "SkeletonGroupLoader",
       desc: "Coordinate multiple placeholders with synchronized shimmer and staggered timing.",
       code: codeExamples.group,
       live: (
         <div className="flex items-center gap-4">
-          <SkeletonGroup
-            shimmerSync
-            stagger={0.08}
-            baseColor="#e5e7eb"
-            highlightColor="#f8fafc"
-          >
-            <SkeletonLoader variant="avatar" size={48} />
-            <div className="space-y-2">
-              <SkeletonLoader variant="text" width={180} height={14} />
-              <SkeletonLoader variant="text" width={120} height={12} />
+          <SkeletonGroupLoader shimmerSync stagger={0.08}>
+            <SkeletonLoader variant="circular" width={48} height={48} />
+            <div style={{ flex: 1 }}>
+              <SkeletonLoader width={180} height={14} style={{ marginBottom: space.sm }} />
+              <SkeletonLoader width={120} height={12} />
             </div>
-          </SkeletonGroup>
+          </SkeletonGroupLoader>
         </div>
       ),
     },
@@ -170,8 +162,8 @@ export function ProductionToolkitSection() {
       live: (
         <div className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-950/50 p-4">
           <div className="size-8 rounded-full bg-indigo-500/30" />
-          <div className="space-y-2 flex-1">
-            <div className="h-2 rounded bg-zinc-800" />
+          <div className="flex-1">
+            <div className="h-2 rounded bg-zinc-800" style={{ marginBottom: space.md }} />
             <div className="h-2 w-2/3 rounded bg-zinc-800" />
           </div>
         </div>
@@ -219,7 +211,7 @@ export function ProductionToolkitSection() {
                   </p>
                 </div>
               </div>
-              <div className="mt-5 rounded-lg border border-zinc-800/8 p-5 text-zinc-950">
+              <div className="mt-5 rounded-lg border border-zinc-800 bg-zinc-950/40 p-5">
                 {feature.live}
               </div>
               <CodeBlock code={feature.code} />

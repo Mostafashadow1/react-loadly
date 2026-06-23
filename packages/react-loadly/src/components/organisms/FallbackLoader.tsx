@@ -1,7 +1,6 @@
 import { IFallbackLoaderProps } from "@/interfaces/IFallbackLoaderProps";
 import React, { FC } from "react";
 import { CSSProperties } from "react";
-import { useFullscreen } from "@/hooks/useFullscreen";
 
 const ErrorIcon: FC<{ className?: string }> = ({ className = "" }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
