@@ -26,7 +26,7 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 - New high-value loaders: `GradientRingLoader`, `OrbitDotsLoader`, `SignalLoader`, `EqualizerLoader`, and `CardFlipLoader`.
 - Production skeleton patterns for profile cards, product cards, articles, dashboards, sidebars, todos, tables, and forms.
 - Accessibility, SSR, fullscreen, and reduced-motion improvements across loaders.
-- `AutoSkeletonLoader` is now clearly marked as **Experimental**.
+- `AutoSkeletonLoader` is clearly marked as **Experimental** and now has safer guarded inference for memo, forwardRef, custom hooks, and fallback presets.
 - AutoSkeleton Compiler roadmap documented.
 - The showcase app is now the source of truth for examples.
 
@@ -98,6 +98,17 @@ It works best with native JSX, simple presentational components, className/style
 For production-critical loading experiences, React Loadly recommends `SkeletonLoader` and `SkeletonGroupLoader`.
 
 Do not treat AutoSkeleton as pixel-perfect or guaranteed for every component tree.
+
+### AutoSkeletonLoader Safety Fixes
+
+The guarded inference path now handles the most common wrapper and fallback cases more predictably:
+
+- `React.memo`, `React.forwardRef`, and nested `memo(forwardRef(...))` components are unwrapped before structural inference.
+- Failed introspection is retried on the next render instead of permanently blacklisting the component type.
+- Custom hooks are detected through the React hook naming convention (`use` + capital letter), including third-party hooks such as Redux, SWR, Recoil, and Jotai-style hooks.
+- Fallback preset matching prefers the wrapper `displayName` before the unwrapped function name, which improves anonymous memo and forwardRef exports.
+
+This means presentational memo/forwardRef components can produce a structural skeleton, while hook-heavy components skip execution and use the safest matching preset.
 
 ### 🧠 The Tech Behind the Magic
 
@@ -194,6 +205,49 @@ function Dashboard({ isLoading, worker }) {
 ```
 
 For best results, keep the target component presentational and expose meaningful JSX structure with className/style layout information.
+
+```tsx
+import React from "react";
+import { AutoSkeletonLoader } from "react-loadly";
+
+const PhotoBase = ({ src, caption }: { src: string; caption: string }) => (
+  <figure className="w-full">
+    <img src={src} alt={caption} className="h-40 w-full rounded-xl" />
+    <figcaption className="text-sm">{caption}</figcaption>
+  </figure>
+);
+
+PhotoBase.displayName = "Photo";
+const Photo = React.memo(PhotoBase);
+Photo.displayName = "Photo";
+
+export function PhotoSkeletonExample({ loading }: { loading: boolean }) {
+  return (
+    <AutoSkeletonLoader
+      inheritStyles
+      loading={loading}
+      component={<Photo src="/photos/lake.jpg" caption="Sunset at the lake" />}
+    />
+  );
+}
+```
+
+Hook-heavy components are intentionally skipped and mapped to a fallback preset when possible:
+
+```tsx
+function useAuthPreview() {
+  return { user: { name: "Jane Doe", verified: true } };
+}
+
+function ProfileHeader() {
+  const { user } = useAuthPreview();
+  return <span>{user.name}</span>;
+}
+
+<AutoSkeletonLoader loading component={<ProfileHeader />} />;
+```
+
+In this case, the custom hook is detected before the component is executed, and the `ProfileHeader` name maps to the profile fallback preset.
 
 ---
 

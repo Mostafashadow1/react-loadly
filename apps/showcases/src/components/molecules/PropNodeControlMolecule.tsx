@@ -9,7 +9,7 @@ interface PropNodeControlProps {
   value?: React.ReactNode;
   onChange: (propName: string, value: React.ReactNode) => void;
   propConfig: PropControlConfig;
-  scope?: Record<string, any>;
+  scope?: Record<string, unknown>;
 }
 
 export default function PropNodeControl({

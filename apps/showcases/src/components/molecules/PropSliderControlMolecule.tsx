@@ -7,7 +7,7 @@ export type PropControlsType = {
     propName: string;
     propConfig: PropControlConfig;
     value: string | number | boolean | ReactNode | undefined;
-    onChange: (name: string, value: any) => void;
+    onChange: (name: string, value: string | number | boolean | ReactNode | undefined) => void;
 }
 const PropSliderControl = ({ propName, propConfig, value, onChange }: PropControlsType) => {
     return (
