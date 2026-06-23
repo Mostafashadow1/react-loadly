@@ -17,7 +17,7 @@ export function FooterSection() {
                 ⚛ react-loadly
               </span>
               <span className="px-2 py-0.5 text-[9px] font-bold bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 rounded-full uppercase tracking-wider">
-                v3.0.0
+                v3.0.1
               </span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-sm">

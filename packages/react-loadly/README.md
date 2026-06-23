@@ -1,7 +1,11 @@
 # React Loadly — Reliable React Loading Experience Toolkit
 
 <p align="center">
-  <img src="./public/images/react-loadly-banner.png" alt="React Loadly - Modern React Loaders, Spinners, Skeleton Loaders, and Loading Indicators for React and Next.js" width="900" />
+ <img
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/packages/react-loadly/public/images/react-loadly-banner.png"
+    alt="React Loadly"
+    width="900"
+  />
 </p>
 
 **React Loadly** is a reliable React loading experience toolkit for modern loaders, `SkeletonLoader`, `SkeletonGroupLoader`, loading state hooks, accessibility, SSR support, and production-ready loading patterns. Built with **TypeScript**, optimized for **Next.js and SSR**, and designed with **ARIA**, reduced motion, and developer experience in mind.
@@ -13,7 +17,7 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 🏠 **Home Page**: [https://Mostafashadow1.github.io/react-loadly-showCases/](https://Mostafashadow1.github.io/react-loadly-showCases/)
 
 [![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)
-[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://github.com/Mostafashadow1/react-loadly)
+[![Version](https://img.shields.io/badge/version-3.0.1-blue.svg)](https://github.com/Mostafashadow1/react-loadly)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/main/LICENSE)
 
@@ -114,11 +118,11 @@ This means presentational memo/forwardRef components can produce a structural sk
 
 For simple presentational components, AutoSkeletonLoader uses guarded runtime JSX traversal to approximate your UI hierarchy without requiring manual skeleton markup.
 
-*   **Best-Effort Component Decoding**: Supports native JSX and simple presentational components where they can be inspected safely.
-*   **Guarded Safe Render**: `safeRender` skips risky components, including hook-heavy, async, lazy, and SSR paths, and falls back without crashing.
-*   **Class and Semantic Heuristics**: Built-in analysis predicts dimensions for text, buttons, badges, images, cards, lists, forms, tables, dashboards, and common utility classes.
-*   **Animation Continuity (Stable Key Algorithm)**: v2.4.x introduces a stable keying algorithm that ensures shimmer animations don't "reset" or flicker when your component's state changes.
-*   **Smart Memoization**: The VDOM analysis is extremely fast and memoized, occurring only when the component structure or configuration changes.
+- **Best-Effort Component Decoding**: Supports native JSX and simple presentational components where they can be inspected safely.
+- **Guarded Safe Render**: `safeRender` skips risky components, including hook-heavy, async, lazy, and SSR paths, and falls back without crashing.
+- **Class and Semantic Heuristics**: Built-in analysis predicts dimensions for text, buttons, badges, images, cards, lists, forms, tables, dashboards, and common utility classes.
+- **Animation Continuity (Stable Key Algorithm)**: v2.4.x introduces a stable keying algorithm that ensures shimmer animations don't "reset" or flicker when your component's state changes.
+- **Smart Memoization**: The VDOM analysis is extremely fast and memoized, occurring only when the component structure or configuration changes.
 
 ---
 
@@ -151,14 +155,7 @@ const WorkerCard = React.memo(({ data }) => {
 
 // Implementation
 function Dashboard({ isLoading, worker }) {
-  return (
-    <AutoSkeletonLoader
-      loading={isLoading}
-      inheritStyles={true}
-      shimmer={true}
-      component={<WorkerCard data={worker} />}
-    />
-  );
+  return <AutoSkeletonLoader loading={isLoading} inheritStyles={true} shimmer={true} component={<WorkerCard data={worker} />} />;
 }
 ```
 
@@ -166,33 +163,33 @@ function Dashboard({ isLoading, worker }) {
 
 ### Comparison: AutoSkeletonLoader Status
 
-| Feature | Explicit Skeletons (`SkeletonLoader` + `SkeletonGroupLoader`) | **AutoSkeletonLoader** |
-| :--- | :--- | :--- |
-| **Recommendation** | Production | Experimental |
-| **Accuracy** | Intentional and design-reviewable | Best-effort structural match |
-| **Complex React Trees** | Stable | May fall back |
-| **Maintenance** | Manual but predictable | Lower setup, more variance |
-| **Runtime Introspection** | None | Yes |
+| Feature                   | Explicit Skeletons (`SkeletonLoader` + `SkeletonGroupLoader`) | **AutoSkeletonLoader**       |
+| :------------------------ | :------------------------------------------------------------ | :--------------------------- |
+| **Recommendation**        | Production                                                    | Experimental                 |
+| **Accuracy**              | Intentional and design-reviewable                             | Best-effort structural match |
+| **Complex React Trees**   | Stable                                                        | May fall back                |
+| **Maintenance**           | Manual but predictable                                        | Lower setup, more variance   |
+| **Runtime Introspection** | None                                                          | Yes                          |
 
 ---
 
 ### ⚙️ AutoSkeletonLoader Props (IAutoSkeletonProps)
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `component` | `ReactElement` | **Required** | The actual component to analyze and mirror. |
-| `loading` | `boolean` | `true` | When `false`, the real component is rendered with a smooth transition. |
-| `inheritStyles` | `boolean` | `false` | If `true`, skeleton blocks will copy `style` and `className` from original elements. |
-| `styless` | `Record<string, CSSProperties>` | `{}` | Key-value pairs to override dimensions for specific tags (e.g., `{ h1: { width: '50%'} }`). |
-| `shimmer` | `boolean` | `true` | Enables the high-performance GPU-accelerated shimmer wave. |
-| `speed` | `number` | `1` | Animation speed multiplier (higher is faster). |
-| `color` | `string` | `"#e2e8f0"` | The base background color of the skeleton blocks. |
-| `highlightColor`| `string` | `"#f1f5f9"` | The highlight color used in the shimmer gradient. |
-| `shimmerColor` | `string` | `"#f1f5f9"` | The center color used in the shimmer gradient. |
-| `waveWidthValue` | `string` | `"200px"` | Width of the shimmer wave gradient. |
-| `waveDirection` | `String` | `"left-to-right"` | Shimmer direction: `left-to-right`, `right-to-left`, etc. |
-| `maxDepth` | `number` | `30` | Maximum structural traversal depth before falling back. |
-| `aria-label` | `string` | `"Loading content..."` | Accessible label for screen readers. |
+| Prop             | Type                            | Default                | Description                                                                                 |
+| :--------------- | :------------------------------ | :--------------------- | :------------------------------------------------------------------------------------------ |
+| `component`      | `ReactElement`                  | **Required**           | The actual component to analyze and mirror.                                                 |
+| `loading`        | `boolean`                       | `true`                 | When `false`, the real component is rendered with a smooth transition.                      |
+| `inheritStyles`  | `boolean`                       | `false`                | If `true`, skeleton blocks will copy `style` and `className` from original elements.        |
+| `styless`        | `Record<string, CSSProperties>` | `{}`                   | Key-value pairs to override dimensions for specific tags (e.g., `{ h1: { width: '50%'} }`). |
+| `shimmer`        | `boolean`                       | `true`                 | Enables the high-performance GPU-accelerated shimmer wave.                                  |
+| `speed`          | `number`                        | `1`                    | Animation speed multiplier (higher is faster).                                              |
+| `color`          | `string`                        | `"#e2e8f0"`            | The base background color of the skeleton blocks.                                           |
+| `highlightColor` | `string`                        | `"#f1f5f9"`            | The highlight color used in the shimmer gradient.                                           |
+| `shimmerColor`   | `string`                        | `"#f1f5f9"`            | The center color used in the shimmer gradient.                                              |
+| `waveWidthValue` | `string`                        | `"200px"`              | Width of the shimmer wave gradient.                                                         |
+| `waveDirection`  | `String`                        | `"left-to-right"`      | Shimmer direction: `left-to-right`, `right-to-left`, etc.                                   |
+| `maxDepth`       | `number`                        | `30`                   | Maximum structural traversal depth before falling back.                                     |
+| `aria-label`     | `string`                        | `"Loading content..."` | Accessible label for screen readers.                                                        |
 
 ---
 
@@ -222,13 +219,7 @@ const Photo = React.memo(PhotoBase);
 Photo.displayName = "Photo";
 
 export function PhotoSkeletonExample({ loading }: { loading: boolean }) {
-  return (
-    <AutoSkeletonLoader
-      inheritStyles
-      loading={loading}
-      component={<Photo src="/photos/lake.jpg" caption="Sunset at the lake" />}
-    />
-  );
+  return <AutoSkeletonLoader inheritStyles loading={loading} component={<Photo src="/photos/lake.jpg" caption="Sunset at the lake" />} />;
 }
 ```
 
@@ -260,7 +251,7 @@ A premium gradient ring spinner for polished product surfaces and dashboards.
 ```tsx
 import { GradientRingLoader } from "react-loadly";
 
-<GradientRingLoader size={56} color="#6366f1" secondaryColor="#06b6d4" aria-label="Loading dashboard" />
+<GradientRingLoader size={56} color="#6366f1" secondaryColor="#06b6d4" aria-label="Loading dashboard" />;
 ```
 
 Props: all base loader props plus `secondaryColor` and `thickness`.
@@ -274,7 +265,7 @@ Animated signal bars for network, streaming, and realtime data loading states.
 ```tsx
 import { SignalLoader } from "react-loadly";
 
-<SignalLoader size={48} count={4} color="#22c55e" aria-label="Connecting" />
+<SignalLoader size={48} count={4} color="#22c55e" aria-label="Connecting" />;
 ```
 
 Props: all base loader props plus `count` and `secondaryColor`.
@@ -288,7 +279,7 @@ Orbiting particles for polished loading states in dashboards, media apps, and re
 ```tsx
 import { OrbitDotsLoader } from "react-loadly";
 
-<OrbitDotsLoader size={56} count={4} color="#6366f1" secondaryColor="#22c55e" aria-label="Loading activity" />
+<OrbitDotsLoader size={56} count={4} color="#6366f1" secondaryColor="#22c55e" aria-label="Loading activity" />;
 ```
 
 Props: all base loader props plus `count` and `secondaryColor`.
@@ -302,7 +293,7 @@ Audio-style animated bars for uploads, streams, media, and activity states.
 ```tsx
 import { EqualizerLoader } from "react-loadly";
 
-<EqualizerLoader size={52} count={5} color="#a855f7" secondaryColor="#ec4899" aria-label="Loading stream" />
+<EqualizerLoader size={52} count={5} color="#a855f7" secondaryColor="#ec4899" aria-label="Loading stream" />;
 ```
 
 Props: all base loader props plus `count` and `secondaryColor`.
@@ -316,7 +307,7 @@ A subtle flipping card animation for card-heavy interfaces and content loading.
 ```tsx
 import { CardFlipLoader } from "react-loadly";
 
-<CardFlipLoader size={56} color="#6366f1" secondaryColor="#a78bfa" aria-label="Loading card" />
+<CardFlipLoader size={56} color="#6366f1" secondaryColor="#a78bfa" aria-label="Loading card" />;
 ```
 
 Props: all base loader props plus `secondaryColor` and `borderRadius`.
@@ -398,9 +389,9 @@ apps/showcases
 
 ---
 
-## 🆕 What's New in v3.0.0
+## 🆕 What's New in v3.0.1
 
-React Loadly v3.0.0 introduces major features, performance enhancements, and developer-experience upgrades:
+React Loadly v3.0.1 introduces major features, performance enhancements, and developer-experience upgrades:
 
 1. **`<LoadlyProvider>`** - A global context system for managing settings overrides, theme modes (`"light"` | `"dark"`), and automatic runtime CSS injection.
 2. **`<SkeletonGroupLoader>`** - Coordinate staggering and synchronize shimmer animation phases across multiple skeleton loader children.
@@ -414,9 +405,9 @@ React Loadly v3.0.0 introduces major features, performance enhancements, and dev
 
 ### Bundle Optimization & Subpath Exports
 
-React Loadly v3.0.0 is fully tree-shakeable and supports dedicated subpath exports to minimize your application's bundle size:
+React Loadly v3.0.1 is fully tree-shakeable and supports dedicated subpath exports to minimize your application's bundle size:
 
-- **CSS Auto-injection**: In v3.0.0, the `<LoadlyProvider>` automatically injects the necessary CSS styles into the document head at runtime, so importing `react-loadly/styles.css` is optional when using the provider.
+- **CSS Auto-injection**: In v3.0.1, the `<LoadlyProvider>` automatically injects the necessary CSS styles into the document head at runtime, so importing `react-loadly/styles.css` is optional when using the provider.
 - **Tree-shakeable Entrypoints**: Import directly from dedicated subpaths to ensure that your build tools only bundle what you actually use:
   - `react-loadly/hooks`: Re-exports hooks (`useLoaderState`, `useSkeletonState`, `useAsyncLoader`, etc.).
   - `react-loadly/skeleton`: Re-exports skeleton loaders (`SkeletonLoader`, `AutoSkeletonLoader`, `SkeletonGroupLoader`).
