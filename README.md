@@ -1,78 +1,219 @@
-# React Loadly
+<p align="center">
+  <img
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/packages/react-loadly/public/images/react-loadly-banner.png"
+    alt="React Loadly"
+    width="900"
+  />
+</p>
 
-Reliable React loading experience toolkit for loaders, spinners, skeletons, loading-state hooks, and production-ready loading patterns.
+<h1 align="center">React Loadly</h1>
 
-React Loadly is maintained as a pnpm monorepo with the published `react-loadly` package and a private Vite showcase app.
+<p align="center">
+  Reliable React Loading Experience Toolkit
+</p>
 
-## Workspace
+<p align="center">
+  Modern Loaders • Skeletons • Loading Hooks • Accessibility • SSR Support
+</p>
 
-```txt
-packages/react-loadly   # npm package published as react-loadly
-apps/showcases          # private Vite showcase app for GitHub Pages
-```
+<p align="center">
+  <a href="https://www.npmjs.com/package/react-loadly" target="_blank">📦 NPM</a>
+  •
+  <a href="https://mostafashadow1.github.io/react-loadly/" target="_blank">🌐 Showcase</a>
+  •
+  <a href="https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/README.md" target="_blank">📖 Documentation</a>
+  •
+  <a href="https://github.com/Mostafashadow1/react-loadly/issues" target="_blank">🐛 Issues</a>
+</p>
+
+---
+
+> Looking for installation guides, examples, loaders, skeleton patterns, and documentation?
+>
+> Visit the official showcase:
+>
+> **https://mostafashadow1.github.io/react-loadly/**
+
+---
+
+## About
+
+React Loadly is a modern loading experience toolkit for React applications.
+
+It provides:
+
+- Production-ready loaders
+- SkeletonLoader
+- SkeletonGroupLoader
+- Loading state hooks
+- Accessibility support
+- Reduced motion support
+- SSR compatibility
+- React 17 / 18 / 19 support
+- Next.js 14 / 15 / 16 support
+
+Designed for dashboards, SaaS products, admin panels, forms, data-heavy applications, and modern user interfaces.
+
+---
 
 ## Quick Start
 
-```bash
-pnpm install
-pnpm dev
-```
-
-Useful checks:
+Install React Loadly:
 
 ```bash
-pnpm type-check
-pnpm test
-pnpm build
+npm install react-loadly
 ```
 
-## AutoSkeletonLoader Update
+```bash
+pnpm add react-loadly
+```
 
-`AutoSkeletonLoader` is still experimental, but its guarded inference is safer now:
+```bash
+yarn add react-loadly
+```
 
-- `React.memo`, `React.forwardRef`, and nested wrappers are unwrapped before introspection.
-- Components are no longer permanently blacklisted after one failed introspection attempt.
-- Custom hooks are detected with the React hook naming convention, so hook-heavy components safely fall back instead of being executed directly.
-- Fallback preset names prefer wrapper `displayName`, which improves memo and forwardRef examples.
-
-The showcase includes examples for plain components, memo components, forwardRef components, nested wrappers, custom hooks, class components, arbitrary unmatched names, and memoized arbitrary names.
-
-## Package Usage
+Import the styles:
 
 ```tsx
-import { SkeletonLoader, SkeletonGroupLoader } from "react-loadly";
+import "react-loadly/styles.css";
+```
+
+Example:
+
+```tsx
+import { PulseLoader } from "react-loadly";
 import "react-loadly/styles.css";
 
-export function ProfileSkeleton() {
-  return (
-    <SkeletonGroupLoader shimmerSync stagger={0.08}>
-      <SkeletonLoader variant="circular" width={56} height={56} />
-      <SkeletonLoader variant="text" width="70%" height={16} />
-      <SkeletonLoader variant="text" width="45%" height={12} />
-    </SkeletonGroupLoader>
-  );
+export default function App() {
+  return <PulseLoader />;
 }
 ```
 
-Use explicit skeletons for production-critical UI. Use `AutoSkeletonLoader` when you want best-effort structural inference for presentational components.
+---
 
-## Showcase
+## Monorepo Structure
 
-The showcase app deploys to GitHub Pages from `apps/showcases/dist` and keeps the `/react-loadly-showCases` base path.
+This repository uses a pnpm monorepo architecture.
 
-```bash
-pnpm build:showcases
+```txt
+react-loadly
+├── packages
+│   └── react-loadly
+│
+└── apps
+    └── showcases
 ```
 
-## AI And Developer Workflow
+### Packages
 
-Whenever a component, hook, loader, prop, or feature changes in `packages/react-loadly`, update `apps/showcases` with at least one real example demonstrating it.
+| Package                 | Description                                        |
+| ----------------------- | -------------------------------------------------- |
+| `packages/react-loadly` | Published npm package                              |
+| `apps/showcases`        | Documentation, examples, and GitHub Pages showcase |
 
-When adding a loader, hook, skeleton pattern, or feature:
+---
 
-1. Update library exports.
-2. Update `packages/react-loadly/README.md`.
-3. Update showcase examples.
-4. Update showcase documentation.
+## Project Links
 
-The showcase is the source of truth for examples. Do not create examples inside `packages/react-loadly/examples`, `packages/react-loadly/demo`, or `packages/react-loadly/playground`.
+### 📦 NPM Package
+
+https://www.npmjs.com/package/react-loadly
+
+### 🌐 Showcase & Documentation
+
+https://mostafashadow1.github.io/react-loadly/
+
+### 📖 Package Source
+
+https://github.com/Mostafashadow1/react-loadly/tree/master/packages/react-loadly
+
+### 🐛 Report Issues
+
+https://github.com/Mostafashadow1/react-loadly/issues
+
+### 🤝 Pull Requests
+
+https://github.com/Mostafashadow1/react-loadly/pulls
+
+---
+
+## For Contributors
+
+React Loadly follows a simple rule:
+
+Whenever a loader, skeleton, hook, prop, or feature changes inside:
+
+```txt
+packages/react-loadly
+```
+
+the showcase must be updated as well:
+
+```txt
+apps/showcases
+```
+
+The showcase is considered the source of truth for:
+
+- Documentation
+- Examples
+- Usage patterns
+- New feature demonstrations
+
+---
+
+## Local Development
+
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Run showcase:
+
+```bash
+pnpm dev
+```
+
+Build everything:
+
+```bash
+pnpm build
+```
+
+Type checking:
+
+```bash
+pnpm type-check
+```
+
+Run tests:
+
+```bash
+pnpm test
+```
+
+---
+
+## Documentation
+
+For full documentation, component APIs, examples, skeleton patterns, hooks, and production guides, visit:
+
+### 🌐 https://mostafashadow1.github.io/react-loadly/
+
+Or browse the package documentation directly:
+
+### 📖 https://github.com/Mostafashadow1/react-loadly/tree/master/packages/react-loadly
+
+---
+
+## License
+
+MIT License
+
+---
+
+<p align="center">
+  Built with ❤️ by Shadow Coding
+</p>
