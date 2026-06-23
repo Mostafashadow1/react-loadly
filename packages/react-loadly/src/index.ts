@@ -1,6 +1,6 @@
-export { Skeleton } from "./components/Skeleton";
-export { SkeletonGroup } from "./components/SkeletonGroup";
-export { SkeletonSwitch } from "./components/SkeletonSwitch";
+export { SkeletonLoader } from "./components/SkeletonLoader";
+export { SkeletonGroupLoader } from "./components/SkeletonGroupLoader";
+export { SkeletonSwitchLoader } from "./components/SkeletonSwitchLoader";
 export {
   ArticleSkeleton,
   CardSkeleton,
@@ -15,9 +15,9 @@ export {
 } from "./presets";
 export { useSkeleton } from "./hooks/useSkeleton";
 export { useSkeletonTheme } from "./hooks/useSkeletonTheme";
-export type { SkeletonProps } from "./components/Skeleton";
-export type { SkeletonGroupProps } from "./components/SkeletonGroup";
-export type { SkeletonSwitchProps } from "./components/SkeletonSwitch";
+export type { SkeletonLoaderProps } from "./components/SkeletonLoader";
+export type { SkeletonGroupLoaderProps } from "./components/SkeletonGroupLoader";
+export type { SkeletonSwitchLoaderProps } from "./components/SkeletonSwitchLoader";
 export type {
   ArticleSkeletonProps,
   CardSkeletonProps,
@@ -31,11 +31,11 @@ export type {
   TableSkeletonProps,
 } from "./presets";
 export type {
-  SkeletonAnimation as AnimationVariant,
-  SkeletonDirection,
-  SkeletonTheme,
-  SkeletonVariant as ShapeVariant,
-} from "./context/SkeletonGroupContext";
+  SkeletonLoaderAnimation as AnimationVariant,
+  SkeletonLoaderDirection,
+  SkeletonLoaderTheme,
+  SkeletonLoaderVariant as ShapeVariant,
+} from "./context/SkeletonGroupLoaderContext";
 
 // Components
 export * from "./components";

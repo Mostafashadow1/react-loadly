@@ -431,7 +431,7 @@ export const AutoSkeletonLoaderExamples = () => {
           <p className="mt-4 text-muted-foreground">
             AutoSkeletonLoader remains available for experimentation and
             backward compatibility. Results may vary depending on component
-            structure. For production use, prefer SkeletonLoader and SkeletonGroup.
+            structure. For production use, prefer SkeletonLoader and SkeletonGroupLoader.
           </p>
         </div>
 
@@ -522,7 +522,7 @@ export const AutoSkeletonLoaderExamples = () => {
                     >
                       {loadingStates.profile
                         ? "Reveal Content"
-                        : "Trigger Skeleton"}
+                        : "Trigger SkeletonLoader"}
                     </Button>
                   </CardHeader>
                   <CardContent className="p-8 flex justify-center bg-zinc-950/20">
@@ -559,7 +559,7 @@ export const AutoSkeletonLoaderExamples = () => {
                     >
                       {loadingStates.product
                         ? "Reveal Content"
-                        : "Trigger Skeleton"}
+                        : "Trigger SkeletonLoader"}
                     </Button>
                   </CardHeader>
                   <CardContent className="p-8 flex justify-center bg-zinc-950/20">
@@ -596,7 +596,7 @@ export const AutoSkeletonLoaderExamples = () => {
                     >
                       {loadingStates.article
                         ? "Reveal Content"
-                        : "Trigger Skeleton"}
+                        : "Trigger SkeletonLoader"}
                     </Button>
                   </CardHeader>
                   <CardContent className="p-8 flex justify-center bg-zinc-950/20">
@@ -629,7 +629,7 @@ export const AutoSkeletonLoaderExamples = () => {
                       onClick={() => toggleLoading("sidebar")}
                       className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold px-4 h-9"
                     >
-                      {loadingStates.sidebar ? "Reveal Content" : "Trigger Skeleton"}
+                      {loadingStates.sidebar ? "Reveal Content" : "Trigger SkeletonLoader"}
                     </Button>
                   </CardHeader>
                   <CardContent className="p-8 flex justify-center bg-zinc-950/20">
@@ -658,7 +658,7 @@ export const AutoSkeletonLoaderExamples = () => {
                       onClick={() => toggleLoading("dashboard")}
                       className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold px-4 h-9"
                     >
-                      {loadingStates.dashboard ? "Reveal Content" : "Trigger Skeleton"}
+                      {loadingStates.dashboard ? "Reveal Content" : "Trigger SkeletonLoader"}
                     </Button>
                   </CardHeader>
                   <CardContent className="p-8 flex justify-center bg-zinc-950/20">
@@ -687,7 +687,7 @@ export const AutoSkeletonLoaderExamples = () => {
                       onClick={() => toggleLoading("settings")}
                       className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold px-4 h-9"
                     >
-                      {loadingStates.settings ? "Reveal Content" : "Trigger Skeleton"}
+                      {loadingStates.settings ? "Reveal Content" : "Trigger SkeletonLoader"}
                     </Button>
                   </CardHeader>
                   <CardContent className="p-8 flex justify-center bg-zinc-950/20">
@@ -925,7 +925,7 @@ export const AutoSkeletonLoaderExamples = () => {
                       AutoSkeletonLoader
                     </th>
                     <th className="p-4 pl-6 text-zinc-400">
-                      Manual Skeleton Coding
+                      Manual SkeletonLoader Coding
                     </th>
                   </tr>
                 </thead>

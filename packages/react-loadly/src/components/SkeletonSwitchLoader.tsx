@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface SkeletonSwitchProps {
+export interface SkeletonSwitchLoaderProps {
   loading: boolean;
   error?: Error | null;
   empty?: boolean;
@@ -11,7 +11,7 @@ export interface SkeletonSwitchProps {
   children?: React.ReactNode;
 }
 
-export function SkeletonSwitch({
+export function SkeletonSwitchLoader({
   loading,
   error = null,
   empty = false,
@@ -20,7 +20,7 @@ export function SkeletonSwitch({
   emptyFallback = null,
   transition = "fade",
   children,
-}: SkeletonSwitchProps) {
+}: SkeletonSwitchLoaderProps) {
   if (error) {
     return <>{typeof errorFallback === "function" ? errorFallback(error) : errorFallback}</>;
   }
@@ -64,4 +64,4 @@ export function SkeletonSwitch({
   );
 }
 
-export default SkeletonSwitch;
+export default SkeletonSwitchLoader;

@@ -4,7 +4,7 @@ import type {
   IFluidLoaderProps,
   IGeometricLoaderProps,
   ILogoLoaderProps,
-  ISkeletonLoaderProps,
+  ISkeletonPatternLoaderProps,
   ITextLoaderProps,
   ISpinDotsLoaderProps,
   IHeatmapLoaderProps,
@@ -40,7 +40,7 @@ export type LoaderPropsMap = {
   rotate: IGeometricLoaderProps;
   element: IElementLoaderProps;
   bounce: IGeometricLoaderProps;
-  skeleton: ISkeletonLoaderProps;
+  skeleton: ISkeletonPatternLoaderProps;
   spinDots: ISpinDotsLoaderProps;
   heatmap: IHeatmapLoaderProps;
   morph: IMorphLoaderProps;
@@ -65,7 +65,7 @@ type LoaderInterfaces = {
   IFluidLoaderProps: IFluidLoaderProps;
   IGeometricLoaderProps: IGeometricLoaderProps;
   ILogoLoaderProps: ILogoLoaderProps;
-  ISkeletonLoaderProps: ISkeletonLoaderProps;
+  ISkeletonPatternLoaderProps: ISkeletonPatternLoaderProps;
   ITextLoaderProps: ITextLoaderProps;
   ISpinDotsLoaderProps: ISpinDotsLoaderProps;
   IHeatmapLoaderProps: IHeatmapLoaderProps;

@@ -174,7 +174,7 @@ export function InstallationSection() {
                     </span>
                   </div>
                   <CopyButton
-                    text={`import { OrbitLoader } from "react-loadly/loaders";\nimport { useLoaderState } from "react-loadly/hooks";\nimport { SkeletonGroup } from "react-loadly/skeleton";`}
+                    text={`import { OrbitLoader } from "react-loadly/loaders";\nimport { useLoaderState } from "react-loadly/hooks";\nimport { SkeletonGroupLoader } from "react-loadly/skeleton";`}
                   />
                 </div>
 
@@ -202,7 +202,7 @@ export function InstallationSection() {
                   </div>
                   <div>
                     <span className="text-purple-400">import</span>{" "}
-                    <span className="text-zinc-100">{"{ SkeletonGroup }"}</span>{" "}
+                    <span className="text-zinc-100">{"{ SkeletonGroupLoader }"}</span>{" "}
                     <span className="text-purple-400">from</span>{" "}
                     <span className="text-emerald-300">
                       "react-loadly/skeleton"

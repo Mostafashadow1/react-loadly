@@ -21,7 +21,7 @@ export { clamp } from "./mathUtils";
 // DOM utilities
 export { generateId, sanitizeCSSValue } from "./domUtils";
 
-// Skeleton utilities
+// SkeletonLoader utilities
 export { getDefaultColors } from "./motionPreference";
 export { spacing } from "./spacing";
 

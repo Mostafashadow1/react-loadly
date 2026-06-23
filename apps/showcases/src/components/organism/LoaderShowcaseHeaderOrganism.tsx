@@ -12,7 +12,7 @@ const LoaderShowcaseHeader = ({
   setSelectedCategory,
   totalCount,
 }: LoaderShowcaseHeaderProps) => {
-  const categories = ["All", "Geometric", "Skeleton", "Organic", "Flexible", "New ✨"];
+  const categories = ["All", "Geometric", "Organic", "Flexible", "New ✨"];
 
   return (
     <div className="text-center mb-12">

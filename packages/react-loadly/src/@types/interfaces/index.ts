@@ -6,7 +6,7 @@ export type { IGeometricLoaderProps } from "./IGeometricLoaderProps";
 export type { ILoaderCSSVariables } from "./ILoaderCSSVariables";
 export type { ILogoLoaderProps } from "./ILogoLoaderProps";
 export type { ITextLoaderProps } from "./ITextLoaderProps";
-export type { ISkeletonLoaderProps } from "./ISkeletonLoaderProps";
+export type { ISkeletonPatternLoaderProps } from "./ISkeletonPatternLoaderProps";
 export type { IAutoSkeletonProps } from "./IAutoSkeletonProps";
 export type { IMorphLoaderProps } from "./IMorphLoaderProps";
 export type { ISpinDotsLoaderProps } from "./ISpinDotsLoaderProps";

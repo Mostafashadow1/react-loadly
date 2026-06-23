@@ -94,7 +94,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-6 max-w-3xl text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed"
           >
-            Modern loaders, SkeletonLoader, SkeletonGroup, loading state hooks,
+            Modern loaders, SkeletonLoader, SkeletonGroupLoader, loading state hooks,
             accessibility, SSR support, and production-ready loading patterns for
             React 17, React 18, React 19, Next.js 14, Next.js 15, and Next.js 16.
           </motion.p>

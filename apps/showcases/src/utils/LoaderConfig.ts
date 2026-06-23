@@ -13,7 +13,7 @@ import {
   RotateLoader,
   ElementLoader,
   BounceLoader,
-  SkeletonLoader,
+  SkeletonPatternLoader,
   SpinDotsLoader,
   HeatmapLoader,
   MorphLoader,
@@ -138,9 +138,9 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   skeleton: {
-    component: SkeletonLoader,
-    title: "Skeleton Loader",
-    interface: "ISkeletonLoaderProps",
+    component: SkeletonPatternLoader,
+    title: "Skeleton Pattern Loader",
+    interface: "ISkeletonPatternLoaderProps",
     commonProps: commonProps,
     uniqueProps: [
       "variant",

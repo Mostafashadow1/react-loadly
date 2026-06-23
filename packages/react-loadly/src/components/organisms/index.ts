@@ -11,13 +11,13 @@ export { LogoSpinLoader } from "./LogoSpinLoader";
 export { PulseLoader } from "./PulseLoader";
 export { RingLoader } from "./RingLoader";
 export { RotateLoader } from "./RotateLoader";
-export { SkeletonLoader } from "./SkeletonLoader";
+export { SkeletonPatternLoader } from "./SkeletonPatternLoader";
 export { SpinLoader } from "./SpinLoader";
 export { TypingLoader } from "./TypingLoader";
 export { WaveLoader } from "./WaveLoader";
 export { AutoSkeletonLoader } from "./AutoSkeletonLoader";
 export { ProgressRingLoader } from "./ProgressRingLoader";
-export { SkeletonGroup } from "./SkeletonGroup";
+export { SkeletonGroupLoader } from "./SkeletonGroupLoader";
 export { MorphLoader } from "./MorphLoader";
 
 export { SpinDotsLoader } from "./SpinDotsLoader";
@@ -41,7 +41,7 @@ export type {
   ILogoLoaderProps,
   ITextLoaderProps,
   IBaseLoaderProps,
-  ISkeletonLoaderProps,
+  ISkeletonPatternLoaderProps,
   IElementLoaderProps,
   ILoaderCSSVariables,
   ILoaderState,

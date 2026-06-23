@@ -35,7 +35,7 @@ export function getSpecificProps(
                 glowIntensity: propValues.glowIntensity as number,
             };
 
-        case "ISkeletonLoaderProps":
+        case "ISkeletonPatternLoaderProps":
             return {
                 variant: propValues.variant as string,
                 shimmer: propValues.shimmer as boolean,

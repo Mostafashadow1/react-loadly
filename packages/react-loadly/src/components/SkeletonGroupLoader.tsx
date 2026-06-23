@@ -1,13 +1,13 @@
 import React from "react";
-import { SkeletonGroupContext, SkeletonTheme } from "../context/SkeletonGroupContext";
+import { SkeletonGroupLoaderContext, SkeletonLoaderTheme } from "../context/SkeletonGroupLoaderContext";
 
-export interface SkeletonGroupProps extends SkeletonTheme {
+export interface SkeletonGroupLoaderProps extends SkeletonLoaderTheme {
   stagger?: boolean | number;
   shimmerSync?: boolean;
   children?: React.ReactNode;
 }
 
-export function SkeletonGroup({
+export function SkeletonGroupLoader({
   animation,
   speed,
   baseColor,
@@ -16,9 +16,9 @@ export function SkeletonGroup({
   stagger = false,
   shimmerSync: _shimmerSync,
   children,
-}: SkeletonGroupProps) {
-  const parentTheme = React.useContext(SkeletonGroupContext);
-  const value = React.useMemo<SkeletonTheme>(
+}: SkeletonGroupLoaderProps) {
+  const parentTheme = React.useContext(SkeletonGroupLoaderContext);
+  const value = React.useMemo<SkeletonLoaderTheme>(
     () => ({
       ...parentTheme,
       animation: animation ?? parentTheme.animation,
@@ -45,7 +45,7 @@ export function SkeletonGroup({
     });
   }, [children, stagger]);
 
-  return <SkeletonGroupContext.Provider value={value}>{staggeredChildren}</SkeletonGroupContext.Provider>;
+  return <SkeletonGroupLoaderContext.Provider value={value}>{staggeredChildren}</SkeletonGroupLoaderContext.Provider>;
 }
 
-export default SkeletonGroup;
+export default SkeletonGroupLoader;

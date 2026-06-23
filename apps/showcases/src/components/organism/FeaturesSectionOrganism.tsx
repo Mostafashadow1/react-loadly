@@ -1,4 +1,3 @@
-import React from "react";
 import { Zap, Layers, Shield, Cpu, Clock, Sparkles, Accessibility } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
@@ -104,13 +103,13 @@ export function FeaturesSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
-          {/* Card 1: Skeleton patterns (Large) */}
+          {/* Card 1: SkeletonLoader patterns (Large) */}
           <motion.div variants={itemVariants} className="col-span-1 md:col-span-2">
             <FeatureCard
               icon={Sparkles}
               badge="Production"
-              title="Skeleton-First Loading Patterns"
-              desc="Build intentional loading states with SkeletonLoader and SkeletonGroup. These patterns are predictable, accessible, SSR-friendly, and recommended for production-critical screens."
+              title="SkeletonLoader Loading Patterns"
+              desc="Build intentional loading states with SkeletonLoader and SkeletonGroupLoader. These patterns are predictable, accessible, SSR-friendly, and recommended for production-critical screens."
               glowColor="from-indigo-500/10 via-purple-500/10 to-transparent"
               iconBg="bg-indigo-500/10"
               iconColor="text-indigo-400"
@@ -146,13 +145,13 @@ export function FeaturesSection() {
             />
           </motion.div>
 
-          {/* Card 4: SkeletonGroup (Small) */}
+          {/* Card 4: SkeletonLoader sync (Small) */}
           <motion.div variants={itemVariants} className="col-span-1">
             <FeatureCard
               icon={Cpu}
               badge="Sync"
-              title="SkeletonGroup"
-              desc="Coordinate multiple skeleton placeholders with synchronized shimmer timing and clean staggered motion."
+              title="SkeletonLoader Groups"
+              desc="Coordinate multiple SkeletonLoader placeholders with synchronized shimmer timing and clean staggered motion."
               glowColor="from-amber-500/10 via-orange-500/10 to-transparent"
               iconBg="bg-amber-500/10"
               iconColor="text-amber-400"

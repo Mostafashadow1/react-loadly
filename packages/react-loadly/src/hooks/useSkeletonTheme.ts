@@ -1,8 +1,8 @@
 import React from "react";
-import { SkeletonGroupContext, SkeletonTheme } from "../context/SkeletonGroupContext";
+import { SkeletonGroupLoaderContext, SkeletonLoaderTheme } from "../context/SkeletonGroupLoaderContext";
 
-export function useSkeletonTheme(): SkeletonTheme {
-  return React.useContext(SkeletonGroupContext);
+export function useSkeletonTheme(): SkeletonLoaderTheme {
+  return React.useContext(SkeletonGroupLoaderContext);
 }
 
 export default useSkeletonTheme;
