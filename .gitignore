@@ -1,0 +1,9 @@
+node_modules
+dist
+dist.bak
+coverage
+*.tsbuildinfo
+.DS_Store
+*.tgz
+node-compile-cache
+.pnpm-store

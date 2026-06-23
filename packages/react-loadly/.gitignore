@@ -1,0 +1,12 @@
+node_modules
+node-compile-cache
+dist
+dist.bak
+.idea
+.vscode
+.DS_Store
+react-loadly-*.tgz
+main
+
+
+examples/*
