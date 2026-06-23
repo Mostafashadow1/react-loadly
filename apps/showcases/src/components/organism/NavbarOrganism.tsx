@@ -83,7 +83,7 @@ export function Navbar() {
               className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 hover:text-white transition-all"
             >
               <span className="text-red-400 font-bold font-mono">npm</span>
-              <span>v3.0.0</span>
+              <span>v3.0.1</span>
             </a>
           </div>
 
@@ -137,7 +137,7 @@ export function Navbar() {
               className="flex items-center justify-center space-x-2 py-2 px-3 text-sm font-semibold text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 hover:text-white transition-all"
             >
               <span className="text-red-400 font-bold font-mono">npm</span>
-              <span>v3.0.0</span>
+              <span>v3.0.1</span>
             </a>
           </div>
         </div>
