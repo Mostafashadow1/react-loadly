@@ -28,6 +28,20 @@
 
 ---
 
+<p align="center">
+  <img
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/assets/palestine-solidarity-banner.png"
+    alt="This project stands with Palestine — Freedom, dignity, and justice."
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <strong>🇵🇸 This project stands with Palestine — freedom, dignity, and justice.</strong>
+</p>
+
+---
+
 > Looking for installation guides, examples, loaders, skeleton patterns, and documentation?
 >
 > Visit the official showcase:

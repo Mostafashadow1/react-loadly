@@ -23,6 +23,20 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 
 ---
 
+<p align="center">
+  <img
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/packages/react-loadly/public/images/palestine-solidarity-banner.png"
+    alt="This project stands with Palestine — Freedom, dignity, and justice."
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <strong>🇵🇸 This project stands with Palestine — freedom, dignity, and justice.</strong>
+</p>
+
+---
+
 ## What's New
 
 - New identity: **Reliable React Loading Experience Toolkit**.
