@@ -40,11 +40,13 @@ const createBundle = (inputPath, outputName) => ({
       extensions: [".js", ".jsx", ".ts", ".tsx"],
     }),
     commonjs(),
+    // Subpath typings come from createDtsBundle; emitting declarations here
+    // would copy the whole dist/types tree into every subpath folder.
     typescript({
       tsconfig: "./tsconfig.json",
-      declaration: true,
-      declarationDir: "dist/types",
-      emitDeclarationOnly: false,
+      declaration: false,
+      declarationMap: false,
+      declarationDir: undefined,
     }),
     postcss({
       extract: false,
