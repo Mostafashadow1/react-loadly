@@ -148,18 +148,18 @@ const getUnsafeSourceToken = (Component: unknown): string | null => {
   }
 
   const knownToken = riskySourceTokens.find((token) => {
-    const hookCallPattern = new RegExp(`(^|[^\\w$])(?:[A-Za-z_$][\\w$]*\\.)?${escapeRegExp(token)}\\s*\\(`);
+    const hookCallPattern = new RegExp(`(^|[^\\w$])(?:[A-Za-z_$][\\w$]*\\.)?${escapeRegExp(token)}\\s*\\)?\\s*\\(`);
     return hookCallPattern.test(source);
   });
   if (knownToken) return knownToken;
 
-  const genericHookMatch = /(^|[^\w$.])(?:[A-Za-z_$][\w$]*\.)?use[A-Z]\w*\s*\(/.exec(source);
+  const genericHookMatch = /(^|[^\w$.])(?:[A-Za-z_$][\w$]*\.)?use[A-Z]\w*\s*\)?\s*\(/.exec(source);
   if (genericHookMatch) {
     const nameMatch = /use[A-Z]\w*/.exec(genericHookMatch[0]);
     return nameMatch?.[0] || "a custom hook";
   }
 
-  if (/(^|[^\w$.])use\s*\(/.test(source)) return "use()";
+  if (/(^|[^\w$.])use\s*\(/.test(source) || /(^|[^\w$.])[A-Za-z_$][\w$]*\.use\s*\)\s*\(/.test(source)) return "use()";
 
   return null;
 };
