@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/packages/react-loadly/public/images/react-loadly-banner.png"
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/main/packages/react-loadly/public/images/react-loadly-banner.png"
     alt="React Loadly"
     width="900"
   />
@@ -21,7 +21,7 @@
   •
   <a href="https://mostafashadow1.github.io/react-loadly/" target="_blank">🌐 Showcase</a>
   •
-  <a href="https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/README.md" target="_blank">📖 Documentation</a>
+  <a href="https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/README.md" target="_blank">📖 Documentation</a>
   •
   <a href="https://github.com/Mostafashadow1/react-loadly/issues" target="_blank">🐛 Issues</a>
 </p>
@@ -30,7 +30,7 @@
 
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/assets/palestine-solidarity-banner.png"
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/main/assets/palestine-solidarity-banner.png"
     alt="This project stands with Palestine — Freedom, dignity, and justice."
     width="100%"
   />
@@ -79,7 +79,7 @@ Designed for dashboards, SaaS products, admin panels, forms, data-heavy applicat
 
 **Not for:** Progress bars for route changes at the top of the page (use nprogress or the router's own indicator).
 
-> **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
+> **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
 
 ---
 
@@ -152,7 +152,7 @@ https://mostafashadow1.github.io/react-loadly/
 
 ### 📖 Package Source
 
-https://github.com/Mostafashadow1/react-loadly/tree/master/packages/react-loadly
+https://github.com/Mostafashadow1/react-loadly/tree/main/packages/react-loadly
 
 ### 🐛 Report Issues
 
@@ -231,7 +231,7 @@ For full documentation, component APIs, examples, skeleton patterns, hooks, and 
 
 Or browse the package documentation directly:
 
-### 📖 https://github.com/Mostafashadow1/react-loadly/tree/master/packages/react-loadly
+### 📖 https://github.com/Mostafashadow1/react-loadly/tree/main/packages/react-loadly
 
 ---
 
