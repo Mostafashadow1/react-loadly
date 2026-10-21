@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/organism/HeroSectionOrganism";
 import { InstallationSection } from "@/components/organism/InstallationSectionOrganism";
 import { ProductionSkeletonPatterns } from "@/components/organism/ProductionSkeletonPatternsOrganism";
 import { SkeletonLibraryExamples } from "@/components/organism/SkeletonLibraryExamplesOrganism";
+import { SkeletonizeExamples } from "@/components/organism/SkeletonizeExamplesOrganism";
 import { AutoSkeletonLoaderExamples } from "@/components/organism/AutoSkeletonLoaderExamplesOrganism";
 import { FeaturesSection } from "@/components/organism/FeaturesSectionOrganism";
 import { TypeGuardsSection } from "@/components/organism/TypeGuardsSectionOrganism";
@@ -24,6 +25,7 @@ export default function App() {
         <HeroSection />
         <InstallationSection />
         <SkeletonLibraryExamples />
+        <SkeletonizeExamples />
         <ProductionSkeletonPatterns />
         <LoadersShowcaseSection />
         <FeaturesSection />

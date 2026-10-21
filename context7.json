@@ -1,7 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "React Loadly",
-  "description": "React Loadly gives React and Next.js apps accessible loading UI: 30+ spinners/loaders, SkeletonLoader and SkeletonGroupLoader for skeleton screens, SkeletonSwitchLoader for loading/error/empty switching, and loading-state hooks. TypeScript, SSR-friendly, ARIA role=\"status\", reduced-motion support.",
+  "description": "React Loadly gives React and Next.js apps accessible loading UI: 30+ spinners/loaders, Skeletonize (turns your real component into its skeleton), SkeletonLoader and SkeletonGroupLoader for skeleton screens, SkeletonSwitchLoader for loading/error/empty switching, and loading-state hooks. TypeScript, SSR-friendly, ARIA role=\"status\", reduced-motion support.",
   "folders": [
     "packages/react-loadly"
   ],
@@ -12,7 +12,9 @@
     "**/__tests__"
   ],
   "rules": [
-    "For production skeletons prefer explicit `SkeletonLoader` + `SkeletonGroupLoader`. `AutoSkeletonLoader` is experimental; do not use it unless the user asks.",
+    "To skeleton an existing component, wrap it: `<Skeletonize loading={isLoading}><UserCard user={data ?? placeholderUser} /></Skeletonize>`. Pass realistic placeholder data while loading; the real component renders and its text, images, icons and controls become skeleton blocks. Do not write a separate skeleton layout for a component you can wrap.",
+    "For skeletons of UI that does not exist yet (e.g. a page shell), use explicit `SkeletonLoader` + `SkeletonGroupLoader`. `AutoSkeletonLoader` is deprecated and will be removed in v4; do not use it.",
+    "`Skeletonize` props: `loading`, `animation`, `baseColor`, `highlightColor`, `speed`, `loadingLabel`, `as`. Add `data-skeleton` to an element that should also become a block.",
     "Import the stylesheet once in the app root: `import \"react-loadly/styles.css\"` (or wrap the app with `<LoadlyProvider>`, which injects styles).",
     "`SkeletonLoader` props: `variant` (\"text\" | \"rectangular\" | \"circular\" | \"rounded\"), `width`, `height`, `count`, `animation` (\"shimmer\" | \"wave\" | \"pulse\" | \"none\"), `borderRadius`, `baseColor`, `highlightColor`.",
     "Loaders share base props: `size`, `color`, `speed`, `loading`, `aria-label`, `showText`, `loadingText`, `fullscreen`, `loaderCenter`, `className`, `style`.",

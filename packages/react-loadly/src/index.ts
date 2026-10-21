@@ -1,6 +1,7 @@
 export { SkeletonLoader } from "./components/SkeletonLoader";
 export { SkeletonGroupLoader } from "./components/SkeletonGroupLoader";
 export { SkeletonSwitchLoader } from "./components/SkeletonSwitchLoader";
+export { Skeletonize } from "./components/Skeletonize";
 export {
   ArticleSkeleton,
   CardSkeleton,
@@ -18,6 +19,7 @@ export { useSkeletonTheme } from "./hooks/useSkeletonTheme";
 export type { SkeletonLoaderProps } from "./components/SkeletonLoader";
 export type { SkeletonGroupLoaderProps } from "./components/SkeletonGroupLoader";
 export type { SkeletonSwitchLoaderProps } from "./components/SkeletonSwitchLoader";
+export type { SkeletonizeProps } from "./components/Skeletonize";
 export type {
   ArticleSkeletonProps,
   CardSkeletonProps,
