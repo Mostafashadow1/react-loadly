@@ -3,7 +3,7 @@
   "version": "3.1.0",
   "type": "module",
   "description": "Accessible React loaders, spinners and skeleton screens with loading-state hooks. 30+ loaders, SkeletonLoader, SSR and Next.js ready, TypeScript.",
-  "main": "dist/index.cjs.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -14,40 +14,75 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./styles.css": "./dist/styles.css",
     "./components": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./hooks": {
-      "import": "./dist/hooks/index.esm.js",
-      "require": "./dist/hooks/index.cjs.js",
-      "types": "./dist/hooks/index.d.ts"
+      "import": {
+        "types": "./dist/hooks/index.d.ts",
+        "default": "./dist/hooks/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/hooks/index.d.cts",
+        "default": "./dist/hooks/index.cjs"
+      }
     },
     "./skeleton": {
-      "import": "./dist/skeleton/index.esm.js",
-      "require": "./dist/skeleton/index.cjs.js",
-      "types": "./dist/skeleton/index.d.ts"
+      "import": {
+        "types": "./dist/skeleton/index.d.ts",
+        "default": "./dist/skeleton/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/skeleton/index.d.cts",
+        "default": "./dist/skeleton/index.cjs"
+      }
     },
     "./loaders": {
-      "import": "./dist/loaders/index.esm.js",
-      "require": "./dist/loaders/index.cjs.js",
-      "types": "./dist/loaders/index.d.ts"
+      "import": {
+        "types": "./dist/loaders/index.d.ts",
+        "default": "./dist/loaders/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/loaders/index.d.cts",
+        "default": "./dist/loaders/index.cjs"
+      }
     },
     "./utils": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./types": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.esm.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "sideEffects": [
