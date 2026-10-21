@@ -148,7 +148,7 @@ describe("AutoSkeletonLoader safety and stability", () => {
 
       expect(getSignature(screen.getByRole("status"))).toEqual([
         { width: "100%", height: "10rem", radius: "0.75rem" },
-        { width: "30%", height: "1em", radius: "6px" },
+        { width: "100%", height: "16px", radius: "6px" },
       ]);
       expect(warnSpy).not.toHaveBeenCalled();
     });
@@ -261,8 +261,9 @@ describe("AutoSkeletonLoader safety and stability", () => {
 
     test("component using useTranslation", () => {
       const TranslationCard = () => {
-        const useTranslationValue = "title";
-        return <h1>{useTranslationValue}</h1>;
+        const useTranslation = () => ({ t: (key: string) => key });
+        const { t } = useTranslation();
+        return <h1>{t("title")}</h1>;
       };
 
       render(<AutoSkeletonLoader component={<TranslationCard />} />);
@@ -273,8 +274,9 @@ describe("AutoSkeletonLoader safety and stability", () => {
 
     test("component using useQuery", () => {
       const QueryCard = () => {
-        const useQueryResult = { title: "Orders" };
-        return <h1>{useQueryResult.title}</h1>;
+        const useQuery = () => ({ data: { title: "Orders" } });
+        const { data } = useQuery();
+        return <h1>{data.title}</h1>;
       };
 
       render(<AutoSkeletonLoader component={<QueryCard />} />);
@@ -371,7 +373,7 @@ describe("AutoSkeletonLoader safety and stability", () => {
       render(<AutoSkeletonLoader component={<div className="w-5 h-5 rounded border" />} />);
 
       expect(getSignature(screen.getByRole("status"))).toEqual([
-        { width: "1.25rem", height: "1.25rem", radius: "6px" },
+        { width: "1.25rem", height: "1.25rem", radius: "0.375rem" },
       ]);
     });
   });

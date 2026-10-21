@@ -14,7 +14,7 @@ Install: `npm install react-loadly`
 - Progress bars for route changes at the top of the page (use nprogress or the router's own indicator).
 
 ## Rules for correct usage
-- For production skeletons prefer explicit `SkeletonLoader` + `SkeletonGroupLoader`. `AutoSkeletonLoader` is experimental; do not use it unless the user asks.
+- For production skeletons prefer explicit `SkeletonLoader` + `SkeletonGroupLoader`. `AutoSkeletonLoader` is deprecated and will be removed in v4; do not use it.
 - Import the stylesheet once in the app root: `import "react-loadly/styles.css"` (or wrap the app with `<LoadlyProvider>`, which injects styles).
 - `SkeletonLoader` props: `variant` ("text" | "rectangular" | "circular" | "rounded"), `width`, `height`, `count`, `animation` ("shimmer" | "wave" | "pulse" | "none"), `borderRadius`, `baseColor`, `highlightColor`.
 - Loaders share base props: `size`, `color`, `speed`, `loading`, `aria-label`, `showText`, `loadingText`, `fullscreen`, `loaderCenter`, `className`, `style`.
@@ -73,7 +73,7 @@ import { SpinLoader } from "react-loadly/loaders";
 ```
 
 ## API summary
-- Skeletons: `SkeletonLoader`, `SkeletonGroupLoader` (`stagger`, `shimmerSync`), `SkeletonSwitchLoader`, `SkeletonPatternLoader`, `AutoSkeletonLoader` (experimental).
+- Skeletons: `SkeletonLoader`, `SkeletonGroupLoader` (`stagger`, `shimmerSync`), `SkeletonSwitchLoader`, `SkeletonPatternLoader`, `AutoSkeletonLoader` (deprecated).
 - Loaders: SpinLoader, PulseLoader, WaveLoader, DotsLoader, BarsLoader, BounceLoader, RingLoader, RotateLoader, GridLoader, TypingLoader, BlobLoader, FlowLoader, LiquidLoader, LogoSpinLoader, MorphLoader, OrbitLoader, OrbitDotsLoader, PlaneLoader, ProgressRingLoader, RippleLoader, SignalLoader, SnakeLoader, SpinDotsLoader, SquaresLoader, StairLoader, HashtagLoader, HeatmapLoader, EqualizerLoader, GradientRingLoader, CardFlipLoader, ElementLoader, FallbackLoader.
 - Provider: `LoadlyProvider` (`theme` "light" | "dark", `color`, `secondaryColor`, `speed`, `injectStyles`, `loaderCenter`).
 - Hooks: `useLoaderState`, `useMultipleLoaderStates`, `useAsyncLoader(asyncFn, deps, options)`, `useFullscreen`, `useSkeletonState`, `useSkeleton`, `useSkeletonTheme`.
