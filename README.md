@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  Modern Loaders • Skeletons • Loading Hooks • Accessibility • SSR Support
+  Modern Loaders • Skeletonize • Skeletons • Loading Hooks • Accessibility • SSR Support
 </p>
 
 <p align="center">
@@ -57,6 +57,7 @@ React Loadly is a modern loading experience toolkit for React applications.
 It provides:
 
 - Production-ready loaders
+- Skeletonize: your real component becomes its own skeleton
 - SkeletonLoader
 - SkeletonGroupLoader
 - Loading state hooks
@@ -81,6 +82,41 @@ Designed for dashboards, SaaS products, admin panels, forms, data-heavy applicat
 **Not for:** Progress bars for route changes at the top of the page (use nprogress or the router's own indicator).
 
 > **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
+
+---
+
+## Skeletonize (new in 3.1)
+
+Stop writing a second skeleton layout for every component. Wrap the real component, render it with placeholder data, and it becomes its own skeleton while loading.
+
+```tsx
+import { Skeletonize } from "react-loadly";
+
+const placeholderUser = { name: "Loading name", role: "Loading role", avatar: "" };
+
+export function Profile() {
+  const { data, isLoading } = useQuery({ queryKey: ["user"], queryFn: getUser });
+
+  return (
+    <Skeletonize loading={isLoading}>
+      <UserCard user={data ?? placeholderUser} />
+    </Skeletonize>
+  );
+}
+```
+
+- **Pixel-perfect by design**: the skeleton is your real component, so it always matches the layout, spacing and sizes.
+- **No sync work**: change the component and the skeleton changes with it.
+- **Works with anything**: hooks, context, data fetching, Tailwind, CSS Modules and plain CSS.
+- **Text, images, icons and form controls** become skeleton blocks; containers keep their background, borders and padding. Add `data-skeleton` to any other element to turn it into a block.
+- **Accessible**: content is `inert` and `aria-hidden` while loading, and screen readers hear one `role="status"` message (`loadingLabel`).
+- **Animations**: `shimmer`, `wave`, `pulse` or `none`, with shimmer aligned across every block; respects `prefers-reduced-motion`.
+- **Theming**: `baseColor`, `highlightColor` and `speed` props, or inherit them from `SkeletonGroupLoader`.
+- **SSR and Next.js App Router ready**, and children keep their state when `loading` toggles.
+
+[Live examples](https://mostafashadow1.github.io/react-loadly/#skeletonize) · [Full docs](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/README.md#skeletonize)
+
+Also in 3.1: the package is smaller, with 28 files instead of 972 (about 1 MB unpacked instead of 1.5 MB).
 
 ---
 
