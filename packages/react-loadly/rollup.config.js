@@ -9,6 +9,9 @@ import { terser } from "rollup-plugin-terser";
 import { visualizer } from "rollup-plugin-visualizer";
 
 const pkg = JSON.parse(readFileSync("./package.json", "utf8"));
+// Components use hooks and context, so every JS bundle is marked as a client
+// module for Next.js App Router. Added through terser so it survives minification.
+const CLIENT_DIRECTIVE = '"use client";';
 const isAnalyze = process.argv.includes("--config-option") && process.argv.includes("analyze=true");
 
 const createBundle = (inputPath, outputName) => ({
@@ -59,6 +62,7 @@ const createBundle = (inputPath, outputName) => ({
       },
       format: {
         comments: false,
+        preamble: CLIENT_DIRECTIVE,
       },
     }),
   ],
@@ -121,6 +125,7 @@ export default [
         },
         format: {
           comments: false,
+          preamble: CLIENT_DIRECTIVE,
         },
       }),
       ...(isAnalyze

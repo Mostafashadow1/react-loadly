@@ -3,7 +3,7 @@ name: Deploy showcases
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - "apps/showcases/**"
       - "packages/react-loadly/**"

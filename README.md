@@ -70,6 +70,19 @@ Designed for dashboards, SaaS products, admin panels, forms, data-heavy applicat
 
 ---
 
+## When to use React Loadly
+
+- A component fetches data and needs a skeleton or spinner while it loads.
+- You want one component that switches between loading, error, empty and content (`SkeletonSwitchLoader`).
+- You need accessible loaders (role="status", aria-label, reduced motion) without writing CSS animations.
+- You need a fullscreen or page-level loader, or a Suspense / next/dynamic fallback.
+
+**Not for:** Progress bars for route changes at the top of the page (use nprogress or the router's own indicator).
+
+> **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
+
+---
+
 ## Quick Start
 
 Install React Loadly:
