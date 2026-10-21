@@ -73,6 +73,7 @@ Designed for dashboards, SaaS products, admin panels, forms, data-heavy applicat
 ## When to use React Loadly
 
 - A component fetches data and needs a skeleton or spinner while it loads.
+- You want a skeleton that matches your real component exactly, without writing a second skeleton layout (`Skeletonize`).
 - You want one component that switches between loading, error, empty and content (`SkeletonSwitchLoader`).
 - You need accessible loaders (role="status", aria-label, reduced motion) without writing CSS animations.
 - You need a fullscreen or page-level loader, or a Suspense / next/dynamic fallback.

@@ -40,6 +40,7 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 ## When to use React Loadly
 
 - A component fetches data and needs a skeleton or spinner while it loads.
+- You want a skeleton that matches your real component exactly, without writing a second skeleton layout (`Skeletonize`).
 - You want one component that switches between loading, error, empty and content (`SkeletonSwitchLoader`).
 - You need accessible loaders (role="status", aria-label, reduced motion) without writing CSS animations.
 - You need a fullscreen or page-level loader, or a Suspense / next/dynamic fallback.
@@ -52,12 +53,13 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 
 ## What's New
 
+- `Skeletonize`: wrap any component and it becomes its own skeleton while loading. See [Skeletonize](#skeletonize).
 - New identity: **Reliable React Loading Experience Toolkit**.
 - `SkeletonGroupLoader` for coordinated production skeleton patterns.
 - New high-value loaders: `GradientRingLoader`, `OrbitDotsLoader`, `SignalLoader`, `EqualizerLoader`, and `CardFlipLoader`.
 - Production skeleton patterns for profile cards, product cards, articles, dashboards, sidebars, todos, tables, and forms.
 - Accessibility, SSR, fullscreen, and reduced-motion improvements across loaders.
-- `AutoSkeletonLoader` is clearly marked as **Experimental** and now has safer guarded inference for memo, forwardRef, custom hooks, and fallback presets.
+- `AutoSkeletonLoader` is deprecated and will be removed in v4. Use `Skeletonize` or `SkeletonLoader` instead.
 - AutoSkeleton Compiler roadmap documented.
 - The showcase app is now the source of truth for examples.
 
@@ -118,9 +120,38 @@ pnpm i react-loadly
 
 ---
 
+## Skeletonize
+
+`Skeletonize` turns your real component into its own skeleton. Render the component with placeholder data and wrap it: while `loading` is true, text, images, icons and form controls become skeleton blocks with the exact size and position of the real UI.
+
+```tsx
+import { Skeletonize } from "react-loadly";
+
+const placeholderUser = { name: "Loading name", role: "Loading role", avatar: "" };
+
+export function Profile() {
+  const { data, isLoading } = useQuery({ queryKey: ["user"], queryFn: getUser });
+
+  return (
+    <Skeletonize loading={isLoading}>
+      <UserCard user={data ?? placeholderUser} />
+    </Skeletonize>
+  );
+}
+```
+
+- Works with hooks, context, Tailwind and any CSS, because it is your component rendering normally.
+- Containers keep their background, borders and spacing; text, `img`, `svg`, `video`, `button`, `input`, `select` and `textarea` become blocks. Add `data-skeleton` to any other element that should become a block.
+- While loading the content is `inert` and `aria-hidden`, and screen readers hear one `role="status"` message (`loadingLabel`, default "Loading").
+- Toggling `loading` does not remount the children, so their state is kept.
+- Props: `loading`, `animation` ("shimmer" | "wave" | "pulse" | "none"), `baseColor`, `highlightColor`, `speed`, `loadingLabel`, `as`, plus any HTML attribute. It also reads the theme from `SkeletonGroupLoader`.
+- The placeholder data decides the skeleton's text length, so use realistic placeholder values.
+
+---
+
 ## AutoSkeletonLoader (Deprecated)
 
-`AutoSkeletonLoader` is **deprecated** and will be removed in v4. Use `SkeletonLoader` and `SkeletonGroupLoader` instead.
+`AutoSkeletonLoader` is **deprecated** and will be removed in v4. Use `Skeletonize`, or `SkeletonLoader` and `SkeletonGroupLoader`, instead.
 
 The current implementation remains available only for backward compatibility. It uses best-effort structural inference by combining JSX traversal, safe presentational component inference, `className` heuristics, and smart fallback presets to generate realistic loading states.
 

@@ -23,6 +23,7 @@ export function Navbar() {
       href: "#skeleton-library",
       icon: Play,
     },
+    { name: "Skeletonize", href: "#skeletonize", icon: Play },
     { name: "AutoSkeleton", href: "#playground", icon: ShieldIcon },
     { name: "Loaders", href: "#loaders", icon: GridIcon },
   ];

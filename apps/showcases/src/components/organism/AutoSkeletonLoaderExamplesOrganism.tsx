@@ -89,15 +89,15 @@ export const AutoSkeletonLoaderExamples = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-indigo-500/20 bg-indigo-500/5 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-4">
             <FlaskConical className="size-3.5" />
-            <span>Experimental Feature</span>
+            <span>Deprecated, removed in v4</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            AutoSkeletonLoader Experimental Playground
+            AutoSkeletonLoader (deprecated)
           </h2>
           <p className="mt-4 text-muted-foreground">
-            AutoSkeletonLoader remains available for experimentation and
-            backward compatibility. Results may vary depending on component
-            structure. For production use, prefer SkeletonLoader and
+            AutoSkeletonLoader is deprecated and will be removed in v4. It stays
+            available only for backward compatibility. Use Skeletonize to turn
+            your real component into its skeleton, or SkeletonLoader and
             SkeletonGroupLoader.
           </p>
         </div>
