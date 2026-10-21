@@ -1,6 +1,6 @@
 {
   "name": "react-loadly",
-  "version": "3.0.4",
+  "version": "3.1.0",
   "type": "module",
   "description": "Accessible React loaders, spinners and skeleton screens with loading-state hooks. 30+ loaders, SkeletonLoader, SSR and Next.js ready, TypeScript.",
   "main": "dist/index.cjs.js",
