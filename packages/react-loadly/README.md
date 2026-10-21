@@ -147,6 +147,18 @@ export function Profile() {
 - Props: `loading`, `animation` ("shimmer" | "wave" | "pulse" | "none"), `baseColor`, `highlightColor`, `speed`, `loadingLabel`, `as`, plus any HTML attribute. It also reads the theme from `SkeletonGroupLoader`.
 - The placeholder data decides the skeleton's text length, so use realistic placeholder values.
 
+| Prop | Type | Default | Description |
+| :-- | :-- | :-- | :-- |
+| `loading` | `boolean` | required | Shows the skeleton while true. |
+| `animation` | `"shimmer" \| "wave" \| "pulse" \| "none"` | `"shimmer"` | Skeleton animation. |
+| `baseColor` | `string` | theme | Block color. |
+| `highlightColor` | `string` | theme | Shimmer highlight color. |
+| `speed` | `number` | `1.5` | Animation duration in seconds. |
+| `loadingLabel` | `string` | `"Loading"` | Text announced to screen readers. |
+| `as` | `React.ElementType` | `"div"` | Wrapper element. |
+
+[Live examples](https://mostafashadow1.github.io/react-loadly/#skeletonize)
+
 ---
 
 ## AutoSkeletonLoader (Deprecated)
@@ -376,6 +388,7 @@ Accessibility: renders `role="status"`, `aria-live="polite"`, and a screen-reade
 
 ## ✨ Key Features
 
+- **Skeletonize**: wrap any component and it becomes its own pixel-perfect skeleton while loading. See [Skeletonize](#skeletonize).
 - **High Performance**: Uses hardware-accelerated CSS transforms and animations.
 - **Accessibility First**: Full **ARIA support**, screen reader compatibility, and keyboard navigation.
 - **TypeScript Ready**: Comprehensive type definitions for a seamless dev experience.
