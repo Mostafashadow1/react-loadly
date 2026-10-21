@@ -19,7 +19,7 @@ const createBundle = (inputPath, outputName) => ({
   external: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
   output: [
     {
-      file: `dist/${outputName}.cjs.js`,
+      file: `dist/${outputName}.cjs`,
       format: "cjs",
       sourcemap: true,
       exports: "named",
@@ -72,7 +72,11 @@ const createBundle = (inputPath, outputName) => ({
 
 const createDtsBundle = (inputPath, outputPath) => ({
   input: inputPath,
-  output: [{ file: outputPath, format: "es" }],
+  // .d.cts types the CommonJS entry; .d.ts types the ESM entry ("type": "module").
+  output: [
+    { file: outputPath, format: "es" },
+    { file: outputPath.replace(/\.d\.ts$/, ".d.cts"), format: "es" },
+  ],
   plugins: [typescriptPaths({ preserveExtensions: true }), dts()],
   external: [/\.css$/],
 });
@@ -84,7 +88,7 @@ export default [
     external: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
     output: [
       {
-        file: pkg.main, // dist/index.cjs.js
+        file: pkg.main, // dist/index.cjs
         format: "cjs",
         sourcemap: true,
         exports: "named",
@@ -169,7 +173,10 @@ export default [
   // --- DTS Build (for autocomplete) ---
   {
     input: "dist/types/index.d.ts",
-    output: [{ file: "dist/index.d.ts", format: "es" }],
+    output: [
+      { file: "dist/index.d.ts", format: "es" },
+      { file: "dist/index.d.cts", format: "es" },
+    ],
     plugins: [typescriptPaths({ preserveExtensions: true }), dts()],
     external: [/\.css$/],
   },
