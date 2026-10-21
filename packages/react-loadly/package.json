@@ -8,6 +8,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
+    "!dist/types",
     "AGENTS.md",
     "llms.txt"
   ],
