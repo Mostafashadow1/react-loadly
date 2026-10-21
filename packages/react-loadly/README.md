@@ -10,7 +10,7 @@
 
 **React Loadly** is a reliable React loading experience toolkit for modern loaders, `SkeletonLoader`, `SkeletonGroupLoader`, loading state hooks, accessibility, SSR support, and production-ready loading patterns. Built with **TypeScript**, optimized for **Next.js and SSR**, and designed with **ARIA**, reduced motion, and developer experience in mind.
 
-Perfect for building **React applications, dashboards, forms, SaaS tools, and data-driven UIs** where loading states should feel deliberate, accessible, and consistent. `AutoSkeletonLoader` remains available as an experimental feature for backward compatibility and experimentation.
+Perfect for building **React applications, dashboards, forms, SaaS tools, and data-driven UIs** where loading states should feel deliberate, accessible, and consistent. `AutoSkeletonLoader` is deprecated and will be removed in v4; use `SkeletonLoader` and `SkeletonGroupLoader` instead.
 
 🔍 **Search-friendly features**: React loading spinner | React loader components | React skeleton loader | React loading indicator | Next.js loader | TypeScript loader | Accessible React loader | React loading animation
 
@@ -118,11 +118,11 @@ pnpm i react-loadly
 
 ---
 
-## AutoSkeletonLoader Experimental
+## AutoSkeletonLoader (Deprecated)
 
-`AutoSkeletonLoader` is currently **experimental**.
+`AutoSkeletonLoader` is **deprecated** and will be removed in v4. Use `SkeletonLoader` and `SkeletonGroupLoader` instead.
 
-The current implementation remains available for experimentation and backward compatibility. It uses best-effort structural inference by combining JSX traversal, safe presentational component inference, `className` heuristics, and smart fallback presets to generate realistic loading states.
+The current implementation remains available only for backward compatibility. It uses best-effort structural inference by combining JSX traversal, safe presentational component inference, `className` heuristics, and smart fallback presets to generate realistic loading states.
 
 It works best with native JSX, simple presentational components, className/style-based layouts, and visible component structure. It safely falls back for hook-heavy, context-heavy, Suspense-based, async, lazy, SSR-only, or opaque third-party components.
 
@@ -192,7 +192,7 @@ function Dashboard({ isLoading, worker }) {
 
 | Feature                   | Explicit Skeletons (`SkeletonLoader` + `SkeletonGroupLoader`) | **AutoSkeletonLoader**       |
 | :------------------------ | :------------------------------------------------------------ | :--------------------------- |
-| **Recommendation**        | Production                                                    | Experimental                 |
+| **Recommendation**        | Production                                                    | Deprecated (removed in v4)   |
 | **Accuracy**              | Intentional and design-reviewable                             | Best-effort structural match |
 | **Complex React Trees**   | Stable                                                        | May fall back                |
 | **Maintenance**           | Manual but predictable                                        | Lower setup, more variance   |
@@ -353,7 +353,7 @@ Accessibility: renders `role="status"`, `aria-live="polite"`, and a screen-reade
 - **Reduced Motion**: Respects the user's `prefers-reduced-motion` settings.
 - **SSR Compatible**: Works out-of-the-box with frameworks like **Next.js**.
 - **Fullscreen Support**: Display loaders in fullscreen mode with customizable backgrounds.
-- **AutoSkeletonLoader Experimental**: Best-effort runtime skeleton generation for experimentation and backward compatibility.
+- **AutoSkeletonLoader (Deprecated)**: Kept only for backward compatibility; it will be removed in v4.
 
 ---
 

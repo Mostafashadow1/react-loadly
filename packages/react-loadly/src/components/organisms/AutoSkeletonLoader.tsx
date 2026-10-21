@@ -238,6 +238,10 @@ const getTailwindStyles = (className = ""): CSSProperties => {
 const hasReactElementChild = (children: unknown): boolean =>
   React.Children.toArray(children as React.ReactNode).some((child) => React.isValidElement(child));
 
+/**
+ * @deprecated Structural inference is best-effort and cannot match real component layouts.
+ * Use `SkeletonLoader` and `SkeletonGroupLoader` instead. It will be removed in v4.
+ */
 export const AutoSkeletonLoader: FC<IAutoSkeletonProps> = (userProps) => {
   const props = mergeProps(defaultProps, userProps);
   const {
