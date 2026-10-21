@@ -17,9 +17,9 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 🏠 **Home Page**: [https://mostafashadow1.github.io/react-loadly/](https://mostafashadow1.github.io/react-loadly/)
 
 [![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)
-[![Version](https://img.shields.io/badge/version-3.0.1-blue.svg)](https://github.com/Mostafashadow1/react-loadly)
+
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/master/LICENSE)
 
 ---
 
@@ -34,6 +34,19 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 <p align="center">
   <strong>🇵🇸 This project stands with Palestine — freedom, dignity, and justice.</strong>
 </p>
+
+---
+
+## When to use React Loadly
+
+- A component fetches data and needs a skeleton or spinner while it loads.
+- You want one component that switches between loading, error, empty and content (`SkeletonSwitchLoader`).
+- You need accessible loaders (role="status", aria-label, reduced motion) without writing CSS animations.
+- You need a fullscreen or page-level loader, or a Suspense / next/dynamic fallback.
+
+**Not for:** Progress bars for route changes at the top of the page (use nprogress or the router's own indicator).
+
+> **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
 
 ---
 

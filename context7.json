@@ -1,0 +1,24 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "React Loadly",
+  "description": "React Loadly gives React and Next.js apps accessible loading UI: 30+ spinners/loaders, SkeletonLoader and SkeletonGroupLoader for skeleton screens, SkeletonSwitchLoader for loading/error/empty switching, and loading-state hooks. TypeScript, SSR-friendly, ARIA role=\"status\", reduced-motion support.",
+  "folders": [
+    "packages/react-loadly"
+  ],
+  "excludeFolders": [
+    "**/node_modules",
+    "**/dist",
+    "**/tests",
+    "**/__tests__"
+  ],
+  "rules": [
+    "For production skeletons prefer explicit `SkeletonLoader` + `SkeletonGroupLoader`. `AutoSkeletonLoader` is experimental; do not use it unless the user asks.",
+    "Import the stylesheet once in the app root: `import \"react-loadly/styles.css\"` (or wrap the app with `<LoadlyProvider>`, which injects styles).",
+    "`SkeletonLoader` props: `variant` (\"text\" | \"rectangular\" | \"circular\" | \"rounded\"), `width`, `height`, `count`, `animation` (\"shimmer\" | \"wave\" | \"pulse\" | \"none\"), `borderRadius`, `baseColor`, `highlightColor`.",
+    "Loaders share base props: `size`, `color`, `speed`, `loading`, `aria-label`, `showText`, `loadingText`, `fullscreen`, `loaderCenter`, `className`, `style`.",
+    "`SkeletonSwitchLoader` props: `loading`, `error`, `empty`, `skeleton`, `errorFallback`, `emptyFallback`, `transition`.",
+    "Subpath imports keep bundles smaller: `react-loadly/loaders`, `react-loadly/skeleton`, `react-loadly/hooks`.",
+    "Components use React context and hooks, so in Next.js App Router use them from files that start with \"use client\" (or pass them as client-component fallbacks).",
+    "Always set a meaningful `aria-label` such as \"Loading orders\"."
+  ]
+}
