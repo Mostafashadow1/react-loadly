@@ -2,7 +2,7 @@
 
 <p align="center">
  <img
-    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/packages/react-loadly/public/images/react-loadly-banner.png"
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/main/packages/react-loadly/public/images/react-loadly-banner.png"
     alt="React Loadly"
     width="900"
   />
@@ -19,13 +19,13 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 [![NPM Version](https://img.shields.io/npm/v/react-loadly.svg)](https://www.npmjs.com/package/react-loadly)
 
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/react-loadly.svg)](https://bundlephobia.com/result?p=react-loadly)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Mostafashadow1/react-loadly/blob/main/LICENSE)
 
 ---
 
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/master/packages/react-loadly/public/images/palestine-solidarity-banner.png"
+    src="https://raw.githubusercontent.com/Mostafashadow1/react-loadly/main/packages/react-loadly/public/images/palestine-solidarity-banner.png"
     alt="This project stands with Palestine — Freedom, dignity, and justice."
     width="100%"
   />
@@ -46,7 +46,7 @@ Perfect for building **React applications, dashboards, forms, SaaS tools, and da
 
 **Not for:** Progress bars for route changes at the top of the page (use nprogress or the router's own indicator).
 
-> **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/master/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
+> **Using an AI coding agent?** This package ships an [`AGENTS.md`](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/AGENTS.md) and an [`llms.txt`](https://github.com/Mostafashadow1/react-loadly/blob/main/packages/react-loadly/llms.txt) with usage rules and examples. Agents with the Context7 MCP can fetch these docs directly.
 
 ---
 
