@@ -195,6 +195,9 @@ function Example({
 
 export function SkeletonizeExamples() {
   const [loading, setLoading] = useState(true);
+  // The fetch examples load on their own until the toggle is used, then follow it too.
+  const [toggled, setToggled] = useState(false);
+  const forced = toggled && loading;
   const user = useFakeFetch(placeholderUser, realUser);
   const product = useFakeFetch(placeholderProduct, realProduct, 2000);
   const orders = useFakeFetch(placeholderOrders, realOrders, 2500);
@@ -234,7 +237,10 @@ function Profile() {
 
         <div className="mb-6 flex justify-center">
           <Button
-            onClick={() => setLoading((value) => !value)}
+            onClick={() => {
+              setToggled(true);
+              setLoading((value) => !value);
+            }}
             className="h-9 rounded-lg bg-indigo-400 px-4 text-xs font-semibold text-white hover:bg-indigo-500"
           >
             {loading ? "Show content" : "Show skeletons"}
@@ -249,7 +255,7 @@ function Profile() {
   <UserCard user={data ?? placeholderUser} />
 </Skeletonize>`}
           >
-            <Skeletonize loading={user.loading} {...darkTheme}>
+            <Skeletonize loading={user.loading || forced} {...darkTheme}>
               <UserCard user={user.value} />
             </Skeletonize>
           </Example>
@@ -261,7 +267,7 @@ function Profile() {
   <ProductCard product={data ?? placeholderProduct} />
 </Skeletonize>`}
           >
-            <Skeletonize loading={product.loading} {...darkTheme}>
+            <Skeletonize loading={product.loading || forced} {...darkTheme}>
               <ProductCard product={product.value} />
             </Skeletonize>
           </Example>
@@ -273,7 +279,7 @@ function Profile() {
   <OrdersTable orders={data ?? placeholderOrders} />
 </Skeletonize>`}
           >
-            <Skeletonize loading={orders.loading} {...darkTheme}>
+            <Skeletonize loading={orders.loading || forced} {...darkTheme}>
               <OrdersTable orders={orders.value} />
             </Skeletonize>
           </Example>
