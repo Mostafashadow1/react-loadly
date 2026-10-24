@@ -3,11 +3,10 @@ name: Publish to npm
 on:
   release:
     types: [published]
-  workflow_dispatch:
 
 permissions:
   contents: read
-  id-token: write # required for npm provenance
+  id-token: write # npm trusted publishing (OIDC), no NPM_TOKEN needed
 
 jobs:
   publish:
@@ -25,9 +24,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
           registry-url: https://registry.npmjs.org
+
+      - name: Use npm with trusted publishing support
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -38,7 +40,6 @@ jobs:
       - name: Test
         run: pnpm --filter react-loadly test
 
-      - name: Publish with provenance
-        run: pnpm --filter react-loadly publish --provenance --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish (provenance is automatic)
+        working-directory: packages/react-loadly
+        run: npm publish --access public
